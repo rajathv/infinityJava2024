@@ -1,0 +1,14 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue May 07 15:33:49 AST 2024
+@default-dbx-http\://10.10.24.26\:8081/nexus/content/repositories/dbx/.lastUpdated=1705335462143
+@default-dbx-https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1715085214412
+@default-temenos-http\://maven.temenosgroup.com/content/repositories/temenos/.lastUpdated=1705335462192
+file\:///Users/ijarahtestmac/Developer/Fabric/java/DBPMFAServices/../../../../maven-local-repo/.error=
+file\:///Users/ijarahtestmac/Developer/Fabric/java/DBPMFAServices/../../../../maven-local-repo/.lastUpdated=1715085229084
+file\:///Users/ijarahtestmac/Developer/Fabric/java/dbp-authservices/../maven-local-repo/.error=
+file\:///Users/ijarahtestmac/Developer/Fabric/java/dbp-authservices/../maven-local-repo/.lastUpdated=1715085228370
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\DBPPartyArrangementMicroServices/../../../maven-local-repo/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\DBPPartyArrangementMicroServices/../../../maven-local-repo/.lastUpdated=1705335462152
+http\://10.10.24.26\:8081/nexus/content/repositories/dbx/.error=Could not transfer artifact com.infinity.dbx\:DBPJWTGeneration\:jar\:sources\:0.0.1-SNAPSHOT from/to dbx (http\://10.10.24.26\:8081/nexus/content/repositories/dbx)\: No route to host\: no further information
+http\://maven.temenosgroup.com/content/repositories/temenos/.error=Could not transfer artifact com.infinity.dbx\:DBPJWTGeneration\:jar\:sources\:0.0.1-SNAPSHOT from/to temenos (http\://maven.temenosgroup.com/content/repositories/temenos/)\: maven.temenosgroup.com
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=Could not transfer artifact com.infinity.dbx\:DBPJWTGeneration\:jar\:sources\:0.0.1-SNAPSHOT from/to dbx (https\://quantum-maven.temenosgroup.com/content/repositories/dbx/)\: quantum-maven.temenosgroup.com

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.kony.dbp</groupId>
+  <artifactId>smartbankingadvisory-services</artifactId>
+  <versioning>
+    <versions>
+      <version>0.0.1-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20240507074811</lastUpdated>
+  </versioning>
+</metadata>

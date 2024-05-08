@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Sat May 13 12:54:29 IST 2023
+smallrye-common-classloader-1.6.0-sources.jar>central=
+smallrye-common-classloader-1.6.0.pom>central=
+smallrye-common-classloader-1.6.0.jar>central=

@@ -1,0 +1,83 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.temenos.technology</groupId>
+		<artifactId>TemnLibraryInternalParent</artifactId>
+		<version>2.0.8</version>
+	</parent>
+
+	<artifactId>TemnMonitorParent</artifactId>
+	<version>6.0.3</version>
+	<packaging>pom</packaging>
+
+	<description>Temenos Monitor Parent artifact</description>
+
+	<url>http://catalogue.temenosgroup.com/${project.artifactId}</url>
+
+	<distributionManagement>
+		<site>
+			<name>DocumentServer</name>
+			<id>doc-server</id>
+			<url>scp://catalogue.temenosgroup.com/var/www/catalogue/${project.artifactId}/${project.version}
+			</url>
+		</site>
+	</distributionManagement>
+
+	<ciManagement>
+		<url>http://utp-prodfactory.temenosgroup.com:8080/job/Common-Components-Factory/job/${project.artifactId}-GIT/
+		</url>
+	</ciManagement>
+
+	<scm>
+		<connection>scm:git:https://bitbucketuat.temenos.com/scm/tch-com/temnmonitorlib.git</connection>
+		<url>https://bitbucketuat.temenos.com/projects/TCH-COM/repos/temnmonitorlib/browse</url>
+		<developerConnection>scm:git:https://bitbucketuat.temenos.com/scm/tch-com/temnmonitorlib.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
+
+	<modules>
+		<module>temnlogger</module>
+		<module>temnmeter</module>
+		<module>temntracer</module>
+		<module>temnmonitorlib</module>
+	</modules>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<tagNameFormat>v@{project.version}</tagNameFormat>
+					<releaseProfiles>release</releaseProfiles>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<developers>
+		<developer>
+			<id>haubert</id>
+			<name>Herve Aubert</name>
+			<email>haubert@temenos.com</email>
+			<url>newmysite.temenos.com/Person.aspx?accountname=temenosgroup%5Chaubert</url>
+			<roles>
+				<role>architect</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>svetsch</id>
+			<name>Samuel Vetsch</name>
+			<email>svetsch@temenos.com</email>
+			<url>https://newmysite.temenos.com/Person.aspx?accountname=temenosgroup%5Csvetsch</url>
+			<roles>
+				<role>architect</role>
+			</roles>
+		</developer>
+	</developers>
+
+</project>

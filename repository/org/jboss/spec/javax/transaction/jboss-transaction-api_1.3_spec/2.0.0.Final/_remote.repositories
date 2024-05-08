@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Sat May 13 12:54:14 IST 2023
+jboss-transaction-api_1.3_spec-2.0.0.Final-sources.jar>central=
+jboss-transaction-api_1.3_spec-2.0.0.Final.jar>central=
+jboss-transaction-api_1.3_spec-2.0.0.Final.pom>central=

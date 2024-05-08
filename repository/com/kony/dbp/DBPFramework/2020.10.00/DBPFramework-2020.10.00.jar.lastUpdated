@@ -1,0 +1,8 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Jun 30 19:16:38 IST 2023
+http\://10.10.24.26\:8081/nexus/content/repositories/dbx/.error=Could not transfer artifact com.kony.dbp\:DBPFramework\:jar\:2020.10.00 from/to dbx (http\://10.10.24.26\:8081/nexus/content/repositories/dbx)\: Transfer failed for http\://10.10.24.26\:8081/nexus/content/repositories/dbx/com/kony/dbp/DBPFramework/2020.10.00/DBPFramework-2020.10.00.jar
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\eurobank_code\\eurobank_t24javacode_23\\Processors\\Temenos/lib/.lastUpdated=1681901529813
+@default-dbx-http\://10.10.24.26\:8081/nexus/content/repositories/dbx/.lastUpdated=1686835925586
+https\://repo.maven.apache.org/maven2/.lastUpdated=1681901532809
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\eurobank_code\\eurobank_t24javacode_23\\Processors\\Temenos/lib/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1688132798047

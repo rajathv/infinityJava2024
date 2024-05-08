@@ -1,0 +1,32 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Jan 18 17:44:36 IST 2024
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\WealthOrderServices/../../../maven-local-repo/.lastUpdated=1705335222461
+http\://maven.temenosgroup.com/content/groups/odyssey/.lastUpdated=1705580074006
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\bulkpaymentservices/../../../maven-local-repo/.lastUpdated=1705335287403
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\ArtifactsManager/../../../maven-local-repo/.lastUpdated=1694076564085
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\WealthServices/../../../maven-local-repo/.error=
+http\://maven.temenosgroup.com/content/groups/all/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\com.temenos.infinity.t24irisintegration/../../../maven-local-repo/.error=
+http\://maven.temenosgroup.com/content/repositories/temenos/.lastUpdated=1705335223176
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\com.temenos.infinity.t24irisintegration/../../../maven-local-repo/.lastUpdated=1705335240487
+@default-dbx-https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1681802420543
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.lastUpdated=1705335281800
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\PortfolioServicing/../../../maven-local-repo/.lastUpdated=1705519558794
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=Could not transfer artifact com.temenos.technology\:ofsml\:jar\:javadoc\:0.0.1-SNAPSHOT from/to dbx (https\://quantum-maven.temenosgroup.com/content/repositories/dbx)\: quantum-maven.temenosgroup.com
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\eurobank_code\\eurobank_t24javacode_23\\Processors\\Temenos/lib/.error=
+http\://maven.temenosgroup.com/content/repositories/connect-dev/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\ArtifactsManager/../../../maven-local-repo/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\WealthOrderServices/../../../maven-local-repo/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\tradefinanceservices/../../../maven-local-repo/.lastUpdated=1705335281817
+http\://maven.temenosgroup.com/content/groups/odyssey/.error=
+http\://maven.temenosgroup.com/content/repositories/temenos/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\eurobank_code\\eurobank_t24javacode_23\\Processors\\Temenos/lib/.lastUpdated=1681802420549
+http\://maven.temenosgroup.com/content/repositories/t24-snapshots/.lastUpdated=1705580074947
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\PortfolioServicing/../../../maven-local-repo/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\WealthServices/../../../maven-local-repo/.lastUpdated=1694076681149
+http\://maven.temenosgroup.com/content/repositories/t24-snapshots/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\bulkpaymentservices/../../../maven-local-repo/.error=
+http\://maven.temenosgroup.com/content/groups/all/.lastUpdated=1705580076457
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\tradefinanceservices/../../../maven-local-repo/.error=
+http\://maven.temenosgroup.com/content/repositories/connect-dev/.lastUpdated=1705580073048

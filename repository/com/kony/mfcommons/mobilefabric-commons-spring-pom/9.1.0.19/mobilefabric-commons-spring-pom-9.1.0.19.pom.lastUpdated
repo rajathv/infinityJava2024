@@ -1,0 +1,21 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon Jul 10 19:40:38 IST 2023
+https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/.error=
+http\://www.soapui.org/repository/maven2/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/GA/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/QA/.lastUpdated=1688998237761
+http\://www.soapui.org/repository/maven2/.lastUpdated=1688998235062
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1688998232006
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\forexservices/../../../maven-local-repo/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa/.lastUpdated=1688998235728
+https\://repo.maven.apache.org/maven2/.lastUpdated=1688998232304
+https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/.lastUpdated=1688998232664
+https\://quantum-maven.temenosgroup.com/content/repositories/GA/.lastUpdated=1688998235392
+@default-jwt-repository-http\://maven.forgerock.org/repo/repo/.lastUpdated=1688998237392
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.lastUpdated=1688998238489
+https\://repo.maven.apache.org/maven2/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\forexservices/../../../maven-local-repo/.lastUpdated=1688998232015
+https\://quantum-maven.temenosgroup.com/content/repositories/QA/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=
+http\://maven.forgerock.org/repo/repo/.error=Could not transfer artifact com.kony.mfcommons\:mobilefabric-commons-spring-pom\:pom\:9.1.0.19 from/to jwt-repository (http\://maven.forgerock.org/repo/repo)\: Authentication failed for http\://maven.forgerock.org/repo/repo/com/kony/mfcommons/mobilefabric-commons-spring-pom/9.1.0.19/mobilefabric-commons-spring-pom-9.1.0.19.pom 401 Unauthorized

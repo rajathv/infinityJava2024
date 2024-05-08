@@ -1,0 +1,9 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Jan 20 19:59:19 IST 2023
+https\://repo.maven.apache.org/maven2/.lastUpdated=1674224959783
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\SecureMessages\\DBPCommonUtilityServices/../../../maven-local-repo/.error=
+@default-dbx-https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1674224643103
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\SecureMessages\\DBPCommonUtilityServices/maven-local-repo/.lastUpdated=1674224643043
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\SecureMessages\\DBPCommonUtilityServices/maven-local-repo/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=Could not transfer artifact org.bouncycastle\:bcutil-jdk15on\:jar\:1.70 from/to dbx (https\://quantum-maven.temenosgroup.com/content/repositories/dbx/)\: quantum-maven.temenosgroup.com
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\SecureMessages\\DBPCommonUtilityServices/../../../maven-local-repo/.lastUpdated=1674224643162

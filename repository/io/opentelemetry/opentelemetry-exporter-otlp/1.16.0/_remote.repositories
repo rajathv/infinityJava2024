@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Jan 05 15:52:37 IST 2024
+opentelemetry-exporter-otlp-1.16.0-sources.jar>central=
+opentelemetry-exporter-otlp-1.16.0.pom>temenos=
+opentelemetry-exporter-otlp-1.16.0.jar>temenos=

@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed Mar 08 11:39:40 IST 2023
+https\://repo.maven.apache.org/maven2/.lastUpdated=1678255780508
+@default-dbx-https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1678255779064
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=Could not transfer artifact com.microsoft.sqlserver\:mssql-jdbc\:jar\:sources\:7.0.0.jre8 from/to dbx (https\://quantum-maven.temenosgroup.com/content/repositories/dbx)\: quantum-maven.temenosgroup.com

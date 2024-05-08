@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon May 22 18:44:07 IST 2023
+httpcore-nio-4.4.4.jar>=
+httpcore-nio-4.4.4-sources.jar>=
+httpcore-nio-4.4.4.pom>central=
+httpcore-nio-4.4.4.jar>central=
+httpcore-nio-4.4.4-sources.jar>central=

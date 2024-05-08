@@ -1,0 +1,21 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon Jul 10 19:40:16 IST 2023
+https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/.error=
+http\://www.soapui.org/repository/maven2/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/GA/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/QA/.lastUpdated=1688998216041
+http\://www.soapui.org/repository/maven2/.lastUpdated=1688998213063
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1688998209836
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\forexservices/../../../maven-local-repo/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa/.lastUpdated=1688998213779
+https\://repo.maven.apache.org/maven2/.lastUpdated=1688998210284
+https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/.lastUpdated=1688998210687
+https\://quantum-maven.temenosgroup.com/content/repositories/GA/.lastUpdated=1688998213393
+@default-jwt-repository-http\://maven.forgerock.org/repo/repo/.lastUpdated=1688998215722
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.lastUpdated=1688998216751
+https\://repo.maven.apache.org/maven2/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\forexservices/../../../maven-local-repo/.lastUpdated=1688998209850
+https\://quantum-maven.temenosgroup.com/content/repositories/QA/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=
+http\://maven.forgerock.org/repo/repo/.error=Could not transfer artifact com.kony.mfcommons\:mobilefabric-commons-hibernate-pom\:pom\:9.1.0.19 from/to jwt-repository (http\://maven.forgerock.org/repo/repo)\: Authentication failed for http\://maven.forgerock.org/repo/repo/com/kony/mfcommons/mobilefabric-commons-hibernate-pom/9.1.0.19/mobilefabric-commons-hibernate-pom-9.1.0.19.pom 401 Unauthorized

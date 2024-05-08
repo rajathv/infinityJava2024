@@ -1,0 +1,6 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue May 07 15:34:00 AST 2024
+maven-pmd-plugin-3.22.0.jar>central=
+maven-pmd-plugin-3.22.0.jar>odyssey-group.com=
+maven-pmd-plugin-3.22.0.pom>central=
+maven-pmd-plugin-3.22.0.pom>odyssey-group.com=

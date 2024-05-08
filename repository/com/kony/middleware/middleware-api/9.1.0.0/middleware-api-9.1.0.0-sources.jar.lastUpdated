@@ -1,0 +1,12 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Jun 30 19:03:45 IST 2023
+@default-dbx-http\://10.10.24.26\:8081/nexus/content/repositories/dbx/.lastUpdated=1681802533950
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\eurobank_code\\eurobank_javacode_23\\DBX\ Product\ Code\\DBPPartyArrangementMicroServices/../../../maven-local-repo/.error=
+https\://repo.maven.apache.org/maven2/.lastUpdated=1681802534898
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\eurobank_code\\eurobank_javacode_230615\\DBX\ Product\ Code\\DBPPartyArrangementMicroServices/../../../maven-local-repo/.lastUpdated=1686823696453
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\eurobank_code\\eurobank_javacode_230615\\DBX\ Product\ Code\\DBPPartyArrangementMicroServices/../../../maven-local-repo/.error=
+https\://repo.maven.apache.org/maven2/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\eurobank_code\\eurobank_javacode_23\\DBX\ Product\ Code\\DBPPartyArrangementMicroServices/../../../maven-local-repo/.lastUpdated=1681802533971
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1688132025980
+http\://10.10.24.26\:8081/nexus/content/repositories/dbx/.error=Could not transfer artifact com.kony.middleware\:middleware-api\:jar\:sources\:9.1.0.0 from/to dbx (http\://10.10.24.26\:8081/nexus/content/repositories/dbx)\: Connect timed out
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=

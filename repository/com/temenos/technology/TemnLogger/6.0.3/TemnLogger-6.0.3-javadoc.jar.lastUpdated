@@ -1,0 +1,22 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Jan 18 01:01:07 IST 2024
+@default-temenos-http\://maven.temenosgroup.com/content/repositories/temenos/.lastUpdated=1704451108078
+http\://maven.temenosgroup.com/content/repositories/temenos/.error=Could not transfer artifact com.temenos.technology\:TemnLogger\:jar\:javadoc\:6.0.3 from/to temenos (http\://maven.temenosgroup.com/content/repositories/temenos/)\: maven.temenosgroup.com
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\DBPCommonUtilityServices/../../../maven-local-repo/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\WealthServices/../../../maven-local-repo/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\com.temenos.infinity.integration.common/../../../maven-local-repo/.lastUpdated=1705519867462
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\PortfolioServicing/../../../maven-local-repo/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\com.temenos.infinity.t24irisintegration/../../../maven-local-repo/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\com.temenos.infinity.integration.common/../../../maven-local-repo/.error=
+https\://repo.maven.apache.org/maven2/.lastUpdated=1704451108799
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\DBPCommonUtilityServices/maven-local-repo/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\WealthServices/../../../maven-local-repo/.lastUpdated=1705519794615
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\com.temenos.infinity.t24irisintegration/../../../maven-local-repo/.lastUpdated=1705519867061
+@default-dbx-https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1704451108068
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.lastUpdated=1705335231261
+https\://repo.maven.apache.org/maven2/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\DBPCommonUtilityServices/maven-local-repo/.lastUpdated=1705519794114
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\PortfolioServicing/../../../maven-local-repo/.lastUpdated=1705519559048
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=Could not transfer artifact com.temenos.technology\:TemnLogger\:jar\:javadoc\:6.0.3 from/to dbx (https\://quantum-maven.temenosgroup.com/content/repositories/dbx)\: quantum-maven.temenosgroup.com
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\DBPCommonUtilityServices/../../../maven-local-repo/.lastUpdated=1705519794122

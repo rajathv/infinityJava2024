@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Jun 30 17:40:59 IST 2023
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\ArtifactsManager/../../../maven-local-repo/.error=
+https\://repo.maven.apache.org/maven2/.lastUpdated=1688127059467
+@default-dbx-https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1688127059336
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\ArtifactsManager/../../../maven-local-repo/.lastUpdated=1688127059346
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=Could not transfer artifact org.glassfish.hk2.external\:javax.inject\:pom\:2.5.0-b42 from/to dbx (https\://quantum-maven.temenosgroup.com/content/repositories/dbx/)\: quantum-maven.temenosgroup.com

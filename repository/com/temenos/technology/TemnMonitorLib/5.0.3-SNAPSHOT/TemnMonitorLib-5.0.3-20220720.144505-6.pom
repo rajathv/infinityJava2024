@@ -1,0 +1,131 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.temenos.technology</groupId>
+		<artifactId>TemnMonitorParent</artifactId>
+		<version>5.0.3-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>TemnMonitorLib</artifactId>
+	<packaging>pom</packaging>
+
+	<description>Temenos Monitor 3rd party libraries for the TemnLogger,
+		TemnMeter, TemnTracer to be used as dependencies
+	</description>
+
+	<url>http://catalogue.temenosgroup.com/${project.artifactId}</url>
+
+	<distributionManagement>
+		<site>
+			<name>DocumentServer</name>
+			<id>doc-server</id>
+			<url>scp://catalogue.temenosgroup.com/var/www/catalogue/${project.artifactId}/${project.version}
+			</url>
+		</site>
+	</distributionManagement>
+
+	<properties>
+		<path>${basedir}/libMonitor</path>
+		<log4j.version>2.17.2</log4j.version>
+		<opentelemetry.version>1.10.0</opentelemetry.version>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<appendAssemblyId>false</appendAssemblyId>
+					<finalName>${project.artifactId}</finalName>
+					<descriptors>
+						<descriptor>src/assembly/package.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>create-archive</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>io.opentelemetry</groupId>
+				<artifactId>opentelemetry-bom</artifactId>
+				<version>${opentelemetry.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+	<dependencies>
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-api-metrics</artifactId>
+			<version>${opentelemetry.version}-alpha-rc.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>io.opentelemetry</groupId>
+		    <artifactId>opentelemetry-exporter-otlp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-exporter-otlp-metrics</artifactId>
+			<version>${opentelemetry.version}-alpha</version>
+		</dependency>
+		<dependency>
+		    <groupId>io.opentelemetry</groupId>
+		    <artifactId>opentelemetry-exporter-otlp-http-metrics</artifactId>
+		    <version>${opentelemetry.version}-alpha</version>
+		</dependency>		
+		<dependency>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-sdk-trace</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-sdk-extension-autoconfigure</artifactId>
+			<version>${opentelemetry.version}-alpha</version>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+		</dependency>
+
+	</dependencies>
+
+	<developers>
+		<developer>
+			<id>haubert</id>
+			<name>Herve Aubert</name>
+			<email>haubert@temenos.com</email>
+			<url>newmysite.temenos.com/Person.aspx?accountname=temenosgroup%5Chaubert
+			</url>
+			<roles>
+				<role>architect</role>
+			</roles>
+		</developer>
+	</developers>
+
+</project>

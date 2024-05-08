@@ -1,0 +1,26 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed Nov 15 17:25:09 IST 2023
+https\://quantum-maven.temenosgroup.com/content/repositories/GA/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\spotlightservices\\Fabric\\java\\AdminConsoleCommons/maven-local-repo/.lastUpdated=1700049308423
+https\://quantum-maven.temenosgroup.com/content/repositories/QA/.lastUpdated=1681566612666
+http\://www.soapui.org/repository/maven2/.lastUpdated=1681566614635
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\ArtifactsManager/../../../maven-local-repo/.lastUpdated=1681566611379
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1700049308735
+https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa/.lastUpdated=1681566615266
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\spotlightservices\\Fabric\\java\\AdminConsoleCommons/maven-local-repo/.error=
+http\://maven.temenosgroup.com/content/repositories/temenos/.lastUpdated=1700049308998
+https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/.lastUpdated=1681566612331
+https\://quantum-maven.temenosgroup.com/content/repositories/GA/.lastUpdated=1681566614938
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.lastUpdated=1681566611949
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\DBPCommonUtilityServices/maven-local-repo/.lastUpdated=1681566611976
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\ArtifactsManager/../../../maven-local-repo/.error=
+http\://www.soapui.org/repository/maven2/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\DBPCommonUtilityServices/maven-local-repo/.error=
+https\://repo.maven.apache.org/maven2/.lastUpdated=1681566611616
+http\://maven.temenosgroup.com/content/repositories/t24-releases/.lastUpdated=1681566615922
+https\://repo.maven.apache.org/maven2/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/QA/.error=

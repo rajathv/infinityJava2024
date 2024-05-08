@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Sat May 13 12:53:52 IST 2023
+keycloak-core-21.0.1.pom>central=
+keycloak-core-21.0.1.jar>central=
+keycloak-core-21.0.1-sources.jar>central=

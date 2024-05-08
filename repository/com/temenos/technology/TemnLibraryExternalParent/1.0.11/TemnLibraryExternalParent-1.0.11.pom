@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.temenos.technology</groupId>
+		<artifactId>TemnEnvironmentParent</artifactId>
+		<version>1.0.8</version>
+	</parent>
+
+	<artifactId>TemnLibraryExternalParent</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0.11</version>
+	<name>TemnLibraryExternalParent</name>
+
+	<description>
+		Parent project for all external common library type projects. 
+	</description>
+
+	<properties>
+
+
+		<!-- Dependencies Versions -->
+
+		<!-- Logging -->
+		<assertj-core.version>3.21.0</assertj-core.version>
+		<unirest-java.version>1.4.9</unirest-java.version>
+		<commons-text.version>1.9</commons-text.version>
+		<commons-codec.version>1.15</commons-codec.version>
+
+		<!-- Rules Engine DMN/Drool -->
+		<drools.version>7.47.0.Final</drools.version>
+
+		<!-- Security -->
+		<bcpkix-jdk15on.version>1.70</bcpkix-jdk15on.version>
+		<json-simple.version>1.1</json-simple.version>
+		<json.version>20211205</json.version>
+
+		<!-- Security Web -->
+		<!-- Update versions supported by Java 8 -->
+		<jetty-runner.version>9.4.44.v20210927</jetty-runner.version>
+		<weld-servlet.version>2.4.8.Final</weld-servlet.version>
+
+		<!-- Web -->
+		<jsf-api.version>2.2.20</jsf-api.version>
+		<jsf-impl.version>2.2.20</jsf-impl.version>
+		<primefaces.version>8.0-TEMN</primefaces.version>
+		<javaee-api.version>7.0</javaee-api.version>
+
+		<!-- DB -->
+		<h2.version>1.4.197</h2.version>
+		<ojdbc7.version>12.1.0.2.0</ojdbc7.version>
+		<ucp.version>12.2.0.1.0</ucp.version>
+		<xmlparserv2_sans_jaxp_services.version>12.2.1.2.0</xmlparserv2_sans_jaxp_services.version>
+		<oracle.xdb.version>12.1.0.2.1</oracle.xdb.version>
+		<nuodb-jdbc.version>22.0.0</nuodb-jdbc.version>
+		<db2jcc4.version>11.1</db2jcc4.version>
+		<sqljdbc.version>1.2</sqljdbc.version>
+
+	</properties>
+
+	<!-- Technology Wide Dependency Management -->
+	<dependencyManagement>
+		<dependencies>
+
+			<dependency>
+				<groupId>com.mashape.unirest</groupId>
+				<artifactId>unirest-java</artifactId>
+				<version>${unirest-java.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>${commons-codec.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-text</artifactId>
+				<version>${commons-text.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.assertj</groupId>
+				<artifactId>assertj-core</artifactId>
+				<version>${assertj-core.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+
+			<!-- Security -->
+			<dependency>
+				<groupId>org.bouncycastle</groupId>
+				<artifactId>bcpkix-jdk15on</artifactId>
+				<version>${bcpkix-jdk15on.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.googlecode.json-simple</groupId>
+				<artifactId>json-simple</artifactId>
+				<version>${json-simple.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.json</groupId>
+				<artifactId>json</artifactId>
+				<version>${json.version}</version>
+			</dependency>
+
+			<!-- Web -->
+			<dependency>
+				<groupId>javax</groupId>
+				<artifactId>javaee-api</artifactId>
+				<version>${javaee-api.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.sun.faces</groupId>
+				<artifactId>jsf-impl</artifactId>
+				<version>${jsf-impl.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.sun.faces</groupId>
+				<artifactId>jsf-api</artifactId>
+				<version>${jsf-api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.primefaces</groupId>
+				<artifactId>primefaces</artifactId>
+				<version>${primefaces.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.weld.servlet</groupId>
+				<artifactId>weld-servlet</artifactId>
+				<version>${weld-servlet.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-runner</artifactId>
+				<version>${jetty-runner.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- DB -->
+			<dependency>
+				<groupId>com.h2database</groupId>
+				<artifactId>h2</artifactId>
+				<version>${h2.version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>com.oracle</groupId>
+				<artifactId>ojdbc7</artifactId>
+				<version>${ojdbc7.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.oracle</groupId>
+				<artifactId>ucp</artifactId>
+				<scope>provided</scope>
+				<version>${ucp.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.oracle</groupId>
+				<artifactId>xmlparserv2_sans_jaxp_services</artifactId>
+				<version>${xmlparserv2_sans_jaxp_services.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.oracle</groupId>
+				<artifactId>oracle.xdb</artifactId>
+				<version>${oracle.xdb.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.nuodb.jdbc</groupId>
+				<artifactId>nuodb-jdbc</artifactId>
+				<version>${nuodb-jdbc.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.ibm</groupId>
+				<artifactId>db2jcc4</artifactId>
+				<version>${db2jcc4.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.microsoft.sqlserver</groupId>
+				<artifactId>sqljdbc</artifactId>
+				<version>${sqljdbc.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+
+		</dependencies>
+	</dependencyManagement>
+
+
+
+</project>

@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon May 22 18:43:12 IST 2023
+super-csv-2.4.0.jar>central=
+super-csv-2.4.0-sources.jar>central=
+super-csv-2.4.0.jar>=
+super-csv-2.4.0.pom>central=
+super-csv-2.4.0-sources.jar>=

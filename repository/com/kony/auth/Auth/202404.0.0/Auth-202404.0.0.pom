@@ -1,0 +1,205 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.kony.mfcommons</groupId>
+        <artifactId>mobilefabric-commons-parent-pom</artifactId>
+        <version>202404.0.1</version>
+    </parent>
+    <groupId>com.kony.auth</groupId>
+    <artifactId>Auth</artifactId>
+<version>202404.0.0</version>
+    <packaging>pom</packaging>
+    <name>KONY MF IDENTITY</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+<env>DEV</env>
+<Kony-Base-Version>202404</Kony-Base-Version>
+<Kony-Build-Version>0</Kony-Build-Version>
+<Kony-Patch-Version>0</Kony-Patch-Version>
+<Temenos-Release-Version></Temenos-Release-Version>
+        <sonar.language>java</sonar.language>
+        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+		<sonar.coverage.exclusions>src/main/webapp/resources/**</sonar.coverage.exclusions>
+        <jackson-dataformat-xml>2.14.1</jackson-dataformat-xml>
+    </properties>
+
+    <modules>
+        <module>MigrationsAuth</module>
+        <module>commonsLib</module>
+        <module>APIGateway/GatewayFilter</module>
+        <module>manageLib</module>
+        <module>authService</module>
+    </modules>
+
+    <repositories>
+        <repository>
+            <id>kony-nexus-thirdparty</id>
+            <name>Kony nexus third party repo</name>
+            <url>https://quantum-maven.temenosgroup.com/content/repositories/thirdparty/</url>
+        </repository>
+        <repository>
+            <id>QA</id>
+            <url>https://quantum-maven.temenosgroup.com/content/repositories/QA/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>deployment</id>
+            <name>Kony mBaaS nexus releases</name>
+            <url>https://quantum-maven.temenosgroup.com/content/repositories/mBaaS/</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>QA</id>
+            <url>https://quantum-maven.temenosgroup.com/content/repositories/QA</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <showWarnings>true</showWarnings>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                        <compilerArgs>
+                            <arg>-Xlint:all</arg>
+                            <arg>-Xlint:-processing</arg>
+                            <arg>-Werror</arg>
+                        </compilerArgs>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <configuration>
+                        <logViolationsToConsole>true</logViolationsToConsole>
+                        <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                        <configLocation>${project.parent.basedir}/checkstyle_checks.xml</configLocation>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>verify-style</id>
+                            <phase>pre-integration-test</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <configuration>
+                        <printFailingErrors>true</printFailingErrors>
+                        <minimumTokens>75</minimumTokens>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>verify-pmd</id>
+                            <phase>pre-integration-test</phase>
+                            <goals>
+                                <goal>check</goal>
+                                <goal>cpd-check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>analyze</id>
+                            <goals>
+                                <goal>analyze-only</goal>
+                            </goals>
+                            <configuration>
+                                <ignoreNonCompile>true</ignoreNonCompile>
+                                <failOnWarning>true</failOnWarning>
+                                <outputXML>true</outputXML>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>fortify</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.fortify.ps.maven.plugin</groupId>
+                        <artifactId>sca-maven-plugin</artifactId>
+                        <version>4.20</version>
+                        <configuration>
+                            <buildId>AuthWeb-202404.0.0</buildId>
+                            <toplevelArtifactId>Auth</toplevelArtifactId>
+                            <failOnSCAError>true</failOnSCAError>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>sonar</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <sonar.host.url>http://quantum-sonar.temenosgroup.com</sonar.host.url>
+            </properties>
+        </profile>
+    </profiles>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.11.0</version>
+            </dependency>
+			<dependency>
+			<groupId>javax.validation</groupId>
+				<artifactId>validation-api</artifactId>
+				<version>2.0.1.Final</version>
+			</dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+</project>

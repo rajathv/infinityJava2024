@@ -1,0 +1,29 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon May 22 18:44:41 IST 2023
+@default-deployment-https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.lastUpdated=1684761267642
+https\://quantum-maven.temenosgroup.com/content/repositories/GA/.error=Could not transfer artifact org.forgerock.commons\:json-web-token\:jar\:2.2.3 from/to release-GA (https\://quantum-maven.temenosgroup.com/content/repositories/GA)\: Transfer failed for https\://quantum-maven.temenosgroup.com/content/repositories/GA/org/forgerock/commons/json-web-token/2.2.3/json-web-token-2.2.3.jar
+https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/.error=Could not transfer artifact org.forgerock.commons\:json-web-token\:jar\:2.2.3 from/to kony-nexus-thirdparty (https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/)\: Transfer failed for https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/org/forgerock/commons/json-web-token/2.2.3/json-web-token-2.2.3.jar
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\bulkpaymentservices/../../../maven-local-repo/.lastUpdated=1684761261583
+http\://www.soapui.org/repository/maven2/.lastUpdated=1684761264332
+@default-mBaaSQA-https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa/.lastUpdated=1684761264354
+@default-thirdparty-https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/.lastUpdated=1684761262220
+@default-dbx-https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1684761261566
+@default-release-GA-https\://quantum-maven.temenosgroup.com/content/repositories/GA/.lastUpdated=1684761264343
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.lastUpdated=1684761281337
+http\://maven.forgerock.org/repo/repo/.error=Could not transfer artifact org.forgerock.commons\:json-web-token\:jar\:2.2.3 from/to jwt-repository (http\://maven.forgerock.org/repo/repo)\: Authentication failed for http\://maven.forgerock.org/repo/repo/org/forgerock/commons/json-web-token/2.2.3/json-web-token-2.2.3.jar 401 Unauthorized
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=Could not transfer artifact org.forgerock.commons\:json-web-token\:jar\:2.2.3 from/to dbx (https\://quantum-maven.temenosgroup.com/content/repositories/dbx/)\: Transfer failed for https\://quantum-maven.temenosgroup.com/content/repositories/dbx/org/forgerock/commons/json-web-token/2.2.3/json-web-token-2.2.3.jar
+http\://www.soapui.org/repository/maven2/.error=
+@default-kony-nexus-thirdparty-https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/.lastUpdated=1684761267590
+http\://maven.temenosgroup.com/content/repositories/t24-releases/.error=
+http\://maven.temenosgroup.com/content/repositories/t24-snapshots/.lastUpdated=1684761265891
+https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa/.error=Could not transfer artifact org.forgerock.commons\:json-web-token\:jar\:2.2.3 from/to mBaaSQA (https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa)\: Transfer failed for https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa/org/forgerock/commons/json-web-token/2.2.3/json-web-token-2.2.3.jar
+https\://repo.maven.apache.org/maven2/.lastUpdated=1684761262209
+@default-QA-https\://quantum-maven.temenosgroup.com/content/repositories/QA/.lastUpdated=1684761267615
+http\://maven.temenosgroup.com/content/repositories/t24-snapshots/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\bulkpaymentservices/../../../maven-local-repo/.error=
+http\://maven.temenosgroup.com/content/repositories/t24-releases/.lastUpdated=1684761265139
+@default-jwt-repository-http\://maven.forgerock.org/repo/repo/.lastUpdated=1684761267546
+@default-release-QA-https\://quantum-maven.temenosgroup.com/content/repositories/QA/.lastUpdated=1684761262232
+https\://repo.maven.apache.org/maven2/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/QA/.error=Could not transfer artifact org.forgerock.commons\:json-web-token\:jar\:2.2.3 from/to QA (https\://quantum-maven.temenosgroup.com/content/repositories/QA)\: Transfer failed for https\://quantum-maven.temenosgroup.com/content/repositories/QA/org/forgerock/commons/json-web-token/2.2.3/json-web-token-2.2.3.jar
+@default-mBaaS-https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1684761261554

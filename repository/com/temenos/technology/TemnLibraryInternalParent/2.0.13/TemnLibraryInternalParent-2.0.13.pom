@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.temenos.technology</groupId>
+		<artifactId>TemnLibraryExternalParent</artifactId>
+		<version>2.0.13</version>
+	</parent>
+
+	<artifactId>TemnLibraryInternalParent</artifactId>
+	<packaging>pom</packaging>
+	<version>2.0.13</version>
+	<name>TemnLibraryInternalParent</name>
+
+	<description>
+		Parent project for all internal common library type projects. 
+	</description>
+
+	<!-- Properties -->
+	<properties>
+
+		<!-- Testing -->
+		<TestAnnotations.version>1.0.0</TestAnnotations.version>
+
+		<!-- have to be replicate in the pom.xml of TAFJMavenPlugin -->
+
+		<!-- TemnMonitorLib -->
+		<TemnMonitorLib.version>6.0.8</TemnMonitorLib.version>
+
+		<!-- TemnMonitor -->
+		<TemnMonitor.version>2.0.6</TemnMonitor.version>
+
+		<!-- Temn Cache -->
+		<TemnCache.version>4.0.5</TemnCache.version>
+
+		<!-- jWeb -->
+		<jWeb.version>2.0.4</jWeb.version>
+
+		<!-- jTPM -->
+		<jTPM.version>2.0.1</jTPM.version>
+
+		<!-- RestClient -->
+		<rest-client.version>2.0.2</rest-client.version>
+
+		<!-- Temn XACML -->
+		<TemnXacml.version>2.0.3</TemnXacml.version>
+
+		<!-- T24Email -->
+		<t24email.version>2.0.4</t24email.version>
+
+		<!-- T24Sms -->
+		<t24sms.version>2.0.1</t24sms.version>
+
+		<!-- MDAComposer -->
+		<MDA.version>2.1.1</MDA.version>
+
+		<!-- JbcSonar Plugin -->
+		<JbcSonarPlugin_jdk11.version>2.0.5</JbcSonarPlugin_jdk11.version>
+
+		<!-- TemnSecurity and TemnSecurityWeb -->
+		<TemnSecurity.version>2.0.8</TemnSecurity.version>
+
+		<!-- JMSInjector -->
+		<jmsinjector.version>2.0.6</jmsinjector.version>
+
+		<!-- SeatInjector -->
+		<seatinjector.version>2.0.1</seatinjector.version>
+
+		<!-- JarSigner -->
+		<jarsigner.version>2.0.1</jarsigner.version>
+
+		<!-- TemnValidation Lib -->
+		<TemnValidationLib.version>2.0.2</TemnValidationLib.version>
+		<ValidationResponseProvider.version>2.0.2</ValidationResponseProvider.version>
+
+		<!-- jRemote -->
+		<jremote.version>202210.0.0</jremote.version>
+
+		<!-- OFSML -->
+		<ofsml.version>21.0.6</ofsml.version>
+		<propertybag.version>19.0.3</propertybag.version>
+		<tcommon.version>19.0.3</tcommon.version>
+
+		<!-- TemnRulesEngine -->
+		<TemnRulesEngine.version>2.0.0</TemnRulesEngine.version>
+
+		<!-- TOCF -->
+		<tocfT24ra.version>202210.0.0</tocfT24ra.version>
+
+		<!-- TemnKafka -->
+		<TemnKafka.version>2.0.5</TemnKafka.version>
+
+		<!-- JWT/OpenID Connect Dependency -->
+		<TemnOidcAuthenticator.version>3.0.8</TemnOidcAuthenticator.version>
+
+		<!-- Secure Document Download -->
+		<TOCFDocXfer.version>22.0.0</TOCFDocXfer.version>
+
+		<!-- ejb-connector -->
+		<ejb-connector.version>2.0.11</ejb-connector.version>
+
+		<!-- TOCF TCS -->
+		<tocf.verion>1.5.2.47</tocf.verion>
+
+		<!-- TOCF Security -->
+		<tcsecurity.version>10.0.7</tcsecurity.version>
+
+		<!-- TOCF Channels -->
+		<tcchannels.version>1.5.2.62</tcchannels.version>
+
+		<!-- Useragent Cucumber -->
+		<useragent-cucumber.version>202110.0.0</useragent-cucumber.version>
+
+		<!-- Useragent Generic Java -->
+		<useragent-generic-java.version>22.0.8</useragent-generic-java.version>
+		
+		<t24-IF_IntegrationFlowService.version>202006.0.0</t24-IF_IntegrationFlowService.version>
+		
+		<!-- Microservice Framework -->
+    	<inboxOutbox.version>1.0.4</inboxOutbox.version>
+    				
+        <!-- TemnFeatureFlags -->
+		<TemnFeatureFlags.version>2.0.2</TemnFeatureFlags.version>
+		
+		<!-- TemnVault -->
+		<TemnVault.version>1.0.6</TemnVault.version>
+		
+		<!-- TemnClientAPI -->
+		<TemnClientAPI.version>1.0.1</TemnClientAPI.version>
+		
+	</properties>
+
+	<!-- Wide Dependency Management -->
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- Testing -->
+			<dependency>
+				<groupId>com.temenos.test</groupId>
+				<artifactId>TestAnnotations</artifactId>
+				<version>${TestAnnotations.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<!-- TemnMonitorLib -->
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>TemnMonitorLib</artifactId>
+				<version>${TemnMonitorLib.version}</version>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>TemnLogger</artifactId>
+				<version>${TemnMonitorLib.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>TemnMeter</artifactId>
+				<version>${TemnMonitorLib.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>TemnTracer</artifactId>
+				<version>${TemnMonitorLib.version}</version>
+			</dependency>
+
+			<!-- TemnMonitor -->
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>TemnMonitor</artifactId>
+				<version>${TemnMonitor.version}</version>
+			</dependency>
+
+			<!-- Temn Cache -->
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>TemnCache</artifactId>
+				<version>${TemnCache.version}</version>
+			</dependency>
+
+			<!-- jWeb -->
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>jWeb</artifactId>
+				<version>${jWeb.version}</version>
+			</dependency>
+
+			<!-- RestClient -->
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>Rest-client</artifactId>
+				<version>${rest-client.version}</version>
+			</dependency>
+
+			<!-- jTPM -->
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>jTPM</artifactId>
+				<version>${jTPM.version}</version>
+			</dependency>
+
+			<!-- Temn XACML -->
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>authz-decision-adapter</artifactId>
+				<version>${TemnXacml.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>authz-t24-external</artifactId>
+				<version>${TemnXacml.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>pap-model-transformer</artifactId>
+				<version>${TemnXacml.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>sms2xacml-generator</artifactId>
+				<version>${TemnXacml.version}</version>
+			</dependency>
+
+			<!-- T24Email -->
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>T24Email</artifactId>
+				<version>${t24email.version}</version>
+			</dependency>
+
+			<!-- T24Sms -->
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>T24Sms</artifactId>
+				<version>${t24sms.version}</version>
+			</dependency>
+
+			<!-- JbcSonar Plugin -->
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>JbcSonarPlugin_jdk8</artifactId>
+				<version>${JbcSonarPlugin_jdk8.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>JbcSonarPlugin_jdk11</artifactId>
+				<version>${JbcSonarPlugin_jdk11.version}</version>
+			</dependency>
+
+			<!-- MDAComposer -->
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>MDAComposer</artifactId>
+				<version>${MDA.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>MDARegistryEditor</artifactId>
+				<version>${MDA.version}</version>
+			</dependency>
+
+			<!-- TemnSecurity and TemnSecurityWeb -->
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>TemnSecurity</artifactId>
+				<version>${TemnSecurity.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>TemnSecurityWeb</artifactId>
+				<version>${TemnSecurity.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>TemnSecurityWeb</artifactId>
+				<classifier>classes</classifier>
+				<version>${TemnSecurity.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<!-- JMSInjector -->
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>JMSInjector</artifactId>
+				<version>${jmsinjector.version}</version>
+			</dependency>
+
+			<!-- SeatInjector -->
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>SeatInjector</artifactId>
+				<version>${seatinjector.version}</version>
+			</dependency>
+
+			<!-- JarSigner -->
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>JarSigner</artifactId>
+				<version>${jarsigner.version}</version>
+			</dependency>
+
+			<!-- TemnValidation Lib -->
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>TemnValidationLib</artifactId>
+				<version>${TemnValidationLib.version}</version>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>ValidationResponseProvider</artifactId>
+				<version>${ValidationResponseProvider.version}</version>
+			</dependency>
+
+			<!-- jRemote -->
+
+			<dependency>
+				<groupId>com.temenos</groupId>
+				<artifactId>jremote</artifactId>
+				<version>${jremote.version}</version>
+			</dependency>
+
+			<!-- OFSML -->
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>ofsml</artifactId>
+				<version>${ofsml.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>propertybag</artifactId>
+				<version>${propertybag.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>tcommon</artifactId>
+				<version>${tcommon.version}</version>
+			</dependency>
+
+			<!-- TemnRulesEngine -->
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>TemnRulesEngine</artifactId>
+				<version>${TemnRulesEngine.version}</version>
+			</dependency>
+
+			<!-- TOCF -->
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>tocfT24ra</artifactId>
+				<version>${tocfT24ra.version}</version>
+			</dependency>
+
+			<!-- TemnKafka -->
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>TemnKafka</artifactId>
+				<version>${TemnKafka.version}</version>
+				<type>rar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>TemnKafkaAdapter</artifactId>
+				<version>${TemnKafka.version}</version>
+			</dependency>
+
+			<!-- JWT/OpenID Connect Dependency -->
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>TemnOidcAuthenticator</artifactId>
+				<version>${TemnOidcAuthenticator.version}</version>
+			</dependency>
+
+			<!-- Secure Document Download -->
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>TOCFDocXfer</artifactId>
+				<version>${TOCFDocXfer.version}</version>
+			</dependency>
+
+			<!-- ejb-connector -->
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>ejb-connector</artifactId>
+				<version>${ejb-connector.version}</version>
+			</dependency>
+
+			<!-- TOCF TCS -->
+			<dependency>
+				<groupId>com.temenos.tocf.tcs</groupId>
+				<artifactId>tbrowser</artifactId>
+				<version>${tocf.verion}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.temenos.tocf.tcs</groupId>
+				<artifactId>tcclient</artifactId>
+				<version>${tocf.verion}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.temenos.tocf.tcs</groupId>
+				<artifactId>encryption</artifactId>
+				<version>${tocf.verion}</version>
+			</dependency>
+
+			<!-- TOCF Security -->
+			<dependency>
+				<groupId>com.temenos.tocf.tcs</groupId>
+				<artifactId>tcsecurity</artifactId>
+				<version>${tcsecurity.version}</version>
+			</dependency>
+
+			<!-- TOCF Channels -->
+			<dependency>
+				<groupId>com.temenos.tocf.tcs</groupId>
+				<artifactId>channels</artifactId>
+				<version>${tcchannels.version}</version>
+			</dependency>
+
+			<!-- Useragent Cucumber -->
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>useragent-cucumber</artifactId>
+				<version>${useragent-cucumber.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>useragent-cucumberTestbase</artifactId>
+				<version>${useragent-cucumber.version}</version>
+			</dependency>
+
+			<!-- Useragent Generic Java -->
+			<dependency>
+				<groupId>com.temenos.interaction</groupId>
+				<artifactId>useragent-generic-java</artifactId>
+				<version>${useragent-generic-java.version}</version>
+			</dependency>
+			
+			<!-- IF_IntegrationFlowService -->
+			<dependency>
+			   <groupId>com.temenos.t24.external.service.if_integrationflowservice.ws.client</groupId>
+			   <artifactId>t24-IF_IntegrationFlowService-IntegrationFlowServiceWS-jwc</artifactId>
+			   <version>${t24-IF_IntegrationFlowService.version}</version>
+    		</dependency>
+    		
+    		<!-- Inbox Outbox Libraries - Microservice Framework -->
+    		<dependency>
+    			<groupId>com.temenos.microservice.framework</groupId>
+    			<artifactId>commons-connect</artifactId>
+				<version>${inboxOutbox.version}</version>
+    		</dependency>
+    		
+    		<dependency>
+    			<groupId>com.temenos.microservice.framework</groupId>
+    			<artifactId>inbox-outbox</artifactId>
+				<version>${inboxOutbox.version}</version>
+    		</dependency>
+    		
+    		<dependency>
+    			<groupId>com.temenos.microservice</groupId>
+    			<artifactId>bianmapper</artifactId>
+				<version>${inboxOutbox.version}</version>
+    		</dependency>  
+    		
+    		<dependency>
+    			<groupId>com.temenos.microservice.framework</groupId>
+    			<artifactId>inboxOutbox</artifactId>
+				<version>${inboxOutbox.version}</version>
+    		</dependency>
+		 		    		
+    		<!-- TemnFeatureFlags -->
+    		<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>TemnFeatureFlags</artifactId>
+				<version>${TemnFeatureFlags.version}</version>
+			</dependency>		
+
+			<!-- TemnVault -->
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>TVaultClientLib</artifactId>
+				<version>${TemnVault.version}</version>
+			</dependency>
+			
+			<dependency>
+            	<groupId>com.temenos.technology</groupId>
+                <artifactId>TVaultAzureAdaptor</artifactId>
+                <version>${TemnVault.version}</version>
+            </dependency>
+			
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>TVaultEnvAdaptor</artifactId>
+				<version>${TemnVault.version}</version>
+				<scope>test</scope>
+			</dependency>	
+
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>TVaultPropAdaptor</artifactId>
+				<version>${TemnVault.version}</version>
+				<scope>test</scope>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.temenos.technology</groupId>
+				<artifactId>TemnClientAPI</artifactId>
+				<version>${TemnClientAPI.version}</version>
+			</dependency>
+			
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+	</build>
+
+</project>

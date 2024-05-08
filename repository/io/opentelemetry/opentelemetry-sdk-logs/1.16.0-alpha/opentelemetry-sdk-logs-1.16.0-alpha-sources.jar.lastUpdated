@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Jan 05 15:52:45 IST 2024
+@default-temenos-http\://maven.temenosgroup.com/content/repositories/temenos/.lastUpdated=1704450164419
+https\://repo.maven.apache.org/maven2/.lastUpdated=1704450165326
+@default-dbx-https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1704450164410
+http\://maven.temenosgroup.com/content/repositories/temenos/.error=Could not transfer artifact io.opentelemetry\:opentelemetry-sdk-logs\:jar\:sources\:1.16.0-alpha from/to temenos (http\://maven.temenosgroup.com/content/repositories/temenos/)\: maven.temenosgroup.com
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=Could not transfer artifact io.opentelemetry\:opentelemetry-sdk-logs\:jar\:sources\:1.16.0-alpha from/to dbx (https\://quantum-maven.temenosgroup.com/content/repositories/dbx)\: quantum-maven.temenosgroup.com

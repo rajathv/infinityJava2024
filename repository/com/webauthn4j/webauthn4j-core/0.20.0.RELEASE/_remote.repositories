@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Sat May 13 12:54:41 IST 2023
+webauthn4j-core-0.20.0.RELEASE-sources.jar>central=
+webauthn4j-core-0.20.0.RELEASE.jar>central=
+webauthn4j-core-0.20.0.RELEASE.pom>central=

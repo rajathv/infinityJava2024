@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon Jul 03 13:14:54 IST 2023
+bcpkix-jdk15on-1.57.jar>central=
+bcpkix-jdk15on-1.57-sources.jar>central=
+bcpkix-jdk15on-1.57.pom>central=

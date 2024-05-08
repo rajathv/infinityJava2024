@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon May 22 18:43:05 IST 2023
+infinity-api-commons-2023.04.01.jar>=
+infinity-api-commons-2023.04.01.jar>dbx=
+infinity-api-commons-2023.04.01.pom>dbx=

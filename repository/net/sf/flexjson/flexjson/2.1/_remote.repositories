@@ -1,0 +1,6 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Sep 07 14:19:30 IST 2023
+flexjson-2.1.jar>=
+flexjson-2.1-sources.jar>central=
+flexjson-2.1.jar>central=
+flexjson-2.1.pom>central=

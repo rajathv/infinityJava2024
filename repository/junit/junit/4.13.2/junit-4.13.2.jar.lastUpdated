@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri May 19 15:37:06 IST 2023
+https\://repo.maven.apache.org/maven2/.lastUpdated=1684490826022
+@default-dbx-https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1684490825171
+file\://C\:\\Users\\prakash.panigrahi\\OneDrive\ -\ Temenos\\Documents\\Temenos\\code\\eventmanager\\Fabric\\java\\batchprocessingalerts/../../../../maven-local-repo/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=Could not transfer artifact junit\:junit\:jar\:4.13.2 from/to dbx (https\://quantum-maven.temenosgroup.com/content/repositories/dbx)\: quantum-maven.temenosgroup.com
+file\://C\:\\Users\\prakash.panigrahi\\OneDrive\ -\ Temenos\\Documents\\Temenos\\code\\eventmanager\\Fabric\\java\\batchprocessingalerts/../../../../maven-local-repo/.lastUpdated=1684490825181

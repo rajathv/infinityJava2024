@@ -1,0 +1,289 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<groupId>com.kony.mfcommons</groupId>
+		<artifactId>mobilefabric-commons-parent-pom</artifactId>
+		<version>8.4.2.31</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.kony.middleware</groupId>
+	<artifactId>server</artifactId>
+<version>8.4.3.11</version>
+	<packaging>pom</packaging>
+	<name>Kony App Services</name>
+	<description>Kony App Services Maven Parent Project</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<springtest.version>3.1.0.RELEASE</springtest.version>
+		<Kony-Env>DEV</Kony-Env>
+		<label-name>MIDDLEWARE</label-name>
+<Kony-Base-Version>8.4</Kony-Base-Version>
+<Kony-Build-Version>3</Kony-Build-Version>
+<Kony-Patch-Version>11</Kony-Patch-Version>
+		<kony.dependencies.version>1.0.0</kony.dependencies.version>
+		<downloadapp.version>7.0.0.1</downloadapp.version>
+		<webcommons.version>7.2.0.QA_v201609231523_r1</webcommons.version>
+		<tc_artifacts.version>7.0.0.QA_v201508281512_r1</tc_artifacts.version>
+		<dataprocessorstub.version>7.0.0.2</dataprocessorstub.version>
+		<ning.runtime.version>1.9.31</ning.runtime.version>
+		<netty.runtime.version>3.10.5.Final</netty.runtime.version>
+		<timestamp>${maven.build.timestamp}</timestamp>
+		<maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
+		<build.version>${label-name}-${Kony-Env}-8.4.3_v${timestamp}_r11</build.version>
+		<plugin.version>8.4.3.${Kony-Env}_v${timestamp}_r11</plugin.version>
+		<middleware.test.groups>com.konylabs.middleware.category.PreCheckInTests,
+			com.konylabs.middleware.category.IntegrationTests,
+			com.konylabs.middleware.category.UnitTests
+		</middleware.test.groups>
+		<Build_DATE>Build DATE = ${timestamp}${line.separator}</Build_DATE>
+		<Build_Number>Build Number = ${label-name}-${Kony-Env}-${project.version}${line.separator}</Build_Number>
+		<key.store>C:\\konyjarsigner-key\\Kony_keystore</key.store>
+		<Fabric-Version>Fabric-Version = ${project.version}_${Kony-Env}</Fabric-Version>
+		<apache.poi.version>3.17</apache.poi.version>
+	</properties>
+
+	<modules>
+		<module>../CoapProxyServer</module>
+		<module>../middleware-legacy</module>
+		<module>../testutils</module>
+		<module>../TestFrameworkXML</module>
+		<module>../TestFramework</module>
+		<module>../middleware-js-engine</module>
+		<module>../Mapper</module>
+		<module>../servicemodel</module>
+		<module>../middleware-api</module>
+		<module>../middleware-commons</module>
+		<module>../middleware-db-commons</module>
+		<module>../middleware-tenancy</module>
+		<module>../middleware-web</module>
+		<module>../apps</module>
+		<module>../middleware-core</module>
+		<module>../mobilefabric-jobs</module>
+		<module>../middleware-events</module>
+		<module>../trunk</module>
+		<module>../serverdeployer</module>
+		<module>../serverconsole</module>
+		<module>../MWSyncTestSuite</module>
+	</modules>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<configuration>
+						<groups>${middleware.test.groups}</groups>
+						<argLine>-Dfile.encoding=${project.build.sourceEncoding} ${argLine}</argLine>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+				</plugin>
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>default-prepare-agent</id>
+							<goals>
+								<goal>prepare-agent</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>default-report</id>
+							<phase>prepare-package</phase>
+							<goals>
+								<goal>report</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>default-check</id>
+							<goals>
+								<goal>check</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-checkstyle-plugin</artifactId>
+					<configuration>
+						<logViolationsToConsole>true</logViolationsToConsole>
+						<includeTestSourceDirectory>true</includeTestSourceDirectory>
+						<configLocation>../checkstyle_checks.xml</configLocation>
+					</configuration>
+					<executions>
+						<execution>
+							<id>verify-style</id>
+							<phase>pre-integration-test</phase>
+							<goals>
+								<goal>check</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-pmd-plugin</artifactId>
+					<configuration>
+						<printFailingErrors>true</printFailingErrors>
+						<minimumTokens>75</minimumTokens>
+					</configuration>
+					<executions>
+						<execution>
+							<id>verify-pmd</id>
+							<phase>pre-integration-test</phase>
+							<goals>
+								<goal>check</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>analyze</id>
+							<goals>
+								<goal>analyze-only</goal>
+							</goals>
+							<configuration>
+								<ignoreNonCompile>true</ignoreNonCompile>
+								<failOnWarning>true</failOnWarning>
+								<outputXML>true</outputXML>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-antrun-plugin</artifactId>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>thirdparty</id>
+			<name>My releases</name>
+			<url>https://quantum-maven.temenosgroup.com/content/repositories/thirdparty</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>release-QA</id>
+			<name>My releases</name>
+			<url>https://quantum-maven.temenosgroup.com/content/repositories/QA</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>maven repo2</id>
+			<url>http://www.soapui.org/repository/maven2</url>
+		</repository>
+		<repository>
+			<id>release-GA</id>
+			<name>My releases</name>
+			<url>https://quantum-maven.temenosgroup.com/content/repositories/GA</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>mBaaS</id>
+			<name>mBaaS releases</name>
+			<url>https://quantum-maven.temenosgroup.com/content/repositories/mBaaS</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>mBaaSQA</id>
+			<name>mBaaS releases</name>
+			<url>https://quantum-maven.temenosgroup.com/content/repositories/cloudqa</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+	</repositories>
+
+	<!-- download plugins from this repo -->
+	<pluginRepositories>
+		<pluginRepository>
+			<id>release-QA</id>
+			<name>My releases</name>
+			<url>https://quantum-maven.temenosgroup.com/content/repositories/QA</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
+
+		<pluginRepository>
+			<id>release-GA</id>
+			<name>My releases</name>
+			<url>https://quantum-maven.temenosgroup.com/content/repositories/GA</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
+
+		<pluginRepository>
+			<id>mBaaS</id>
+			<name>mBaaS releases</name>
+			<url>https://quantum-maven.temenosgroup.com/content/repositories/mBaaS</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<distributionManagement>
+		<repository>
+			<id>deployment</id>
+			<name>Kony mBaaS nexus releases</name>
+			<url>https://quantum-maven.temenosgroup.com/content/repositories/mBaaS</url>
+		</repository>
+	</distributionManagement>
+
+	<profiles>
+		<profile>
+			<id>sonar</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<sonar.host.url>http://sonar.konylabs.net</sonar.host.url>
+				<sonar.exclusions>**/jms/*,**/jmx/**,**/devicecentral/**,**/siebel/*,**/sap/*,**/coap/**</sonar.exclusions>
+			</properties>
+		</profile>
+	</profiles>
+</project>

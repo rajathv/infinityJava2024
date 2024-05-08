@@ -1,0 +1,8 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue Apr 18 12:50:27 IST 2023
+https\://repo.maven.apache.org/maven2/.lastUpdated=1681802427550
+@default-dbx-https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1681802426426
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\eurobank_code\\eurobank_t24javacode_23\\Processors\\Common/lib/.error=
+https\://repo.maven.apache.org/maven2/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\eurobank_code\\eurobank_t24javacode_23\\Processors\\Common/lib/.lastUpdated=1681802426435
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=Could not transfer artifact com.kony.middleware\:middleware-commons\:jar\:javadoc\:9.1.0.1 from/to dbx (https\://quantum-maven.temenosgroup.com/content/repositories/dbx)\: quantum-maven.temenosgroup.com

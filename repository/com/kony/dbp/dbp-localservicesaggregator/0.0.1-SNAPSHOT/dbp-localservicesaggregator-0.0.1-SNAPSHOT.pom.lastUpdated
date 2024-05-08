@@ -1,0 +1,8 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed Mar 29 12:19:00 IST 2023
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\dbp-P2P-enrollment/../../../maven-local-repo/.lastUpdated=1680072540637
+@default-dbx-https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1680072540624
+file\://${project.basedir}/maven-local-repo/.lastUpdated=1680072539856
+file\://${project.basedir}/maven-local-repo/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=Could not transfer artifact com.kony.dbp\:dbp-localservicesaggregator\:pom\:0.0.1-SNAPSHOT from/to dbx (https\://quantum-maven.temenosgroup.com/content/repositories/dbx/)\: quantum-maven.temenosgroup.com
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\dbp-P2P-enrollment/../../../maven-local-repo/.error=

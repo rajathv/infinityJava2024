@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.temenos.technology</groupId>
+		<artifactId>TemnMonitorParent</artifactId>
+		<version>6.0.8</version>
+	</parent>
+
+	<artifactId>TemnLogger</artifactId>
+	<packaging>jar</packaging>
+
+	<description>Temenos Logger library to be used as common logging framework across product</description>
+
+	<url>http://catalogue.temenosgroup.com/${project.artifactId}</url>
+
+	<distributionManagement>
+		<site>
+			<name>DocumentServer</name>
+			<id>doc-server</id>
+			<url>scp://catalogue.temenosgroup.com/var/www/catalogue/${project.artifactId}/${project.version}</url>
+		</site>
+	</distributionManagement>
+
+	<ciManagement>
+		<url>http://utp-prodfactory.temenosgroup.com:8080/job/Common-Components-Factory/job/${project.artifactId}-GIT/</url>
+	</ciManagement>
+
+	<scm>
+		<developerConnection>scm:git:https://bitbucketdev1ha.temenos.com/scm/tch-com/temnlogger.git</developerConnection>
+		<url>https://bitbucketdev1ha.temenos.com/projects/TCH-COM/repos/temnlogger</url>
+	</scm>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>com.temenos.technology</groupId>
+			<artifactId>TemnMonitorLib</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+	<dependency>
+		<groupId>io.opentelemetry</groupId>
+		<artifactId>opentelemetry-sdk-testing</artifactId>
+		<scope>test</scope>
+	</dependency>
+
+
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-text</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.mashape.unirest</groupId>
+			<artifactId>unirest-java</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit-ext</groupId>
+			<artifactId>junit-ext-1.0-junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/src/site/markdown/imported</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${basedir}/../src/site/markdown/</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>net.nicoulaj.maven.plugins</groupId>
+				<artifactId>checksum-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>files</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<failIfNoTargets>false</failIfNoTargets>
+					<failIfNoFiles>false</failIfNoFiles>
+					<failOnError>true</failOnError>
+					<csvSummary>false</csvSummary>
+					<individualFiles>false</individualFiles>
+					<xmlSummary>true</xmlSummary>
+					<algorithms>
+						<algorithm>SHA-1</algorithm>
+						<algorithm>SHA-256</algorithm>
+						<algorithm>SHA-512</algorithm>
+					</algorithms>
+					<fileSets>
+						<fileSet>
+							<directory>${project.build.directory}</directory>
+							<includes>
+								<include>*.jar</include>
+							</includes>
+						</fileSet>
+					</fileSets>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<developers>
+		<developer>
+			<id>haubert</id>
+			<name>Herve Aubert</name>
+			<email>haubert@temenos.com</email>
+			<url>newmysite.temenos.com/Person.aspx?accountname=temenosgroup%5Chaubert</url>
+			<roles>
+				<role>Product Manager</role>
+				<role>Architect</role>
+				<role>Developer</role>
+			</roles>
+			<timezone>America/New_York</timezone>
+			<properties>
+				<picUrl>http://newmysite.temenos.com/User%20Photos/Profile%20Pictures/haubert_LThumb.jpg?t=63588885703</picUrl>
+			</properties>
+		</developer>
+		<developer>
+			<id>dhanyaj</id>
+			<name>Dhanya Janardhanan</name>
+			<email>dhanyaj@temenos.com</email>
+			<url>newmysite.temenos.com/Person.aspx?accountname=temenosgroup%dhanyaj</url>
+			<roles>
+				<role>architect</role>
+			</roles>
+			<timezone>America/New_York</timezone>
+			<properties>
+				<picUrl>http://newmysite.temenos.com/User%20Photos/Profile%20Pictures/dhanyaj_LThumb.jpg?t=63588885703</picUrl>
+			</properties>
+		</developer>
+
+	</developers>
+
+</project>

@@ -1,0 +1,19 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon Jul 10 19:39:49 IST 2023
+https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/.error=
+http\://www.soapui.org/repository/maven2/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/GA/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/QA/.lastUpdated=1688998185409
+http\://www.soapui.org/repository/maven2/.lastUpdated=1688998187529
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1688998184110
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\forexservices/../../../maven-local-repo/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa/.lastUpdated=1688998188242
+https\://repo.maven.apache.org/maven2/.lastUpdated=1688998184735
+https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/.lastUpdated=1688998185043
+https\://quantum-maven.temenosgroup.com/content/repositories/GA/.lastUpdated=1688998187869
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.lastUpdated=1688998189085
+https\://repo.maven.apache.org/maven2/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\forexservices/../../../maven-local-repo/.lastUpdated=1688998184119
+https\://quantum-maven.temenosgroup.com/content/repositories/QA/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=

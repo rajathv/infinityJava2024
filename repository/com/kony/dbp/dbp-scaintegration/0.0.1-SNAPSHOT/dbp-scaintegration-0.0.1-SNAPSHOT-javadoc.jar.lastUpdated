@@ -1,0 +1,8 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue May 07 15:39:28 AST 2024
+@default-dbx-https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1715085214528
+file\:///Users/ijarahtestmac/Developer/Fabric/java/DBPMFAServices/../../../../maven-local-repo/.error=
+file\:///Users/ijarahtestmac/Developer/Fabric/java/DBPMFAServices/../../../../maven-local-repo/.lastUpdated=1715085568858
+file\:///Users/ijarahtestmac/Developer/Fabric/java/dbp-authservices/../maven-local-repo/.error=
+file\:///Users/ijarahtestmac/Developer/Fabric/java/dbp-authservices/../maven-local-repo/.lastUpdated=1715085568030
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=Could not transfer artifact com.kony.dbp\:dbp-scaintegration\:jar\:javadoc\:0.0.1-SNAPSHOT from/to dbx (https\://quantum-maven.temenosgroup.com/content/repositories/dbx/)\: quantum-maven.temenosgroup.com

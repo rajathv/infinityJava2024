@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon May 22 18:43:07 IST 2023
+junit-3.8.1-sources.jar>=
+junit-3.8.1-sources.jar>central=
+junit-3.8.1.pom>central=
+junit-3.8.1.jar>central=
+junit-3.8.1.jar>=

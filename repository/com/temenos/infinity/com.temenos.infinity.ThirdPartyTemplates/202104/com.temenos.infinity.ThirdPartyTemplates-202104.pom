@@ -1,0 +1,248 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.temenos.infinity</groupId>
+	<artifactId>com.temenos.infinity.ThirdPartyTemplates</artifactId>
+	<version>202104</version>
+	<name>Infinity Digital Banking Templates</name>
+	<description>Infinity Digital Banking integration templates</description>
+
+	<packaging>pom</packaging>
+
+	<properties>
+		<template.version>202104</template.version>
+		<maven-jar-plugin>3.1.0</maven-jar-plugin>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+		<apache.commonslang.version>2.6</apache.commonslang.version>
+		<apache.commonslang3.version>3.7</apache.commonslang3.version>
+		<apache.httpclient.version>4.5.5</apache.httpclient.version>
+		<hamcrest.version>1.3</hamcrest.version>
+		<json.version>20160212</json.version>
+		<junit.jupiter.version>5.2.0</junit.jupiter.version>
+		<junit.platform.version>1.2.0</junit.platform.version>
+		<!-- konyfabric.version>8.2.1.1</konyfabric.version-->
+		<middleware.version>8.4.3.8</middleware.version>
+		<log4j.version>1.2.17</log4j.version>
+		<maven.surefire.version>2.22.0</maven.surefire.version>
+		<maven.failsafe.version>2.22.0</maven.failsafe.version>
+		<maven.antrun.version>1.8</maven.antrun.version>
+		<maven.assembly.version>3.1.0</maven.assembly.version>
+		<unirest.version>1.4.9</unirest.version>
+		<gson-version>2.6.2</gson-version>
+		<dbp.framework.version>2020.10.00</dbp.framework.version>
+		<infinity.commons.version>2020.07.00</infinity.commons.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.kony.dbp</groupId>
+			<artifactId>DBPFramework</artifactId>
+			<version>${dbp.framework.version}</version>
+		</dependency>
+		<dependency>
+				<groupId>com.temenos.infinity</groupId>
+				<artifactId>infinity-api-commons</artifactId>
+				<version>${infinity.commons.version}</version>
+			</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${apache.commonslang3.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>${json.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.kony.middleware</groupId>
+			<artifactId>middleware-commons</artifactId>
+			<version>${middleware.version}</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/middleware-commons-8.4.3.8.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.kony.middleware</groupId>
+			<artifactId>middleware-api</artifactId>
+			<version>${middleware.version}</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/middleware-api-8.4.3.8.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.kony.middleware</groupId>
+			<artifactId>middleware-core</artifactId>
+			<version>${middleware.version}</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/middleware-core-8.4.3.8.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>com.mashape.unirest</groupId>
+			<artifactId>unirest-java</artifactId>
+			<version>${unirest.version}</version>
+		</dependency>
+
+		<!-- The following dependencies are needed for unit testing -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>${junit.jupiter.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-params</artifactId>
+			<version>${junit.jupiter.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-launcher</artifactId>
+			<version>${junit.platform.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-runner</artifactId>
+			<version>${junit.platform.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-all</artifactId>
+			<version>${hamcrest.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>${apache.commonslang.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>${apache.httpclient.version}</version>
+		</dependency>
+		<dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>27.1-jre</version>
+        </dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>${gson-version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<modules>
+		<module>Common</module>
+		<module>Temenos</module>
+	</modules>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+        		<groupId>org.apache.maven.plugins</groupId>
+        		<artifactId>maven-jar-plugin</artifactId>
+        		<version>${maven-jar-plugin}</version>
+        		<configuration>
+          			<archive>
+            			<manifestEntries>
+              				<template-version>${project.version}</template-version>
+            			</manifestEntries>
+          			</archive>
+        		</configuration>
+      		</plugin>
+				<!-- Maven Assembly Plugin to handle the template distribution build 
+					process -->
+				<plugin>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>${maven.assembly.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<plugins>
+
+			<!-- Set the supported Java version to 1.8 -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.7.0</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+
+			<!-- Maven Surefire Plugin to handle Unit Testing -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven.surefire.version}</version>
+				<configuration>
+					<additionalClasspathElement>/Users/timb/Documents/workspace/commons-lang3-3.7.jar</additionalClasspathElement>
+					<redirectTestOutputToFile>true</redirectTestOutputToFile>
+				</configuration>
+			</plugin>
+
+			<!-- Maven Failsafe Plugin to handle Integration Testing -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>${maven.failsafe.version}</version>
+				<executions>
+					<execution>
+						<id>Integration Tests</id>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Maven Ant-run Plugin to handle deployment of services to test system 
+				for integration testing -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>${maven.antrun.version}</version>
+			</plugin>
+		</plugins>
+	</build>
+	<repositories>
+		<repository>
+			<id>dbx</id>
+			<name>dbx releases</name>
+			<url>https://quantum-maven.temenosgroup.com/content/repositories/dbx</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>dbp-productservices</id>
+			<name>dbp-productservices</name>
+			<url>file://${basedir}/lib/</url>
+		</repository>
+	</repositories>
+</project>

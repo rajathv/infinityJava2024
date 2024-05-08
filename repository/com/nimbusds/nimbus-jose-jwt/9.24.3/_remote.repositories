@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon May 22 18:43:09 IST 2023
+nimbus-jose-jwt-9.24.3.jar>=
+nimbus-jose-jwt-9.24.3.pom>central=
+nimbus-jose-jwt-9.24.3.jar>central=
+nimbus-jose-jwt-9.24.3-sources.jar>=
+nimbus-jose-jwt-9.24.3-sources.jar>central=

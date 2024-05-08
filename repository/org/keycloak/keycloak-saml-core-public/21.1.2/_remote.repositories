@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Sep 07 14:21:33 IST 2023
+keycloak-saml-core-public-21.1.2-sources.jar>central=
+keycloak-saml-core-public-21.1.2.jar>central=
+keycloak-saml-core-public-21.1.2.pom>central=

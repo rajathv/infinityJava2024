@@ -1,0 +1,17 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Feb 09 12:13:31 IST 2024
+b5347df9825f8edec0f94ca3b8f2ddec531f781b@default-temenos-http\://maven.temenosgroup.com/content/repositories/temenos/.lastUpdated=1707461011732
+http\://maven.temenosgroup.com/content/repositories/connect-dev/.error=Could not transfer artifact com.kony.dbp\:eum-prservices\:pom\:0.0.1-SNAPSHOT from/to connect-dev (http\://maven.temenosgroup.com/content/repositories/connect-dev/)\: maven.temenosgroup.com
+@default-odyssey-group.com-http\://maven.temenosgroup.com/content/groups/odyssey/.lastUpdated=1707461011973
+http\://maven.temenosgroup.com/content/groups/odyssey/.error=Could not transfer artifact com.kony.dbp\:eum-prservices\:pom\:0.0.1-SNAPSHOT from/to odyssey-group.com (http\://maven.temenosgroup.com/content/groups/odyssey)\: maven.temenosgroup.com
+http\://maven.temenosgroup.com/content/repositories/temenos/.error=Could not transfer artifact com.kony.dbp\:eum-prservices\:pom\:0.0.1-SNAPSHOT from/to temenos (http\://maven.temenosgroup.com/content/repositories/temenos/)\: maven.temenosgroup.com
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.error=Could not transfer artifact com.kony.dbp\:eum-prservices\:pom\:0.0.1-SNAPSHOT from/to mbaas (https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/)\: quantum-maven.temenosgroup.com
+@default-nexus-t24-rep-http\://maven.temenosgroup.com/content/groups/all/.lastUpdated=1707461011760
+http\://maven.temenosgroup.com/content/groups/all/.error=Could not transfer artifact com.kony.dbp\:eum-prservices\:pom\:0.0.1-SNAPSHOT from/to nexus-t24-rep (http\://maven.temenosgroup.com/content/groups/all/)\: maven.temenosgroup.com
+4da02cbbf60789de74c2811269f30c95d0d1608f@default-connect-dev-http\://maven.temenosgroup.com/content/repositories/connect-dev/.lastUpdated=1707461011940
+@default-mbaas-https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.lastUpdated=1707461011796
+@default-dbx-https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1707461011718
+file\://${project.basedir}/../maven-local-repo/.lastUpdated=1707461011663
+file\://${project.basedir}/../maven-local-repo/.error=
+@default-temenos-group.com-http\://maven.temenosgroup.com/content/groups/odyssey/.lastUpdated=1707461011786
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=Could not transfer artifact com.kony.dbp\:eum-prservices\:pom\:0.0.1-SNAPSHOT from/to dbx (https\://quantum-maven.temenosgroup.com/content/repositories/dbx/)\: quantum-maven.temenosgroup.com

@@ -1,0 +1,8 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue Jan 24 11:08:53 IST 2023
+@default-central-https\://repo.maven.apache.org/maven2/.lastUpdated=1674538733866
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\DBPBusinessBankingServices/../../../maven-local-repo/.lastUpdated=1674538725543
+https\://repo.maven.apache.org/maven2/.error=Could not transfer artifact com.itextpdf\:io\:jar\:sources\:7.2.2 from/to central (https\://repo.maven.apache.org/maven2)\: The operation was cancelled.
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1674538725535
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\DBPBusinessBankingServices/../../../maven-local-repo/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=

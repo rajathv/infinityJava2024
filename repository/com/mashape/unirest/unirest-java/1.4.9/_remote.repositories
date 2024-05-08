@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon May 22 18:44:07 IST 2023
+unirest-java-1.4.9-sources.jar>central=
+unirest-java-1.4.9.jar>central=
+unirest-java-1.4.9-sources.jar>=
+unirest-java-1.4.9.jar>=
+unirest-java-1.4.9.pom>central=

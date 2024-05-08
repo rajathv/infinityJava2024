@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon May 22 18:43:05 IST 2023
+curvesapi-1.07.jar>=
+curvesapi-1.07-sources.jar>=
+curvesapi-1.07.pom>central=
+curvesapi-1.07.jar>central=
+curvesapi-1.07-sources.jar>central=

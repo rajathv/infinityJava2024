@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Sat May 13 12:55:32 IST 2023
+jaxws-api-2.3.1.jar>central=
+jaxws-api-2.3.1.pom>central=
+jaxws-api-2.3.1-sources.jar>central=

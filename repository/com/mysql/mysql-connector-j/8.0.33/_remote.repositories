@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Sep 07 14:19:22 IST 2023
+mysql-connector-j-8.0.33.jar>central=
+mysql-connector-j-8.0.33.pom>central=
+mysql-connector-j-8.0.33-sources.jar>central=

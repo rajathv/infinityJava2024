@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Sat Apr 15 18:02:40 IST 2023
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\dbp-authservices/../maven-local-repo/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1681561960532
+@default-central-https\://repo.maven.apache.org/maven2/.lastUpdated=1681561814350
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\dbp-authservices/../maven-local-repo/.lastUpdated=1681561721226
+https\://repo.maven.apache.org/maven2/.error=Could not transfer artifact com.temenos.infinity\:infinity-authtoken-manager\:pom\:2023.04.00 from/to central (https\://repo.maven.apache.org/maven2)\: Transfer failed for https\://repo.maven.apache.org/maven2/com/temenos/infinity/infinity-authtoken-manager/2023.04.00/infinity-authtoken-manager-2023.04.00.pom

@@ -1,0 +1,21 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon Jul 10 19:40:31 IST 2023
+https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/.error=
+http\://www.soapui.org/repository/maven2/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/GA/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/QA/.lastUpdated=1688998231119
+http\://www.soapui.org/repository/maven2/.lastUpdated=1688998228267
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1688998224790
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\forexservices/../../../maven-local-repo/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa/.lastUpdated=1688998229072
+https\://repo.maven.apache.org/maven2/.lastUpdated=1688998225475
+https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/.lastUpdated=1688998225826
+https\://quantum-maven.temenosgroup.com/content/repositories/GA/.lastUpdated=1688998228658
+@default-jwt-repository-http\://maven.forgerock.org/repo/repo/.lastUpdated=1688998230744
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.lastUpdated=1688998231880
+https\://repo.maven.apache.org/maven2/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\forexservices/../../../maven-local-repo/.lastUpdated=1688998224803
+https\://quantum-maven.temenosgroup.com/content/repositories/QA/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=
+http\://maven.forgerock.org/repo/repo/.error=Could not transfer artifact com.kony.mfcommons\:mobilefabric-commons-jersey-pom\:pom\:9.1.0.19 from/to jwt-repository (http\://maven.forgerock.org/repo/repo)\: Authentication failed for http\://maven.forgerock.org/repo/repo/com/kony/mfcommons/mobilefabric-commons-jersey-pom/9.1.0.19/mobilefabric-commons-jersey-pom-9.1.0.19.pom 401 Unauthorized

@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon May 22 18:44:48 IST 2023
+json-20220924.jar>central=
+json-20220924-sources.jar>=
+json-20220924.pom>central=
+json-20220924.jar>=
+json-20220924-sources.jar>central=

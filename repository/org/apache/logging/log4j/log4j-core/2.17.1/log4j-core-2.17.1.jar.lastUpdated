@@ -1,0 +1,9 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon May 22 18:43:46 IST 2023
+https\://repo.maven.apache.org/maven2/.lastUpdated=1684761226578
+@default-dbx-https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1684761225438
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.error=Could not transfer artifact org.apache.logging.log4j\:log4j-core\:jar\:2.17.1 from/to mBaaS (https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS)\: Transfer failed for https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/org/apache/logging/log4j/log4j-core/2.17.1/log4j-core-2.17.1.jar
+@default-mBaaS-https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.lastUpdated=1684761225456
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\forexservices/../../../maven-local-repo/.lastUpdated=1684761225473
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\forexservices/../../../maven-local-repo/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=Could not transfer artifact org.apache.logging.log4j\:log4j-core\:jar\:2.17.1 from/to dbx (https\://quantum-maven.temenosgroup.com/content/repositories/dbx/)\: Transfer failed for https\://quantum-maven.temenosgroup.com/content/repositories/dbx/org/apache/logging/log4j/log4j-core/2.17.1/log4j-core-2.17.1.jar

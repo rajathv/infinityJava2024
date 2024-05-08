@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Jan 05 15:52:59 IST 2024
+@default-temenos-http\://maven.temenosgroup.com/content/repositories/temenos/.lastUpdated=1704450179227
+https\://repo.maven.apache.org/maven2/.lastUpdated=1704450179814
+@default-dbx-https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1704450179217
+http\://maven.temenosgroup.com/content/repositories/temenos/.error=Could not transfer artifact org.objenesis\:objenesis\:jar\:sources\:3.1 from/to temenos (http\://maven.temenosgroup.com/content/repositories/temenos/)\: maven.temenosgroup.com
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=Could not transfer artifact org.objenesis\:objenesis\:jar\:sources\:3.1 from/to dbx (https\://quantum-maven.temenosgroup.com/content/repositories/dbx)\: quantum-maven.temenosgroup.com

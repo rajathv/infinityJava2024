@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Jan 13 18:15:31 IST 2023
+mssql-jdbc-6.4.0.jre8.jar>central=
+mssql-jdbc-6.4.0.jre8-sources.jar>central=
+mssql-jdbc-6.4.0.jre8.pom>central=

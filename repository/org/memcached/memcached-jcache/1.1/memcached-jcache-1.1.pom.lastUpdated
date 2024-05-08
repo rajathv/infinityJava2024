@@ -1,0 +1,25 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon Jul 10 19:42:31 IST 2023
+https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/.error=Could not transfer artifact org.memcached\:memcached-jcache\:pom\:1.1 from/to thirdparty (https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty)\: quantum-maven.temenosgroup.com
+https\://quantum-maven.temenosgroup.com/content/repositories/GA/.error=Could not transfer artifact org.memcached\:memcached-jcache\:pom\:1.1 from/to release-GA (https\://quantum-maven.temenosgroup.com/content/repositories/GA)\: quantum-maven.temenosgroup.com
+http\://www.soapui.org/repository/maven2/.lastUpdated=1688127083048
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\ArtifactsManager/../../../maven-local-repo/.lastUpdated=1688127080813
+@default-mBaaSQA-https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa/.lastUpdated=1688127083060
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1688998350809
+@default-thirdparty-https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/.lastUpdated=1688127081249
+@default-release-GA-https\://quantum-maven.temenosgroup.com/content/repositories/GA/.lastUpdated=1688127083054
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.lastUpdated=1688998351305
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\DBPCommonUtilityServices/maven-local-repo/.lastUpdated=1688127081239
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\ArtifactsManager/../../../maven-local-repo/.error=
+http\://www.soapui.org/repository/maven2/.error=
+@default-TemenosT24Releases-http\://maven.temenosgroup.com/content/repositories/t24-releases/.lastUpdated=1688127083075
+http\://maven.temenosgroup.com/content/repositories/t24-releases/.error=Could not transfer artifact org.memcached\:memcached-jcache\:pom\:1.1 from/to TemenosT24Releases (http\://maven.temenosgroup.com/content/repositories/t24-releases/)\: maven.temenosgroup.com
+https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa/.error=Could not transfer artifact org.memcached\:memcached-jcache\:pom\:1.1 from/to mBaaSQA (https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa)\: quantum-maven.temenosgroup.com
+https\://repo.maven.apache.org/maven2/.lastUpdated=1688127081199
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\DBPCommonUtilityServices/maven-local-repo/.error=
+http\://maven.temenosgroup.com/content/repositories/t24-snapshots/.error=Could not transfer artifact org.memcached\:memcached-jcache\:pom\:1.1 from/to TemenosT24Snapshots (http\://maven.temenosgroup.com/content/repositories/t24-snapshots/)\: maven.temenosgroup.com
+@default-TemenosT24Snapshots-http\://maven.temenosgroup.com/content/repositories/t24-snapshots/.lastUpdated=1688127083081
+@default-release-QA-https\://quantum-maven.temenosgroup.com/content/repositories/QA/.lastUpdated=1688127081258
+https\://repo.maven.apache.org/maven2/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/QA/.error=Could not transfer artifact org.memcached\:memcached-jcache\:pom\:1.1 from/to release-QA (https\://quantum-maven.temenosgroup.com/content/repositories/QA)\: quantum-maven.temenosgroup.com

@@ -1,0 +1,6 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Jan 05 16:08:28 IST 2024
+@default-temenos-http\://maven.temenosgroup.com/content/repositories/temenos/.lastUpdated=1704451108919
+@default-dbx-https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1704451108911
+http\://maven.temenosgroup.com/content/repositories/temenos/.error=Could not transfer artifact com.kony.adminconsole\:AdminConsoleSCAServices\:jar\:javadoc\:0.0.1-SNAPSHOT from/to temenos (http\://maven.temenosgroup.com/content/repositories/temenos/)\: maven.temenosgroup.com
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=Could not transfer artifact com.kony.adminconsole\:AdminConsoleSCAServices\:jar\:javadoc\:0.0.1-SNAPSHOT from/to dbx (https\://quantum-maven.temenosgroup.com/content/repositories/dbx)\: quantum-maven.temenosgroup.com

@@ -1,0 +1,6 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Jun 30 19:18:01 IST 2023
+maven-shared-utils-0.7.jar>central=
+maven-shared-utils-0.7.jar>apache=
+maven-shared-utils-0.7.pom>central=
+maven-shared-utils-0.7.pom>apache=

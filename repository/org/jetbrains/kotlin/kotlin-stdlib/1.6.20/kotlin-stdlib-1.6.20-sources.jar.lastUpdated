@@ -1,0 +1,17 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Feb 09 12:04:40 IST 2024
+http\://maven.temenosgroup.com/content/repositories/connect-dev/.error=Could not transfer artifact org.jetbrains.kotlin\:kotlin-stdlib\:jar\:sources\:1.6.20 from/to connect-dev (http\://maven.temenosgroup.com/content/repositories/connect-dev/)\: maven.temenosgroup.com
+b5347df9825f8edec0f94ca3b8f2ddec531f781b@default-temenos-http\://maven.temenosgroup.com/content/repositories/temenos/.lastUpdated=1707460479804
+@default-odyssey-group.com-http\://maven.temenosgroup.com/content/groups/odyssey/.lastUpdated=1707460479797
+http\://maven.temenosgroup.com/content/groups/odyssey/.error=Could not transfer artifact org.jetbrains.kotlin\:kotlin-stdlib\:jar\:sources\:1.6.20 from/to odyssey-group.com (http\://maven.temenosgroup.com/content/groups/odyssey)\: maven.temenosgroup.com
+http\://maven.temenosgroup.com/content/repositories/temenos/.error=Could not transfer artifact org.jetbrains.kotlin\:kotlin-stdlib\:jar\:sources\:1.6.20 from/to temenos (http\://maven.temenosgroup.com/content/repositories/temenos)\: maven.temenosgroup.com
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.error=Could not transfer artifact org.jetbrains.kotlin\:kotlin-stdlib\:jar\:sources\:1.6.20 from/to mbaas (https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/)\: quantum-maven.temenosgroup.com
+@default-nexus-t24-rep-http\://maven.temenosgroup.com/content/groups/all/.lastUpdated=1707460479818
+4da02cbbf60789de74c2811269f30c95d0d1608f@default-connect-dev-http\://maven.temenosgroup.com/content/repositories/connect-dev/.lastUpdated=1707460479790
+http\://maven.temenosgroup.com/content/groups/all/.error=Could not transfer artifact org.jetbrains.kotlin\:kotlin-stdlib\:jar\:sources\:1.6.20 from/to nexus-t24-rep (http\://maven.temenosgroup.com/content/groups/all/)\: maven.temenosgroup.com
+@default-mbaas-https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.lastUpdated=1707460479783
+https\://repo.maven.apache.org/maven2/.lastUpdated=1707460480332
+http\://maven.temenosgroup.com/content/repositories/t24-snapshots/.error=Could not transfer artifact org.jetbrains.kotlin\:kotlin-stdlib\:jar\:sources\:1.6.20 from/to temenos-group.com (http\://maven.temenosgroup.com/content/repositories/t24-snapshots)\: maven.temenosgroup.com
+@default-dbx-https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1707460479775
+@default-temenos-group.com-http\://maven.temenosgroup.com/content/repositories/t24-snapshots/.lastUpdated=1707460479811
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=Could not transfer artifact org.jetbrains.kotlin\:kotlin-stdlib\:jar\:sources\:1.6.20 from/to dbx (https\://quantum-maven.temenosgroup.com/content/repositories/dbx)\: quantum-maven.temenosgroup.com

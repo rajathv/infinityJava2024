@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Jan 05 15:53:03 IST 2024
+@default-temenos-http\://maven.temenosgroup.com/content/repositories/temenos/.lastUpdated=1704450182164
+https\://repo.maven.apache.org/maven2/.lastUpdated=1704450183085
+@default-dbx-https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1704450182153
+http\://maven.temenosgroup.com/content/repositories/temenos/.error=Could not transfer artifact org.javassist\:javassist\:jar\:sources\:3.27.0-GA from/to temenos (http\://maven.temenosgroup.com/content/repositories/temenos/)\: maven.temenosgroup.com
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=Could not transfer artifact org.javassist\:javassist\:jar\:sources\:3.27.0-GA from/to dbx (https\://quantum-maven.temenosgroup.com/content/repositories/dbx)\: quantum-maven.temenosgroup.com

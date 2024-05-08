@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.temenos.technology</groupId>
+		<artifactId>TemnMonitorParent</artifactId>
+		<version>5.0.3-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>TemnTracer</artifactId>
+	<packaging>jar</packaging>
+
+	<description>Temenos Tracer library to be used as common tracing framework across product</description>
+
+	<url>http://catalogue.temenosgroup.com/${project.artifactId}</url>
+
+	<distributionManagement>
+		<site>
+			<name>DocumentServer</name>
+			<id>doc-server</id>
+			<url>scp://catalogue.temenosgroup.com/var/www/catalogue/${project.artifactId}/${project.version}</url>
+		</site>
+	</distributionManagement>
+
+	<ciManagement>
+		<url>http://utp-prodfactory.temenosgroup.com:8080/job/Common-Components-Factory/job/${project.artifactId}-GIT/</url>
+	</ciManagement>
+
+	<scm>
+		<developerConnection>scm:git:https://bitbucketdev1ha.temenos.com/scm/tch-com/temntracer.git</developerConnection>
+		<url>https://bitbucketdev1ha.temenos.com/projects/TCH-COM/repos/temntracer</url>
+	</scm>
+
+	<properties>
+		<minimum.code.coverage>0.50</minimum.code.coverage>
+		<javax.jms-api.version>2.0</javax.jms-api.version>
+
+		<mockito-core.version>4.1.0</mockito-core.version>
+		<activemq-client.version>5.16.1</activemq-client.version>
+		<mockrunner.version>2.0.6</mockrunner.version>
+		<commons-logging.version>1.2</commons-logging.version>
+	</properties>
+
+
+	<dependencies>
+
+		<dependency>
+			<groupId>com.temenos.technology</groupId>
+			<artifactId>TemnLogger</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.temenos.technology</groupId>
+			<artifactId>TemnMonitorLib</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.jms</groupId>
+			<artifactId>javax.jms-api</artifactId>
+			<version>${javax.jms-api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-client</artifactId>
+			<version>${activemq-client.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>${mockito-core.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.mockrunner</groupId>
+			<artifactId>mockrunner-jms</artifactId>
+			<version>${mockrunner.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+
+
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>${commons-logging.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>net.nicoulaj.maven.plugins</groupId>
+				<artifactId>checksum-maven-plugin</artifactId>
+				<version>1.9</version>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>files</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<failIfNoTargets>false</failIfNoTargets>
+					<failIfNoFiles>false</failIfNoFiles>
+					<failOnError>true</failOnError>
+					<csvSummary>false</csvSummary>
+					<individualFiles>false</individualFiles>
+					<xmlSummary>true</xmlSummary>
+					<algorithms>
+						<algorithm>SHA-1</algorithm>
+						<algorithm>SHA-256</algorithm>
+						<algorithm>SHA-512</algorithm>
+					</algorithms>
+					<fileSets>
+						<fileSet>
+							<directory>${project.build.directory}</directory>
+							<includes>
+								<include>*.jar</include>
+							</includes>
+						</fileSet>
+					</fileSets>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>
+								${project.build.directory}/libs
+							</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+
+
+	<developers>
+		<developer>
+			<id>haubert</id>
+			<name>Herve Aubert</name>
+			<email>haubert@temenos.com</email>
+			<url>newmysite.temenos.com/Person.aspx?accountname=temenosgroup%5Chaubert</url>
+			<roles>
+				<role>architect</role>
+			</roles>
+		</developer>
+	</developers>
+
+</project>

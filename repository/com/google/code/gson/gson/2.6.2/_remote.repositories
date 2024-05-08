@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue Jan 24 11:08:41 IST 2023
+gson-2.6.2.jar>central=
+gson-2.6.2-sources.jar>central=
+gson-2.6.2.pom>central=

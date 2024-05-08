@@ -1,0 +1,8 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Jan 18 17:37:21 IST 2024
+middleware-api-9.7.0.0-javadoc.jar>=
+middleware-api-9.7.0.0-javadoc.jar>central=
+middleware-api-9.7.0.0.jar>=
+middleware-api-9.7.0.0.jar>central=
+middleware-api-9.7.0.0.pom>mbaas=
+middleware-api-9.7.0.0.pom>mBaaS=

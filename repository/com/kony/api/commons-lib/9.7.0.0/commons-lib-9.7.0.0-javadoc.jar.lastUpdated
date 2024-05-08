@@ -1,0 +1,22 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue Feb 06 11:52:50 IST 2024
+http\://maven.temenosgroup.com/content/repositories/connect-dev/.error=
+@default-temenos-http\://maven.temenosgroup.com/content/repositories/temenos/.lastUpdated=1705335463287
+http\://maven.temenosgroup.com/content/groups/odyssey/.lastUpdated=1705579972328
+http\://maven.temenosgroup.com/content/groups/odyssey/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\spotlightservices\\Fabric\\java\\AdminConsoleCommons/maven-local-repo/.lastUpdated=1707200570070
+http\://maven.temenosgroup.com/content/repositories/temenos/.error=Could not transfer artifact com.kony.api\:commons-lib\:jar\:javadoc\:9.7.0.0 from/to temenos (http\://maven.temenosgroup.com/content/repositories/temenos/)\: maven.temenosgroup.com
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1694076712095
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\forexservices/../../../maven-local-repo/.error=
+http\://maven.temenosgroup.com/content/repositories/t24-snapshots/.lastUpdated=1705579973366
+http\://maven.temenosgroup.com/content/groups/all/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\spotlightservices\\Fabric\\java\\AdminConsoleCommons/maven-local-repo/.error=
+https\://repo.maven.apache.org/maven2/.lastUpdated=1694076712685
+http\://maven.temenosgroup.com/content/repositories/t24-snapshots/.error=
+http\://maven.temenosgroup.com/content/groups/all/.lastUpdated=1705579974370
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.lastUpdated=1694076712194
+https\://repo.maven.apache.org/maven2/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\forexservices/../../../maven-local-repo/.lastUpdated=1705335463293
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=
+http\://maven.temenosgroup.com/content/repositories/connect-dev/.lastUpdated=1705579967294

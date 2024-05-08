@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Jan 05 15:52:43 IST 2024
+kotlin-stdlib-1.4.10-sources.jar>central=
+kotlin-stdlib-1.4.10.jar>temenos=
+kotlin-stdlib-1.4.10.pom>central=

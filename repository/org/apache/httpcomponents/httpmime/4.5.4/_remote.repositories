@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon May 22 18:43:22 IST 2023
+httpmime-4.5.4.pom>central=
+httpmime-4.5.4.jar>central=
+httpmime-4.5.4-sources.jar>=
+httpmime-4.5.4-sources.jar>central=
+httpmime-4.5.4.jar>=

@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon May 22 18:44:41 IST 2023
+json-web-token-2.2.3.jar>mBaaS=
+json-web-token-2.2.3.jar>=
+json-web-token-2.2.3.pom>mBaaS=

@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Sep 07 14:19:21 IST 2023
+spring-jcl-5.3.28.jar>central=
+spring-jcl-5.3.28-sources.jar>central=
+spring-jcl-5.3.28.pom>central=

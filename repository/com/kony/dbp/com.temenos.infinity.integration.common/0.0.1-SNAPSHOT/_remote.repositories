@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu May 09 01:41:15 AST 2024
+com.temenos.infinity.integration.common-0.0.1-SNAPSHOT.jar>=
+com.temenos.infinity.integration.common-0.0.1-SNAPSHOT.pom>=

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.temenos.technology</groupId>
+	<artifactId>TemnRepoParent</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+	<name>TemnRepoParent</name>
+
+	<description>An umbrella project which will be used and extended by all Temenos Products in future.</description>
+
+	<organization>
+		<name>Temenos</name>
+		<url>http://www.temenos.com</url>
+	</organization>
+
+	<!-- Distribution Management For all child modules releasing artifacts -->
+	<distributionManagement>
+		<repository>
+			<id>nexus-t24</id>
+			<name>Temenos Releases</name>
+			<url>http://maven.temenosgroup.com/content/repositories/t24-releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>nexus-t24</id>
+			<name>Temenos Snapshots</name>
+			<url>http://maven.temenosgroup.com/content/repositories/t24-snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<issueManagement>
+		<url>https://rtc.temenos.com:9080/jazz/</url>
+		<system>Rational Team Concert</system>
+	</issueManagement>
+
+	<ciManagement>
+		<system>Unified Temenos Platform</system>
+		<url>http://utp.temenosgroup.com</url>
+	</ciManagement>
+
+	<properties>
+		<maven.deploy.plugin.version>3.0.0-M1</maven.deploy.plugin.version>
+	</properties>
+	
+	
+	<build>
+		<plugins>
+			<plugin>
+
+				<!-- The deploy plugin is primarily used during the deploy phase, to 
+					add your artifact(s) to a remote repository for sharing with other developers 
+					and projects. This is usually done in an integration or release environment. 
+					It can also be used to deploy a particular artifact (e.g. a third party jar 
+					like Sun's non redistributable reference implementations). -->
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>${maven.deploy.plugin.version}</version>
+			</plugin>
+		</plugins>
+	</build>
+</project>

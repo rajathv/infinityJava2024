@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon May 22 18:43:05 IST 2023
+guava-31.1-jre-sources.jar>central=
+guava-31.1-jre.jar>=
+guava-31.1-jre.pom>central=
+guava-31.1-jre-sources.jar>=
+guava-31.1-jre.jar>central=

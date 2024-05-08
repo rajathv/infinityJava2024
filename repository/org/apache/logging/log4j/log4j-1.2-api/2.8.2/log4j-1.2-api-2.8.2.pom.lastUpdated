@@ -1,0 +1,9 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Jan 20 19:53:45 IST 2023
+https\://repo.maven.apache.org/maven2/.lastUpdated=1674224625362
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\SecureMessages\\DBPCommonUtilityServices/../../../maven-local-repo/.error=
+@default-dbx-https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1674224619819
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\SecureMessages\\DBPCommonUtilityServices/maven-local-repo/.lastUpdated=1674224619810
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\SecureMessages\\DBPCommonUtilityServices/maven-local-repo/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=Could not transfer artifact org.apache.logging.log4j\:log4j-1.2-api\:pom\:2.8.2 from/to dbx (https\://quantum-maven.temenosgroup.com/content/repositories/dbx/)\: quantum-maven.temenosgroup.com
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\SecureMessages\\DBPCommonUtilityServices/../../../maven-local-repo/.lastUpdated=1674224619831

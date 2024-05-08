@@ -1,0 +1,21 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue Jul 25 11:23:02 IST 2023
+https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/.error=
+http\://www.soapui.org/repository/maven2/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/GA/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/QA/.lastUpdated=1690264379387
+http\://www.soapui.org/repository/maven2/.lastUpdated=1690264380693
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1690264378327
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\forexservices/../../../maven-local-repo/.error=
+http\://maven.temenosgroup.com/content/repositories/t24-releases/.error=
+http\://maven.temenosgroup.com/content/repositories/t24-snapshots/.lastUpdated=1690264382895
+https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa/.lastUpdated=1690264381433
+https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/.lastUpdated=1690264379054
+https\://quantum-maven.temenosgroup.com/content/repositories/GA/.lastUpdated=1690264381058
+http\://maven.temenosgroup.com/content/repositories/t24-releases/.lastUpdated=1690264381734
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.lastUpdated=1690264378682
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\forexservices/../../../maven-local-repo/.lastUpdated=1690264378707
+https\://quantum-maven.temenosgroup.com/content/repositories/QA/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=

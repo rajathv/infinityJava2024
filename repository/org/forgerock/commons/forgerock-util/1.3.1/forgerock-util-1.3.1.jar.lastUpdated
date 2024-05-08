@@ -1,0 +1,34 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon Jul 10 19:43:25 IST 2023
+@default-deployment-https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.lastUpdated=1684761243603
+https\://quantum-maven.temenosgroup.com/content/repositories/GA/.error=Could not transfer artifact org.forgerock.commons\:forgerock-util\:jar\:1.3.1 from/to release-GA (https\://quantum-maven.temenosgroup.com/content/repositories/GA)\: Transfer failed for https\://quantum-maven.temenosgroup.com/content/repositories/GA/org/forgerock/commons/forgerock-util/1.3.1/forgerock-util-1.3.1.jar
+https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/.error=Could not transfer artifact org.forgerock.commons\:forgerock-util\:jar\:1.3.1 from/to kony-nexus-thirdparty (https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/)\: Transfer failed for https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/org/forgerock/commons/forgerock-util/1.3.1/forgerock-util-1.3.1.jar
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\bulkpaymentservices/../../../maven-local-repo/.lastUpdated=1684761275148
+http\://www.soapui.org/repository/maven2/.lastUpdated=1684761243470
+@default-mBaaSQA-https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa/.lastUpdated=1684761243500
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1688998397837
+@default-thirdparty-https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/.lastUpdated=1684761241259
+@default-release-GA-https\://quantum-maven.temenosgroup.com/content/repositories/GA/.lastUpdated=1684761243486
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.lastUpdated=1688998405547
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\forexservices/../../../maven-local-repo/.lastUpdated=1684761240339
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\tradesupplyfinance-services/../../../maven-local-repo/.lastUpdated=1684761339448
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=
+http\://maven.forgerock.org/repo/repo/.error=Could not transfer artifact org.forgerock.commons\:forgerock-util\:jar\:1.3.1 from/to jwt-repository (http\://maven.forgerock.org/repo/repo)\: Authentication failed for http\://maven.forgerock.org/repo/repo/org/forgerock/commons/forgerock-util/1.3.1/forgerock-util-1.3.1.jar 401 Unauthorized
+http\://www.soapui.org/repository/maven2/.error=
+@default-kony-nexus-thirdparty-https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/.lastUpdated=1684761243563
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\tradefinanceservices/../../../maven-local-repo/.lastUpdated=1684761281398
+@default-TemenosT24Releases-http\://maven.temenosgroup.com/content/repositories/t24-releases/.lastUpdated=1684761243524
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\forexservices/../../../maven-local-repo/.error=
+http\://maven.temenosgroup.com/content/repositories/t24-releases/.error=Could not transfer artifact org.forgerock.commons\:forgerock-util\:jar\:1.3.1 from/to TemenosT24Releases (http\://maven.temenosgroup.com/content/repositories/t24-releases/)\: Transfer failed for http\://maven.temenosgroup.com/content/repositories/t24-releases/org/forgerock/commons/forgerock-util/1.3.1/forgerock-util-1.3.1.jar
+https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa/.error=Could not transfer artifact org.forgerock.commons\:forgerock-util\:jar\:1.3.1 from/to mBaaSQA (https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa)\: Transfer failed for https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa/org/forgerock/commons/forgerock-util/1.3.1/forgerock-util-1.3.1.jar
+https\://repo.maven.apache.org/maven2/.lastUpdated=1684761241240
+@default-QA-https\://quantum-maven.temenosgroup.com/content/repositories/QA/.lastUpdated=1684761243584
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\tradesupplyfinance-services/../../../maven-local-repo/.error=
+http\://maven.temenosgroup.com/content/repositories/t24-snapshots/.error=Could not transfer artifact org.forgerock.commons\:forgerock-util\:jar\:1.3.1 from/to TemenosT24Snapshots (http\://maven.temenosgroup.com/content/repositories/t24-snapshots/)\: Transfer failed for http\://maven.temenosgroup.com/content/repositories/t24-snapshots/org/forgerock/commons/forgerock-util/1.3.1/forgerock-util-1.3.1.jar
+@default-TemenosT24Snapshots-http\://maven.temenosgroup.com/content/repositories/t24-snapshots/.lastUpdated=1684761243543
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\bulkpaymentservices/../../../maven-local-repo/.error=
+@default-jwt-repository-http\://maven.forgerock.org/repo/repo/.lastUpdated=1684761276742
+@default-release-QA-https\://quantum-maven.temenosgroup.com/content/repositories/QA/.lastUpdated=1684761241282
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\tradefinanceservices/../../../maven-local-repo/.error=
+https\://repo.maven.apache.org/maven2/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/QA/.error=Could not transfer artifact org.forgerock.commons\:forgerock-util\:jar\:1.3.1 from/to QA (https\://quantum-maven.temenosgroup.com/content/repositories/QA/)\: Transfer failed for https\://quantum-maven.temenosgroup.com/content/repositories/QA/org/forgerock/commons/forgerock-util/1.3.1/forgerock-util-1.3.1.jar

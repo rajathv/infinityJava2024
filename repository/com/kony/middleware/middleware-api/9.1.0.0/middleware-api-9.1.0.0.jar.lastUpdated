@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue Apr 18 11:08:23 IST 2023
+http\://10.10.24.26\:8081/nexus/content/repositories/dbx/.error=Could not transfer artifact com.kony.middleware\:middleware-api\:jar\:9.1.0.0 from/to dbx (http\://10.10.24.26\:8081/nexus/content/repositories/dbx)\: Transfer failed for http\://10.10.24.26\:8081/nexus/content/repositories/dbx/com/kony/middleware/middleware-api/9.1.0.0/middleware-api-9.1.0.0.jar
+@default-dbx-http\://10.10.24.26\:8081/nexus/content/repositories/dbx/.lastUpdated=1681796302954
+https\://repo.maven.apache.org/maven2/.lastUpdated=1681796303626
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\eurobank_code\\eurobank_javacode_23\\DBX\ Product\ Code\\DBPPartyArrangementMicroServices/../../../maven-local-repo/.lastUpdated=1681796302971
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\eurobank_code\\eurobank_javacode_23\\DBX\ Product\ Code\\DBPPartyArrangementMicroServices/../../../maven-local-repo/.error=

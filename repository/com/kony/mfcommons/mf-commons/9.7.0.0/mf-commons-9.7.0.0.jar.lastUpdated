@@ -1,0 +1,30 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue Jul 25 11:23:49 IST 2023
+https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/.error=Could not transfer artifact com.kony.mfcommons\:mf-commons\:jar\:9.7.0.0 from/to thirdparty (https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty)\: Transfer failed for https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/com/kony/mfcommons/mf-commons/9.7.0.0/mf-commons-9.7.0.0.jar
+https\://quantum-maven.temenosgroup.com/content/repositories/GA/.error=Could not transfer artifact com.kony.mfcommons\:mf-commons\:jar\:9.7.0.0 from/to release-GA (https\://quantum-maven.temenosgroup.com/content/repositories/GA)\: Transfer failed for https\://quantum-maven.temenosgroup.com/content/repositories/GA/com/kony/mfcommons/mf-commons/9.7.0.0/mf-commons-9.7.0.0.jar
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\bulkpaymentservices/../../../maven-local-repo/.lastUpdated=1684761255310
+http\://www.soapui.org/repository/maven2/.lastUpdated=1684761235421
+@default-mBaaSQA-https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa/.lastUpdated=1684761235508
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1690264428354
+@default-thirdparty-https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/.lastUpdated=1684761232983
+@default-release-GA-https\://quantum-maven.temenosgroup.com/content/repositories/GA/.lastUpdated=1684761235466
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.lastUpdated=1690264429425
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\forexservices/../../../maven-local-repo/.lastUpdated=1684761232812
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\tradesupplyfinance-services/../../../maven-local-repo/.lastUpdated=1684761339270
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=
+http\://www.soapui.org/repository/maven2/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\tradefinanceservices/../../../maven-local-repo/.lastUpdated=1684761280027
+@default-TemenosT24Releases-http\://maven.temenosgroup.com/content/repositories/t24-releases/.lastUpdated=1684761235555
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\forexservices/../../../maven-local-repo/.error=
+http\://maven.temenosgroup.com/content/repositories/t24-releases/.error=Could not transfer artifact com.kony.mfcommons\:mf-commons\:jar\:9.7.0.0 from/to TemenosT24Releases (http\://maven.temenosgroup.com/content/repositories/t24-releases/)\: Transfer failed for http\://maven.temenosgroup.com/content/repositories/t24-releases/com/kony/mfcommons/mf-commons/9.7.0.0/mf-commons-9.7.0.0.jar
+https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa/.error=Could not transfer artifact com.kony.mfcommons\:mf-commons\:jar\:9.7.0.0 from/to mBaaSQA (https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa)\: Transfer failed for https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa/com/kony/mfcommons/mf-commons/9.7.0.0/mf-commons-9.7.0.0.jar
+https\://repo.maven.apache.org/maven2/.lastUpdated=1684761232965
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\tradesupplyfinance-services/../../../maven-local-repo/.error=
+http\://maven.temenosgroup.com/content/repositories/t24-snapshots/.error=Could not transfer artifact com.kony.mfcommons\:mf-commons\:jar\:9.7.0.0 from/to TemenosT24Snapshots (http\://maven.temenosgroup.com/content/repositories/t24-snapshots/)\: Transfer failed for http\://maven.temenosgroup.com/content/repositories/t24-snapshots/com/kony/mfcommons/mf-commons/9.7.0.0/mf-commons-9.7.0.0.jar
+@default-TemenosT24Snapshots-http\://maven.temenosgroup.com/content/repositories/t24-snapshots/.lastUpdated=1684761235585
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\bulkpaymentservices/../../../maven-local-repo/.error=
+@default-release-QA-https\://quantum-maven.temenosgroup.com/content/repositories/QA/.lastUpdated=1684761233002
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\tradefinanceservices/../../../maven-local-repo/.error=
+https\://repo.maven.apache.org/maven2/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/QA/.error=Could not transfer artifact com.kony.mfcommons\:mf-commons\:jar\:9.7.0.0 from/to release-QA (https\://quantum-maven.temenosgroup.com/content/repositories/QA)\: Transfer failed for https\://quantum-maven.temenosgroup.com/content/repositories/QA/com/kony/mfcommons/mf-commons/9.7.0.0/mf-commons-9.7.0.0.jar
+@default-mBaaS-https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1684761255291

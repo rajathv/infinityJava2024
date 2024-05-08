@@ -1,0 +1,24 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Jun 30 17:41:06 IST 2023
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\ArtifactsManager/../../../maven-local-repo/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/.error=Could not transfer artifact com.temenos.technology\:TemnMeter\:pom\:5.0.3-SNAPSHOT from/to thirdparty (https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty)\: quantum-maven.temenosgroup.com
+http\://www.soapui.org/repository/maven2/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/GA/.error=Could not transfer artifact com.temenos.technology\:TemnMeter\:pom\:5.0.3-SNAPSHOT from/to release-GA (https\://quantum-maven.temenosgroup.com/content/repositories/GA)\: quantum-maven.temenosgroup.com
+@default-TemenosT24Releases-http\://maven.temenosgroup.com/content/repositories/t24-releases/.lastUpdated=1688127066584
+http\://www.soapui.org/repository/maven2/.lastUpdated=1688127066552
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.error=Could not transfer artifact com.temenos.technology\:TemnMeter\:pom\:5.0.3-SNAPSHOT from/to mBaaS (https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS)\: quantum-maven.temenosgroup.com
+@default-mBaaS-https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.lastUpdated=1688127065675
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\ArtifactsManager/../../../maven-local-repo/.lastUpdated=1688127065665
+@default-mBaaSQA-https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa/.lastUpdated=1688127066574
+http\://maven.temenosgroup.com/content/repositories/t24-releases/.error=Could not transfer artifact com.temenos.technology\:TemnMeter\:pom\:5.0.3-SNAPSHOT from/to TemenosT24Releases (http\://maven.temenosgroup.com/content/repositories/t24-releases/)\: maven.temenosgroup.com
+https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa/.error=Could not transfer artifact com.temenos.technology\:TemnMeter\:pom\:5.0.3-SNAPSHOT from/to mBaaSQA (https\://quantum-maven.temenosgroup.com/content/repositories/cloudqa)\: quantum-maven.temenosgroup.com
+@default-thirdparty-https\://quantum-maven.temenosgroup.com/content/repositories/thirdparty/.lastUpdated=1688127065693
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\DBPCommonUtilityServices/maven-local-repo/.error=
+http\://maven.temenosgroup.com/content/repositories/t24-snapshots/.error=Could not transfer artifact com.temenos.technology\:TemnMeter\:pom\:5.0.3-SNAPSHOT from/to TemenosT24Snapshots (http\://maven.temenosgroup.com/content/repositories/t24-snapshots/)\: maven.temenosgroup.com
+@default-TemenosT24Snapshots-http\://maven.temenosgroup.com/content/repositories/t24-snapshots/.lastUpdated=1688127066596
+@default-dbx-https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1688127065653
+@default-release-QA-https\://quantum-maven.temenosgroup.com/content/repositories/QA/.lastUpdated=1688127065699
+@default-release-GA-https\://quantum-maven.temenosgroup.com/content/repositories/GA/.lastUpdated=1688127066562
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\DBPCommonUtilityServices/maven-local-repo/.lastUpdated=1688127065684
+https\://quantum-maven.temenosgroup.com/content/repositories/QA/.error=Could not transfer artifact com.temenos.technology\:TemnMeter\:pom\:5.0.3-SNAPSHOT from/to release-QA (https\://quantum-maven.temenosgroup.com/content/repositories/QA)\: quantum-maven.temenosgroup.com
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=Could not transfer artifact com.temenos.technology\:TemnMeter\:pom\:5.0.3-SNAPSHOT from/to dbx (https\://quantum-maven.temenosgroup.com/content/repositories/dbx/)\: quantum-maven.temenosgroup.com

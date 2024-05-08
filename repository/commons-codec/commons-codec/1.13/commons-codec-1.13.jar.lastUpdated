@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue Jan 24 11:08:41 IST 2023
+@default-dbx-http\://10.10.24.26\:8081/nexus/content/repositories/dbx/.lastUpdated=1674538719100
+https\://repo.maven.apache.org/maven2/.lastUpdated=1674538721456
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\DBPPartyArrangementMicroServices/../../../maven-local-repo/.error=
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\DBPPartyArrangementMicroServices/../../../maven-local-repo/.lastUpdated=1674538719112
+http\://10.10.24.26\:8081/nexus/content/repositories/dbx/.error=Could not transfer artifact commons-codec\:commons-codec\:jar\:1.13 from/to dbx (http\://10.10.24.26\:8081/nexus/content/repositories/dbx)\: Connect timed out

@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Jan 05 15:52:41 IST 2024
+okhttp-4.9.3.jar>temenos=
+okhttp-4.9.3-sources.jar>central=
+okhttp-4.9.3.pom>central=

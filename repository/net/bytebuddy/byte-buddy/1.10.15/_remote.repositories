@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue May 07 15:39:42 AST 2024
+byte-buddy-1.10.15-sources.jar>central=
+byte-buddy-1.10.15.jar>central=
+byte-buddy-1.10.15.jar>temenos=
+byte-buddy-1.10.15.pom>central=
+byte-buddy-1.10.15.pom>temenos=

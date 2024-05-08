@@ -1,0 +1,9 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon May 22 18:43:40 IST 2023
+https\://repo.maven.apache.org/maven2/.lastUpdated=1684761220589
+@default-dbx-https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1684761220173
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.error=Could not transfer artifact com.fasterxml.jackson.core\:jackson-annotations\:pom\:2.13.1 from/to mBaaS (https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS)\: Transfer failed for https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/com/fasterxml/jackson/core/jackson-annotations/2.13.1/jackson-annotations-2.13.1.pom
+@default-mBaaS-https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.lastUpdated=1684761220193
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\forexservices/../../../maven-local-repo/.lastUpdated=1684761220212
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\forexservices/../../../maven-local-repo/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=Could not transfer artifact com.fasterxml.jackson.core\:jackson-annotations\:pom\:2.13.1 from/to dbx (https\://quantum-maven.temenosgroup.com/content/repositories/dbx/)\: Transfer failed for https\://quantum-maven.temenosgroup.com/content/repositories/dbx/com/fasterxml/jackson/core/jackson-annotations/2.13.1/jackson-annotations-2.13.1.pom

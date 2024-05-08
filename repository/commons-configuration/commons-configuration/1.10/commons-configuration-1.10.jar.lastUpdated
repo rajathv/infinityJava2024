@@ -1,0 +1,9 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon May 22 18:43:49 IST 2023
+https\://repo.maven.apache.org/maven2/.lastUpdated=1684761229859
+@default-dbx-https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1684761229269
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.error=Could not transfer artifact commons-configuration\:commons-configuration\:jar\:1.10 from/to mBaaS (https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS)\: Transfer failed for https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/commons-configuration/commons-configuration/1.10/commons-configuration-1.10.jar
+@default-mBaaS-https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.lastUpdated=1684761229286
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\forexservices/../../../maven-local-repo/.lastUpdated=1684761229297
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\forexservices/../../../maven-local-repo/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=Could not transfer artifact commons-configuration\:commons-configuration\:jar\:1.10 from/to dbx (https\://quantum-maven.temenosgroup.com/content/repositories/dbx/)\: Transfer failed for https\://quantum-maven.temenosgroup.com/content/repositories/dbx/commons-configuration/commons-configuration/1.10/commons-configuration-1.10.jar

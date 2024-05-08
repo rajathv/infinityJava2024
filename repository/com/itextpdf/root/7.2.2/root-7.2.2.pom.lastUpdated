@@ -1,0 +1,9 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Jan 20 19:53:51 IST 2023
+https\://repo.maven.apache.org/maven2/.lastUpdated=1674224631680
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\SecureMessages\\DBPCommonUtilityServices/../../../maven-local-repo/.error=
+@default-dbx-https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1674224630511
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\SecureMessages\\DBPCommonUtilityServices/maven-local-repo/.lastUpdated=1674224630490
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\SecureMessages\\DBPCommonUtilityServices/maven-local-repo/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=Could not transfer artifact com.itextpdf\:root\:pom\:7.2.2 from/to dbx (https\://quantum-maven.temenosgroup.com/content/repositories/dbx/)\: quantum-maven.temenosgroup.com
+file\://C\:\\Users\\prakash.panigrahi\\Downloads\\Temenos\\code\\localservices_202110\\Fabric\\java\\SecureMessages\\DBPCommonUtilityServices/../../../maven-local-repo/.lastUpdated=1674224630532

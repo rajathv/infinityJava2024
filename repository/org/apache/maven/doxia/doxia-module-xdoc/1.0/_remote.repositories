@@ -1,0 +1,6 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Apr 14 15:21:29 IST 2023
+doxia-module-xdoc-1.0.jar>central=
+doxia-module-xdoc-1.0.pom>central=
+doxia-module-xdoc-1.0.pom>apache=
+doxia-module-xdoc-1.0.jar>apache=

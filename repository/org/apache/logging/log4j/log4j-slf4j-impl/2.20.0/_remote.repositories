@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Jan 05 15:52:34 IST 2024
+log4j-slf4j-impl-2.20.0.jar>temenos=
+log4j-slf4j-impl-2.20.0.pom>temenos=
+log4j-slf4j-impl-2.20.0-sources.jar>central=

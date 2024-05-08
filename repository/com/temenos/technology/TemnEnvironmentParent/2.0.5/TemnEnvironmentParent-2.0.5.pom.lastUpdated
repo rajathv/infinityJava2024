@@ -1,0 +1,11 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Feb 08 12:50:12 IST 2024
+http\://maven.temenosgroup.com/content/repositories/connect-dev/.error=
+http\://maven.temenosgroup.com/content/repositories/temenos/.lastUpdated=1707376812258
+http\://maven.temenosgroup.com/content/groups/odyssey/.lastUpdated=1707376810821
+http\://maven.temenosgroup.com/content/groups/odyssey/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.error=
+https\://quantum-maven.temenosgroup.com/content/repositories/mBaaS/.lastUpdated=1707376809596
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.lastUpdated=1707376809056
+https\://quantum-maven.temenosgroup.com/content/repositories/dbx/.error=
+http\://maven.temenosgroup.com/content/repositories/connect-dev/.lastUpdated=1707376809883

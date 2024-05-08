@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Sep 07 14:21:25 IST 2023
+keycloak-server-spi-private-21.1.2.jar>central=
+keycloak-server-spi-private-21.1.2-sources.jar>central=
+keycloak-server-spi-private-21.1.2.pom>central=
