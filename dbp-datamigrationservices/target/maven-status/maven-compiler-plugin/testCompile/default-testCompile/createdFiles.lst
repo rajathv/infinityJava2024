@@ -1,0 +1,8 @@
+com/temenos/dbx/datamigrationservices/test/CreateContractTest.class
+com/temenos/dbx/datamigrationservices/test/CreateSignatoryGroupTest.class
+com/temenos/dbx/datamigrationservices/test/UpdateApprovalMatrixModeTest.class
+com/temenos/dbx/datamigrationservices/test/LinkUserToContractTest.class
+com/temenos/dbx/datamigrationservices/test/CreateApprovalMatrixRuleTest.class
+com/temenos/dbx/datamigrationservices/test/CreateUserTest.class
+com/temenos/dbx/datamigrationservices/test/CreatePayeeTest.class
+com/temenos/dbx/datamigrationservices/test/CreateVirtualUserTest.class

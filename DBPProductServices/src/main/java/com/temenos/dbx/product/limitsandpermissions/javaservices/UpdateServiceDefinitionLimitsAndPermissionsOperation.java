@@ -1,0 +1,34 @@
+package com.temenos.dbx.product.limitsandpermissions.javaservices;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.dbp.core.api.factory.ResourceFactory;
+import com.dbp.core.api.factory.impl.DBPAPIAbstractFactoryImpl;
+import com.kony.dbputilities.util.ErrorCodeEnum;
+import com.konylabs.middleware.common.JavaService2;
+import com.konylabs.middleware.controller.DataControllerRequest;
+import com.konylabs.middleware.controller.DataControllerResponse;
+import com.konylabs.middleware.dataobject.Result;
+import com.temenos.dbx.product.limitsandpermissions.resource.api.LimitsAndPermissionsResource;
+
+public class UpdateServiceDefinitionLimitsAndPermissionsOperation implements JavaService2 {
+	private static final Logger LOG = LogManager.getLogger(UpdateServiceDefinitionLimitsAndPermissionsOperation.class);
+
+	@Override
+	public Object invoke(String methodId, Object[] inputArray, DataControllerRequest request,
+			DataControllerResponse response) throws Exception {
+		Result result = new Result();
+		try {
+			LimitsAndPermissionsResource limitsAndPermissionsResource = DBPAPIAbstractFactoryImpl.getInstance()
+					.getFactoryInstance(ResourceFactory.class).getResource(LimitsAndPermissionsResource.class);
+			result = limitsAndPermissionsResource.UpdateServiceDefinitionLimits(methodId, inputArray, request, response);
+		}
+		catch(Exception e) {
+			LOG.error("Caught exception at invoke of EditServiceDefinitionOperation: ", e);
+			return ErrorCodeEnum.ERR_28032.setErrorCode(new Result());
+		}
+		return result;
+	}
+
+}

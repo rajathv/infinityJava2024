@@ -1,0 +1,5 @@
+com/kony/alertsmanagement/AdminConsole_PreLogin.class
+com/kony/alertsmanagement/SetAlertPreferences.class
+com/kony/alertsmanagement/GetCustomerAlertTypePreference.class
+com/kony/alertsmanagement/GetCustomerAccountAlertPreference.class
+com/kony/alertsmanagement/GetCustomerAlertCategoryPreference.class

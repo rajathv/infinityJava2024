@@ -1,0 +1,9 @@
+com/temenos/infinity/api/financemanagementservices/GetPFMPieChart.class
+com/temenos/infinity/api/financemanagementservices/GetAccountsPostLogin.class
+com/temenos/infinity/api/financemanagementservices/GetPFMTrasactions.class
+com/temenos/infinity/api/financemanagementservices/GetPFMCategories.class
+com/temenos/infinity/api/financemanagementservices/GetPFMBarGraph.class
+com/temenos/infinity/api/financemanagementservices/GetAccounts.class
+com/temenos/infinity/api/financemanagementservices/EditPFMtransaction.class
+com/temenos/infinity/api/financemanagementservices/UpdateBulkPFMTransaction.class
+com/temenos/infinity/api/financemanagementservices/GetPFMBudgetSnapshot.class

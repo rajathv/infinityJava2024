@@ -1,0 +1,3 @@
+com/kony/dbputilities/customersecurityservices/DeactivateP2P.class
+com/kony/dbputilities/customersecurityservices/ActivateDbxP2PForUser.class
+com/kony/dbputilities/customersecurityservices/UpdatePreferredDbxP2PAccounts.class

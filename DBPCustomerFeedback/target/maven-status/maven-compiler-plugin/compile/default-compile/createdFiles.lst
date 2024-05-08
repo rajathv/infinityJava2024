@@ -1,0 +1,14 @@
+com/temenos/dbx/feedback/businessdelegate/api/package-info.class
+com/kony/dbputilities/metricsutil/DBPMetricData.class
+com/temenos/dbx/adminintegration/errorhandling/package-info.class
+com/temenos/dbx/feedback/resource/impl/package-info.class
+com/temenos/dbx/adminintegration/dto/package-info.class
+com/kony/dbputilities/metricsutil/DBPMetricsProcessorHelper.class
+com/kony/dbputilities/customerfeedback/CreateUserFeedback.class
+com/temenos/dbx/adminintegration/businessdelegate/impl/package-info.class
+com/kony/dbputilities/customerfeedback/CreateCustomerFeedback.class
+com/kony/dbputilities/customerfeedbackpostprocessor/CreateUserFeedbackPostProcessor.class
+com/temenos/dbx/feedback/servlet/utils/package-info.class
+com/temenos/dbx/adminintegration/mapper/package-info.class
+com/temenos/dbx/feedback/resource/api/package-info.class
+com/temenos/dbx/adminintegration/javaservice/package-info.class

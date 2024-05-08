@@ -1,0 +1,100 @@
+package com.temenos.infinity.api.srmsservices.javaservices;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.dbp.core.util.JSONUtils;
+import com.google.gson.Gson;
+import com.konylabs.middleware.common.JavaService2;
+import com.konylabs.middleware.controller.DataControllerRequest;
+import com.konylabs.middleware.controller.DataControllerResponse;
+import com.konylabs.middleware.dataobject.JSONToResult;
+import com.konylabs.middleware.dataobject.Param;
+import com.konylabs.middleware.dataobject.Result;
+import com.temenos.dbx.product.transactionservices.dto.OwnAccountFundTransferBackendDTO;
+import com.temenos.dbx.product.transactionservices.dto.OwnAccountFundTransferDTO;
+import com.temenos.infinity.api.srmsservices.constants.SRMSConstants;
+import com.temenos.infinity.api.srmstransactions.config.SRMSTypeSubTypeConfiguration;
+import com.temenos.infinity.api.srmstransactions.dto.SRMSOwnAccountDTO;
+
+public class SRMSCreateOwnAccountTransaction implements SRMSConstants, JavaService2 {
+
+	private static final Logger LOG = LogManager.getLogger(SRMSCreateOwnAccountTransaction.class);
+
+	public Object invoke(String methodID, Object[] inputArray, DataControllerRequest request,
+			DataControllerResponse response) throws Exception {
+		@SuppressWarnings("unchecked")
+		Map<String, Object> requestparameters = (Map<String, Object>) inputArray[1];
+		HashMap<String, Object> srmsParams = new HashMap<String, Object>();
+		OwnAccountFundTransferBackendDTO input1 = JSONUtils.parse(new JSONObject(requestparameters).toString(), OwnAccountFundTransferBackendDTO.class);
+		SRMSOwnAccountDTO ownAccountDTOInput = new SRMSOwnAccountDTO().convert(input1);
+		Map<String, Object> filteredSRMSParams = JSONUtils.parseAsMap(new JSONObject(ownAccountDTOInput).toString(), String.class, Object.class);
+		//String isPending = StringUtils.isNotBlank(requestparameters.get("isPending").toString()) ? "1" : "0";
+		String isPending = requestparameters.get("isPending")!=null ? "1" : "0";
+		//if (requestparameters.get("isPending").equals("1")) {
+		if (isPending.equals("1")) {
+			filteredSRMSParams.put(PARAM_NUMBER_OF_AUTHORISERS, "1");
+		}
+		String frequency = (requestparameters.get(PARAM_FREQUENCY_TYPE) != null)
+				? requestparameters.get(PARAM_FREQUENCY_TYPE).toString()
+				: "";
+		String accountId = (requestparameters.get(PARAM_FROM_ACCOUNT_NUMBER) != null)
+				? requestparameters.get(PARAM_FROM_ACCOUNT_NUMBER).toString()
+				: "";
+
+		// Identify Type and SubType
+		if (FREQUENCY_ONCE.equalsIgnoreCase(frequency)) {
+			srmsParams.put(PARAM_TYPE, SRMSTypeSubTypeConfiguration.ONE_TIME_OWN_ACOUNT_TRANSFER.getType());
+			srmsParams.put(PARAM_SUB_TYPE, SRMSTypeSubTypeConfiguration.ONE_TIME_OWN_ACOUNT_TRANSFER.getSubType());
+		} else {
+			srmsParams.put(PARAM_TYPE, SRMSTypeSubTypeConfiguration.RECURRING_OWN_ACOUNT_TRANSFER.getType());
+			srmsParams.put(PARAM_SUB_TYPE, SRMSTypeSubTypeConfiguration.RECURRING_OWN_ACOUNT_TRANSFER.getSubType());
+		}
+
+		// Add Account Number in the request
+		if (StringUtils.isNotBlank(accountId))
+			srmsParams.put(ACCOUNT_ID, accountId);
+
+		// Add Backend Request Body to the request
+		Gson gson = new Gson();
+		String json = gson.toJson(filteredSRMSParams); // Convert Map to JSONObject
+		srmsParams.put(PARAM_REQUEST_BODY, json.toString().replaceAll("\"", "'"));
+
+		LOG.error("Own Account Transfer SRMS Input :" + srmsParams.toString());
+		Result result = new Result();
+		// return srmsParams;
+		OwnAccountFundTransferDTO input;
+		try {
+			LOG.debug("Own Account Create Order Request :" + srmsParams.toString());
+			String response1 = Util.createOrder(srmsParams, request);
+			LOG.debug("Own Account Create Order Response :" + response1);
+			input = JSONUtils.parse(response1, OwnAccountFundTransferDTO.class);
+		} catch (JSONException | IOException e) {
+			LOG.error("Failed to create own account fund transfer without approval: ", e);
+			result.addParam(new Param("dbpErrCode", "{\"errormsg\":\"" + e.getMessage() + "\"}"));
+			return result;
+		}
+		// SRMSOwnAccountDTO ownAccountDTOInput = new
+		// SRMSOwnAccountDTO().convert(input);
+		try {
+			JSONObject resObj = new JSONObject(input);
+			String res = resObj.toString();
+			result = JSONToResult.convert(res);
+			return result;
+			// return JSONUtils.parseAsMap(new JSONObject(ownAccountDTOInput).toString(),
+			// String.class, Object.class);
+		} catch (Exception e) {
+			LOG.error("Error occured while fetching the input params: ", e);
+			result.addParam(new Param("dbpErrCode", "{\"errormsg\":\"" + e.getMessage() + "\"}"));
+			return result;
+		}
+	}
+
+}

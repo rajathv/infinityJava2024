@@ -1,0 +1,5 @@
+com/temenos/infinity/transactionadvice/backenddelegate/mapper/TransactionAdviceBackendDelegateMapper.class
+com/temenos/infinity/transactionadvice/servlet/BusinessAPIsBaseCustomResourcesServlet.class
+com/temenos/infinity/transactionadvice/config/TransactionAdviceAPIServices.class
+com/temenos/infinity/transactionadvice/constants/ErrorCodeEnum.class
+com/temenos/infinity/transactionadvice/backenddelegate/impl/TransactionAdviceAPIBackendDelegateImpl.class

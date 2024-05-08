@@ -1,0 +1,9 @@
+com/kony/contentproductservices/CreateCustomerTNCForLogin.class
+com/kony/dbputilities/customerfeedbackpostprocessor/CreateUserFeedbackPostProcessor.class
+com/kony/contentAdminconsole/GetFAQ.class
+com/kony/contentAdminconsole/PrivacyPolicy.class
+com/kony/contentproductservices/GetCustomerTermsAndConditionsPreLogin.class
+com/kony/contentproductservices/GetCustomerTermsAndConditions.class
+com/kony/contentAdminconsole/ContactUs.class
+com/kony/contentutilities/customerfeedback/CreateCustomerFeedback.class
+com/kony/contentAdminconsole/AdminConsole_PreLogin.class

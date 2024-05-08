@@ -1,0 +1,8 @@
+com\temenos\infinity\tradelending\javaservices\SubmitRolloverRequestOperationTest.class
+com\temenos\infinity\tradelending\resource\impl\RolloverRequestResourceImplTest.class
+com\temenos\infinity\tradelending\resource\impl\DrawdownRequestResourceImplTest.class
+com\temenos\infinity\tradelending\businessdelegate\impl\RolloverRequestBusinessDelegateImplTest.class
+com\temenos\infinity\tradelending\javaservices\SubmitDrawdownRequestOperationTest.class
+com\temenos\infinity\tradelending\backenddelegate\impl\DrawdownRequestBackendDelegateImplTest.class
+com\temenos\infinity\tradelending\backenddelegate\impl\RolloverRequestBackendDelegateImplTest.class
+com\temenos\infinity\tradelending\businessdelegate\impl\DrawdownRequestBusinessDelegateImplTest.class
