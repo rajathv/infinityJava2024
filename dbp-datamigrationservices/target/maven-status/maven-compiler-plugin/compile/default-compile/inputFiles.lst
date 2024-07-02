@@ -20,8 +20,10 @@
 /Users/ijarahtestmac/Developer/Fabric/java/dbp-datamigrationservices/src/main/java/com/temenos/dbx/datamigrationservices/business/api/MigrateInfinityUserBusinessDelegate.java
 /Users/ijarahtestmac/Developer/Fabric/java/dbp-datamigrationservices/src/main/java/com/temenos/dbx/datamigrationservices/mapper/MigrationBackendDelegateMapper.java
 /Users/ijarahtestmac/Developer/Fabric/java/dbp-datamigrationservices/src/main/java/com/temenos/dbx/datamigrationservices/utils/MigratePayeeCommonMethods.java
+/Users/ijarahtestmac/Developer/Fabric/java/dbp-datamigrationservices/src/main/java/com/temenos/dbx/datamigrationservices/resource/impl/CreateCommucationRaw.java
 /Users/ijarahtestmac/Developer/Fabric/java/dbp-datamigrationservices/src/main/java/com/temenos/dbx/datamigrationservices/resource/impl/MigrateApprovalMatrixResourceImpl.java
 /Users/ijarahtestmac/Developer/Fabric/java/dbp-datamigrationservices/src/main/java/com/temenos/dbx/datamigrationservices/resource/impl/MigrateInfinityUserResourceImpl.java
 /Users/ijarahtestmac/Developer/Fabric/java/dbp-datamigrationservices/src/main/java/com/temenos/dbx/datamigrationservices/servlet/MigrationResourceServlet.java
 /Users/ijarahtestmac/Developer/Fabric/java/dbp-datamigrationservices/src/main/java/com/temenos/dbx/datamigrationservices/javaservice/CreateSignatoryGroup.java
+/Users/ijarahtestmac/Developer/Fabric/java/dbp-datamigrationservices/src/main/java/com/temenos/dbx/datamigrationservices/postporcessor/MigrationLoginPostProcessor.java
 /Users/ijarahtestmac/Developer/Fabric/java/dbp-datamigrationservices/src/main/java/com/temenos/dbx/datamigrationservices/utils/MigrationUtils.java

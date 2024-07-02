@@ -85,7 +85,7 @@ import com.temenos.dbx.product.utils.DTOUtils;
 import com.temenos.dbx.product.utils.InfinityConstants;
 
 public class ContractResourceImpl implements ContractResource {
-	
+
 	LoggerUtil logger = new LoggerUtil(ContractResourceImpl.class);
 	SimpleDateFormat idFormatter = new SimpleDateFormat("yyMMddHHmmssSSS");
 
@@ -132,909 +132,922 @@ public class ContractResourceImpl implements ContractResource {
 	public static final String IMPLICIT_ACCOUNT_ACCESS = "implicitAccountAccess";
 	private static final String EXCLUDED_ACCOUNTS = "excludedAccounts";
 	private static final String DAILY_LIMIT = "DAILY_LIMIT";
-    private static final String MAX_TRANSACTION_LIMIT = "MAX_TRANSACTION_LIMIT";
-    private static final String WEEKLY_LIMIT = "WEEKLY_LIMIT";
-    private static final String ROLE_ID = "roleId";
-    private static final String PRODUCTSLIST = "productsList";
-    private static final String PRODUCTID = "productId";
-    private static final String featurePermissions = "featurePermissions";
-    private static final String permissions = "permissions";
-    private static final String LEGAL_ENTITY_ID = "legalEntityId";
-    
-    @Override
-    public Result createContract(String methodID, Object[] inputArray, DataControllerRequest dcRequest,
-            DataControllerResponse dcResponse) throws ApplicationException {
-        Result result = new Result();
-        Map<String, String> inputParams = HelperMethods.getInputParamMap(inputArray);
-        String contractId;
-        Set<String> validContractCustomers;
-        try {
-            String contractName = inputParams.get(CONTRACT_NAME);
-            String serviceDefinitionId = inputParams.get(SERVICE_DEFINITION_ID);
-            String faxId = inputParams.get(FAX_ID);
-            String communication = inputParams.get(COMMUNICATION);
-            String address = inputParams.get(ADDRESS);
-            String contractCustomers = inputParams.get(CONTRACTCUSTOMERS);
-            String isDefaultActionsEnabled = dcRequest.getParameter(ISDEFAULTACTIONSENABLED);
-            String accountLevelPermissions = inputParams.get("accountLevelPermissions1");
-            String globalLevelPermissions = inputParams.get("globalLevelPermissions1");
-            String transactionLimits = inputParams.get("transactionLimits1");
-            String legalEntityId = StringUtils.isNotBlank(inputParams.get(LEGAL_ENTITY_ID)) ? inputParams.get(LEGAL_ENTITY_ID)
-    				: dcRequest.getParameter(LEGAL_ENTITY_ID); 
-            JsonArray accountLevelPermissionsJsonArray = new JsonArray();
-            JsonArray globalLevelPermissionsJsonArray = new JsonArray();
-            JsonArray transactionLimitsJsonArray = new JsonArray();
+	private static final String MAX_TRANSACTION_LIMIT = "MAX_TRANSACTION_LIMIT";
+	private static final String WEEKLY_LIMIT = "WEEKLY_LIMIT";
+	private static final String ROLE_ID = "roleId";
+	private static final String PRODUCTSLIST = "productsList";
+	private static final String PRODUCTID = "productId";
+	private static final String featurePermissions = "featurePermissions";
+	private static final String permissions = "permissions";
+	private static final String LEGAL_ENTITY_ID = "legalEntityId";
 
-            if (StringUtils.isBlank(isDefaultActionsEnabled)) {
-                isDefaultActionsEnabled = DBPUtilitiesConstants.BOOLEAN_STRING_FALSE;
-            }
-            
-            logger.debug("isDefaultActionsEnabled flag is set to...." + isDefaultActionsEnabled);
-            logger.debug("legalEntityId is set to...." + legalEntityId);
+	@Override
+	public Result createContract(String methodID, Object[] inputArray, DataControllerRequest dcRequest,
+			DataControllerResponse dcResponse) throws ApplicationException {
+		Result result = new Result();
+		Map<String, String> inputParams = HelperMethods.getInputParamMap(inputArray);
+		String contractId;
+		Set<String> validContractCustomers;
+		try {
+			String contractName = inputParams.get(CONTRACT_NAME);
+			String serviceDefinitionId = inputParams.get(SERVICE_DEFINITION_ID);
+			String faxId = inputParams.get(FAX_ID);
+			String communication = inputParams.get(COMMUNICATION);
+			String address = inputParams.get(ADDRESS);
+			String contractCustomers = inputParams.get(CONTRACTCUSTOMERS);
+			String isDefaultActionsEnabled = dcRequest.getParameter(ISDEFAULTACTIONSENABLED);
+			String accountLevelPermissions = inputParams.get("accountLevelPermissions1");
+			String globalLevelPermissions = inputParams.get("globalLevelPermissions1");
+			String transactionLimits = inputParams.get("transactionLimits1");
+			String legalEntityId = StringUtils.isNotBlank(inputParams.get(LEGAL_ENTITY_ID))
+					? inputParams.get(LEGAL_ENTITY_ID)
+					: dcRequest.getParameter(LEGAL_ENTITY_ID);
+			JsonArray accountLevelPermissionsJsonArray = new JsonArray();
+			JsonArray globalLevelPermissionsJsonArray = new JsonArray();
+			JsonArray transactionLimitsJsonArray = new JsonArray();
 
+			if (StringUtils.isBlank(isDefaultActionsEnabled)) {
+				isDefaultActionsEnabled = DBPUtilitiesConstants.BOOLEAN_STRING_FALSE;
+			}
 
-            if (StringUtils.isBlank(contractName) || StringUtils.isBlank(serviceDefinitionId)
-                    || StringUtils.isBlank(contractCustomers)) {
-                throw new ApplicationException(ErrorCodeEnum.ERR_10348);
+			logger.debug("isDefaultActionsEnabled flag is set to...." + isDefaultActionsEnabled);
+			logger.debug("legalEntityId is set to...." + legalEntityId);
 
-            }
-            
-            if (DBPUtilitiesConstants.BOOLEAN_STRING_FALSE.equals(isDefaultActionsEnabled)) {
-                if (StringUtils.isBlank(accountLevelPermissions) || StringUtils.isBlank(globalLevelPermissions)
-                        || StringUtils.isBlank(transactionLimits))
-                    throw new ApplicationException(ErrorCodeEnum.ERR_10348);
-                else {
-                    accountLevelPermissionsJsonArray = JSONUtil.parseAsJsonArray(accountLevelPermissions);
-                    globalLevelPermissionsJsonArray = JSONUtil.parseAsJsonArray(globalLevelPermissions);
-                    transactionLimitsJsonArray = JSONUtil.parseAsJsonArray(transactionLimits);
-                }
-            }
-            
-            if (StringUtils.isBlank(legalEntityId)){
-            	throw new ApplicationException(ErrorCodeEnum.ERR_29040);
-            }
+			logger.error("NSGH:contractName::" + contractName);
+			logger.error("NSGH:contractCustomers::" + contractCustomers);
 
-            String serviceDefinitionType = getServiceType(serviceDefinitionId, dcRequest);
+			if (StringUtils.isBlank(contractName) || StringUtils.isBlank(serviceDefinitionId)
+					|| StringUtils.isBlank(contractCustomers)) {
+				throw new ApplicationException(ErrorCodeEnum.ERR_10348);
 
-            if (StringUtils.isBlank(serviceDefinitionType)) {
-                throw new ApplicationException(ErrorCodeEnum.ERR_10349);
-            }
+			}
 
-            boolean isNotExists = verifyContractName(null, contractName, dcRequest);
+			if (DBPUtilitiesConstants.BOOLEAN_STRING_FALSE.equals(isDefaultActionsEnabled)) {
+				if (StringUtils.isBlank(accountLevelPermissions) || StringUtils.isBlank(globalLevelPermissions)
+						|| StringUtils.isBlank(transactionLimits))
+					throw new ApplicationException(ErrorCodeEnum.ERR_10348);
+				else {
+					accountLevelPermissionsJsonArray = JSONUtil.parseAsJsonArray(accountLevelPermissions);
+					globalLevelPermissionsJsonArray = JSONUtil.parseAsJsonArray(globalLevelPermissions);
+					transactionLimitsJsonArray = JSONUtil.parseAsJsonArray(transactionLimits);
+				}
+			}
 
-            if (!isNotExists) {
-                throw new ApplicationException(ErrorCodeEnum.ERR_10401);
-            }
+			if (StringUtils.isBlank(legalEntityId)) {
+				throw new ApplicationException(ErrorCodeEnum.ERR_29040);
+			}
 
-            validContractCustomers = getValidContractCustomers(contractCustomers, true, legalEntityId, dcRequest);
-            if (validContractCustomers == null || validContractCustomers.isEmpty()) {
-                throw new ApplicationException(ErrorCodeEnum.ERR_10368);
-            }
+			String serviceDefinitionType = getServiceType(serviceDefinitionId, dcRequest);
 
-            checkIfPayloadContainsValidAccountsForAllCustomers(contractCustomers, null, dcRequest);
+			if (StringUtils.isBlank(serviceDefinitionType)) {
+				throw new ApplicationException(ErrorCodeEnum.ERR_10349);
+			}
 
-            List<AddressDTO> addressList = DTOUtils.getDTOList(address, AddressDTO.class);
+			boolean isNotExists = verifyContractName(null, contractName, dcRequest);
 
-            String contractStatus = getAutoApprovalStatus(isDefaultActionsEnabled, dcRequest);
+			if (!isNotExists) {
+				throw new ApplicationException(ErrorCodeEnum.ERR_10401);
+			}
 
-            ContractDTO contractDTO = createContract(contractName, serviceDefinitionId, serviceDefinitionType, faxId,
-                    contractStatus, legalEntityId, dcRequest);
-            logger.debug("contract table is populated");
-            contractId = contractDTO.getId();
-            createContractCommunication(communication, contractId, legalEntityId, dcRequest);
-            logger.debug("ContractCommunication table is populated");
-            createContractAddress(addressList, contractId, legalEntityId, dcRequest);
-            logger.debug("ContractAddress table is populated");
-            Set<String> createdValidContractCustomers = createContractCustomers(contractCustomers,
-                    validContractCustomers, contractId, legalEntityId, dcRequest);
-            logger.debug("ContractCustomers table is populated. Valid ContractCustomers count : "
-                    +createdValidContractCustomers.size());
+			validContractCustomers = getValidContractCustomers(contractCustomers, true, legalEntityId, dcRequest);
+			if (validContractCustomers == null || validContractCustomers.isEmpty()) {
+				throw new ApplicationException(ErrorCodeEnum.ERR_10368);
+			}
 
-            Map<String, Set<ContractAccountsDTO>> createdCustomerAccounts = createContractAccounts(contractCustomers,
-                    createdValidContractCustomers, null, contractId, legalEntityId, dcRequest);
-            logger.debug("Contractaccount table is populated");
-            createExcludedContractAccounts(contractCustomers, contractId, legalEntityId, dcRequest);
-            logger.debug("excludedContractaccount table is populated");
+			checkIfPayloadContainsValidAccountsForAllCustomers(contractCustomers, null, dcRequest);
+
+			List<AddressDTO> addressList = DTOUtils.getDTOList(address, AddressDTO.class);
+
+			String contractStatus = getAutoApprovalStatus(isDefaultActionsEnabled, dcRequest);
+
+			ContractDTO contractDTO = createContract(contractName, serviceDefinitionId, serviceDefinitionType, faxId,
+					contractStatus, legalEntityId, dcRequest);
+			logger.debug("contract table is populated");
+			contractId = contractDTO.getId();
+			createContractCommunication(communication, contractId, legalEntityId, dcRequest);
+			logger.debug("ContractCommunication table is populated");
+			createContractAddress(addressList, contractId, legalEntityId, dcRequest);
+			logger.debug("ContractAddress table is populated");
+			Set<String> createdValidContractCustomers = createContractCustomers(contractCustomers,
+					validContractCustomers, contractId, legalEntityId, dcRequest);
+			logger.debug("ContractCustomers table is populated. Valid ContractCustomers count : "
+					+ createdValidContractCustomers.size());
+
+			Map<String, Set<ContractAccountsDTO>> createdCustomerAccounts = createContractAccounts(contractCustomers,
+					createdValidContractCustomers, null, contractId, legalEntityId, dcRequest);
+			logger.debug("Contractaccount table is populated");
+			createExcludedContractAccounts(contractCustomers, contractId, legalEntityId, dcRequest);
+			logger.debug("excludedContractaccount table is populated");
 
 			/*
 			 * Map<String, Set<String>> featuresCreated =
 			 * createContractFeatures(contractCustomers, createdValidContractCustomers,
 			 * null, contractId, serviceDefinitionType, isDefaultActionsEnabled, dcRequest);
 			 */
-            if (!isValidContractActionLimits(transactionLimitsJsonArray, validContractCustomers, contractId, serviceDefinitionType,
-                    dcRequest)) {
-            	logger.debug("ContractActionLimits validation failed");
-                throw new ApplicationException(ErrorCodeEnum.ERR_10420);
-            }
+			if (!isValidContractActionLimits(transactionLimitsJsonArray, validContractCustomers, contractId,
+					serviceDefinitionType,
+					dcRequest)) {
+				logger.debug("ContractActionLimits validation failed");
+				throw new ApplicationException(ErrorCodeEnum.ERR_10420);
+			}
 			/*
 			 * if (DBPUtilitiesConstants.BOOLEAN_STRING_FALSE.equalsIgnoreCase(
 			 * isDefaultActionsEnabled)) { createContractActionLimits(contractCustomers,
 			 * featuresCreated, contractId, serviceDefinitionType, dcRequest); }
 			 */
-            if (DBPUtilitiesConstants.BOOLEAN_STRING_TRUE.equals(isDefaultActionsEnabled)) {
-                createContractDefaultFeatureActionLimits(contractCustomers, createdValidContractCustomers,
-                        createdCustomerAccounts, null, contractId, serviceDefinitionType, "true", serviceDefinitionId,
-                        legalEntityId, dcRequest);
-                ContractFeatureActionsBusinessDelegate contractFeatureActionBusinessDelegate = DBPAPIAbstractFactoryImpl
-                        .getBusinessDelegate(ContractFeatureActionsBusinessDelegate.class);
-                contractFeatureActionBusinessDelegate.createDefaultContractActionLimits(contractId,
-                		legalEntityId, dcRequest.getHeaderMap());
-            } else {
-                JsonObject contractActionObj = new JsonObject();
-                contractActionObj.add("accountLevelPermissions", accountLevelPermissionsJsonArray);
-                contractActionObj.add("globalLevelPermissions", globalLevelPermissionsJsonArray);
-                contractActionObj.add("transactionLimits", transactionLimitsJsonArray);
-                contractActionObj.addProperty("serviceDefinitionType", serviceDefinitionType);
+			if (DBPUtilitiesConstants.BOOLEAN_STRING_TRUE.equals(isDefaultActionsEnabled)) {
+				createContractDefaultFeatureActionLimits(contractCustomers, createdValidContractCustomers,
+						createdCustomerAccounts, null, contractId, serviceDefinitionType, "true", serviceDefinitionId,
+						legalEntityId, dcRequest);
+				ContractFeatureActionsBusinessDelegate contractFeatureActionBusinessDelegate = DBPAPIAbstractFactoryImpl
+						.getBusinessDelegate(ContractFeatureActionsBusinessDelegate.class);
+				contractFeatureActionBusinessDelegate.createDefaultContractActionLimits(contractId,
+						legalEntityId, dcRequest.getHeaderMap());
+			} else {
+				JsonObject contractActionObj = new JsonObject();
+				contractActionObj.add("accountLevelPermissions", accountLevelPermissionsJsonArray);
+				contractActionObj.add("globalLevelPermissions", globalLevelPermissionsJsonArray);
+				contractActionObj.add("transactionLimits", transactionLimitsJsonArray);
+				contractActionObj.addProperty("serviceDefinitionType", serviceDefinitionType);
 
-                ContractBusinessDelegate ContractBusinessDelegate = DBPAPIAbstractFactoryImpl
-                        .getBusinessDelegate(ContractBusinessDelegate.class);
-                ContractBusinessDelegate.createContractActionLimit(contractActionObj, contractId,
-                		legalEntityId, dcRequest.getHeaderMap());
+				ContractBusinessDelegate ContractBusinessDelegate = DBPAPIAbstractFactoryImpl
+						.getBusinessDelegate(ContractBusinessDelegate.class);
+				ContractBusinessDelegate.createContractActionLimit(contractActionObj, contractId,
+						legalEntityId, dcRequest.getHeaderMap());
 
-            }
-            logger.debug("contract actions created");
-            createDefaultApprovalMatrixEntry(contractCustomers, contractId, createdValidContractCustomers, dcRequest, legalEntityId);
-            logger.debug("Default Approval Matrix created");
-            result.addParam(new Param(CONTRACT_ID, contractId, DBPUtilitiesConstants.STRING_TYPE));
-            result.addParam(new Param("status", "success", DBPUtilitiesConstants.STRING_TYPE));
+			}
+			logger.debug("contract actions created");
+			createDefaultApprovalMatrixEntry(contractCustomers, contractId, createdValidContractCustomers, dcRequest,
+					legalEntityId);
+			logger.debug("Default Approval Matrix created");
+			result.addParam(new Param(CONTRACT_ID, contractId, DBPUtilitiesConstants.STRING_TYPE));
+			result.addParam(new Param("status", "success", DBPUtilitiesConstants.STRING_TYPE));
 
-            // Below parameters are added in request to use while enrolling the contract
-            dcRequest.setAttribute("serviceType", serviceDefinitionType);
-            dcRequest.setAttribute("createdValidCustomers", createdValidContractCustomers);
-            dcRequest.setAttribute("createdCustomerAccounts", createdCustomerAccounts);
-            dcRequest.setAttribute("createdCustomerAccounts", createdCustomerAccounts);
-            dcRequest.setAttribute("contractStatus", contractDTO.getStatusId());
-            dcRequest.setAttribute("contractId", contractId);
-            
-        } catch (ApplicationException e) {
-        	logger.error("Error occured", e);
-            throw new ApplicationException(e.getErrorCodeEnum());
-        } catch (Exception e) {
-            logger.error("Error occured", e);
-            throw new ApplicationException(ErrorCodeEnum.ERR_10351);
+			// Below parameters are added in request to use while enrolling the contract
+			dcRequest.setAttribute("serviceType", serviceDefinitionType);
+			dcRequest.setAttribute("createdValidCustomers", createdValidContractCustomers);
+			dcRequest.setAttribute("createdCustomerAccounts", createdCustomerAccounts);
+			dcRequest.setAttribute("createdCustomerAccounts", createdCustomerAccounts);
+			dcRequest.setAttribute("contractStatus", contractDTO.getStatusId());
+			dcRequest.setAttribute("contractId", contractId);
 
-        }
-        return result;
-    }
+		} catch (ApplicationException e) {
+			logger.error("Error occured", e);
+			throw new ApplicationException(e.getErrorCodeEnum());
+		} catch (Exception e) {
+			logger.error("Error occured", e);
+			throw new ApplicationException(ErrorCodeEnum.ERR_10351);
 
-    private void createExcludedContractAccounts(String contractCustomers, String contractId,
-    		String legalEntityId, DataControllerRequest dcRequest) throws ApplicationException {
-        
-        JsonArray contractCustomersArray = JSONUtil.parseAsJsonArray(contractCustomers);
+		}
+		return result;
+	}
 
-        ExcludedContractAccountsBusinessDelegate contractAccountsBD = DBPAPIAbstractFactoryImpl
-                .getBusinessDelegate(ExcludedContractAccountsBusinessDelegate.class);
+	private void createExcludedContractAccounts(String contractCustomers, String contractId,
+			String legalEntityId, DataControllerRequest dcRequest) throws ApplicationException {
 
-        for (JsonElement customerElement : contractCustomersArray) {
-            JsonObject customerJson = customerElement.isJsonObject() ? customerElement.getAsJsonObject()
-                    : new JsonObject();
-            if (JSONUtil.hasKey(customerJson, CORECUSTOMERID) && JSONUtil.hasKey(customerJson, EXCLUDED_ACCOUNTS)
-                    && customerJson.get(EXCLUDED_ACCOUNTS).isJsonArray()) {
-                String coreCustomerId = JSONUtil.getString(customerJson, CORECUSTOMERID);
-                JsonArray accountsArray = customerJson.get(EXCLUDED_ACCOUNTS).getAsJsonArray();
+		JsonArray contractCustomersArray = JSONUtil.parseAsJsonArray(contractCustomers);
 
-                for (JsonElement accountElement : accountsArray) {
-                    JsonObject accountObject = accountElement.isJsonObject() ? accountElement.getAsJsonObject()
-                            : new JsonObject();
-                    String accountId = JSONUtil.hasKey(accountObject, ACCOUNTID)
-                            ? accountObject.get(ACCOUNTID).getAsString()
-                            : "";
-                    String accountName = JSONUtil.hasKey(accountObject, ACCOUNTNAME)
-                            ? accountObject.get(ACCOUNTNAME).getAsString()
-                            : "";
-                    String typeId = JSONUtil.hasKey(accountObject, TYPEID) ? accountObject.get(TYPEID).getAsString()
-                            : "";
-                    String ownerType = JSONUtil.hasKey(accountObject, OWNERTYPE)
-                            ? accountObject.get(OWNERTYPE).getAsString()
-                            : "";
-                    String arrangementId = JSONUtil.hasKey(accountObject, ARRANGEMENTID)
-                            ? accountObject.get(ARRANGEMENTID).getAsString()
-                            : "";
-                    String accountStatus = JSONUtil.hasKey(accountObject, ACCOUNTSTATUS)
-                            ? accountObject.get(ACCOUNTSTATUS).getAsString()
-                            : DBPUtilitiesConstants.DEFAULT_ACCOUNT_STATUS;
-                    String accountType = JSONUtil.hasKey(accountObject, ACCOUNTTYPE)
-                            ? accountObject.get(ACCOUNTTYPE).getAsString()
-                            : "";           
+		ExcludedContractAccountsBusinessDelegate contractAccountsBD = DBPAPIAbstractFactoryImpl
+				.getBusinessDelegate(ExcludedContractAccountsBusinessDelegate.class);
 
-                    if (StringUtils.isNotBlank(accountId)) {
+		for (JsonElement customerElement : contractCustomersArray) {
+			JsonObject customerJson = customerElement.isJsonObject() ? customerElement.getAsJsonObject()
+					: new JsonObject();
+			if (JSONUtil.hasKey(customerJson, CORECUSTOMERID) && JSONUtil.hasKey(customerJson, EXCLUDED_ACCOUNTS)
+					&& customerJson.get(EXCLUDED_ACCOUNTS).isJsonArray()) {
+				String coreCustomerId = JSONUtil.getString(customerJson, CORECUSTOMERID);
+				JsonArray accountsArray = customerJson.get(EXCLUDED_ACCOUNTS).getAsJsonArray();
 
-                        ExcludedContractAccountDTO contractAccountDTO = new ExcludedContractAccountDTO();
-                        contractAccountDTO.setAccountId(accountId);
-                        contractAccountDTO.setAccountName(accountName);
-                        contractAccountDTO.setContractId(contractId);
-                        contractAccountDTO.setCoreCustomerId(coreCustomerId);
-                        contractAccountDTO.setId(idFormatter.format(new Date()));
-                        contractAccountDTO.setTypeId(typeId);
-                        contractAccountDTO.setOwnerType(ownerType);
-                        contractAccountDTO.setArrangementId(arrangementId);
-                        contractAccountDTO.setStatusDesc(accountStatus);
-                        contractAccountDTO.setAccountType(accountType);
-                        contractAccountDTO.setCompanyLegalUnit(legalEntityId);
-                        ExcludedContractAccountDTO createdAcontractAccountDTO = contractAccountsBD
-                                .getExcludedContractAccount(contractAccountDTO, dcRequest.getHeaderMap());
+				for (JsonElement accountElement : accountsArray) {
+					JsonObject accountObject = accountElement.isJsonObject() ? accountElement.getAsJsonObject()
+							: new JsonObject();
+					String accountId = JSONUtil.hasKey(accountObject, ACCOUNTID)
+							? accountObject.get(ACCOUNTID).getAsString()
+							: "";
+					String accountName = JSONUtil.hasKey(accountObject, ACCOUNTNAME)
+							? accountObject.get(ACCOUNTNAME).getAsString()
+							: "";
+					String typeId = JSONUtil.hasKey(accountObject, TYPEID) ? accountObject.get(TYPEID).getAsString()
+							: "";
+					String ownerType = JSONUtil.hasKey(accountObject, OWNERTYPE)
+							? accountObject.get(OWNERTYPE).getAsString()
+							: "";
+					String arrangementId = JSONUtil.hasKey(accountObject, ARRANGEMENTID)
+							? accountObject.get(ARRANGEMENTID).getAsString()
+							: "";
+					String accountStatus = JSONUtil.hasKey(accountObject, ACCOUNTSTATUS)
+							? accountObject.get(ACCOUNTSTATUS).getAsString()
+							: DBPUtilitiesConstants.DEFAULT_ACCOUNT_STATUS;
+					String accountType = JSONUtil.hasKey(accountObject, ACCOUNTTYPE)
+							? accountObject.get(ACCOUNTTYPE).getAsString()
+							: "";
 
-                        if (createdAcontractAccountDTO == null
-                                || StringUtils.isBlank(createdAcontractAccountDTO.getId())) {
+					if (StringUtils.isNotBlank(accountId)) {
 
-                            contractAccountDTO = contractAccountsBD.createExcludedContractAccount(contractAccountDTO,
-                                    dcRequest.getHeaderMap());
-                            if (null == contractAccountDTO || StringUtils.isBlank(contractAccountDTO.getId())) {
-                            	logger.debug("ExcludedContractaccount creation failed for accountId "+accountId);
-                                throw new ApplicationException(ErrorCodeEnum.ERR_10413);
-                            }
-                        }
+						ExcludedContractAccountDTO contractAccountDTO = new ExcludedContractAccountDTO();
+						contractAccountDTO.setAccountId(accountId);
+						contractAccountDTO.setAccountName(accountName);
+						contractAccountDTO.setContractId(contractId);
+						contractAccountDTO.setCoreCustomerId(coreCustomerId);
+						contractAccountDTO.setId(idFormatter.format(new Date()));
+						contractAccountDTO.setTypeId(typeId);
+						contractAccountDTO.setOwnerType(ownerType);
+						contractAccountDTO.setArrangementId(arrangementId);
+						contractAccountDTO.setStatusDesc(accountStatus);
+						contractAccountDTO.setAccountType(accountType);
+						contractAccountDTO.setCompanyLegalUnit(legalEntityId);
+						ExcludedContractAccountDTO createdAcontractAccountDTO = contractAccountsBD
+								.getExcludedContractAccount(contractAccountDTO, dcRequest.getHeaderMap());
 
-                    }
+						if (createdAcontractAccountDTO == null
+								|| StringUtils.isBlank(createdAcontractAccountDTO.getId())) {
 
-                }
-            }
+							contractAccountDTO = contractAccountsBD.createExcludedContractAccount(contractAccountDTO,
+									dcRequest.getHeaderMap());
+							if (null == contractAccountDTO || StringUtils.isBlank(contractAccountDTO.getId())) {
+								logger.debug("ExcludedContractaccount creation failed for accountId " + accountId);
+								throw new ApplicationException(ErrorCodeEnum.ERR_10413);
+							}
+						}
 
-        }
+					}
 
-    }
+				}
+			}
 
-    private void checkIfPayloadContainsValidAccountsForAllCustomers(String contractCustomers, String contractId,
-            DataControllerRequest dcRequest) throws ApplicationException {
-        
-        JsonArray contractCustomersArray = JSONUtil.parseAsJsonArray(contractCustomers);
-        boolean accountsStatus = false;
+		}
 
-        ContractAccountsBusinessDelegate contractAccountsBD = DBPAPIAbstractFactoryImpl
-                .getBusinessDelegate(ContractAccountsBusinessDelegate.class);
-        Set<String> givenAccountsList = new HashSet<>();
+	}
 
-        for (JsonElement customerElement : contractCustomersArray) {
-            JsonObject customerJson = customerElement.isJsonObject() ? customerElement.getAsJsonObject()
-                    : new JsonObject();
-            if (JSONUtil.hasKey(customerJson, CORECUSTOMERID)
-                    && StringUtils.isNotBlank(customerJson.get(CORECUSTOMERID).getAsString())
-                    && JSONUtil.hasKey(customerJson, ACCOUNTS) && customerJson.get(ACCOUNTS).isJsonArray()) {
-                JsonArray accountsArray = customerJson.get(ACCOUNTS).getAsJsonArray();
+	private void checkIfPayloadContainsValidAccountsForAllCustomers(String contractCustomers, String contractId,
+			DataControllerRequest dcRequest) throws ApplicationException {
 
-                if (accountsArray.size() == 0) {
-                	logger.debug("no accounts in the contract payload");
-                    throw new ApplicationException(ErrorCodeEnum.ERR_10408);
-                }
+		JsonArray contractCustomersArray = JSONUtil.parseAsJsonArray(contractCustomers);
+		boolean accountsStatus = false;
 
-                for (JsonElement accountElement : accountsArray) {
-                    JsonObject accountObject = accountElement.isJsonObject() ? accountElement.getAsJsonObject()
-                            : new JsonObject();
-                    String accountId = accountObject.has(ACCOUNTID) ? accountObject.get(ACCOUNTID).getAsString() : "";
-                    String accountName = accountObject.has(ACCOUNTNAME) ? accountObject.get(ACCOUNTNAME).getAsString()
-                            : "";
-                    String typeId = accountObject.has(TYPEID) ? accountObject.get(TYPEID).getAsString() : "";
+		ContractAccountsBusinessDelegate contractAccountsBD = DBPAPIAbstractFactoryImpl
+				.getBusinessDelegate(ContractAccountsBusinessDelegate.class);
+		Set<String> givenAccountsList = new HashSet<>();
 
-                    if (StringUtils.isBlank(accountId) || StringUtils.isBlank(accountName)
-                            || StringUtils.isBlank(typeId)) {
-                    	logger.debug("incorrect details in the contract payload accountId,accountName,typeId : "
-                    			+StringUtils.isBlank(accountId)+", "
-                    			+StringUtils.isBlank(accountName)+", "+StringUtils.isBlank(typeId));
-                        throw new ApplicationException(ErrorCodeEnum.ERR_10409);
-                    }
-                    givenAccountsList.add(accountId);
-                }
-            } else {
-            	logger.debug("incorrect contract payload");
-                throw new ApplicationException(ErrorCodeEnum.ERR_10410);
-            }
-        }
-        if (StringUtils.isNotBlank(contractId)) {
-            Set<String> existingContractAccounts = new HashSet<>();
-            Set<String> newlyAddedAccounts = new HashSet<>();
-            List<ContractAccountsDTO> contractAccountsList = contractAccountsBD.getContractCustomerAccounts(contractId,
-                    null, dcRequest.getHeaderMap());
-            for (ContractAccountsDTO dto : contractAccountsList) {
-                String accountId = dto.getAccountId();
-                if (StringUtils.isNotBlank(accountId)) {
-                    existingContractAccounts.add(accountId);
-                }
-            }
+		for (JsonElement customerElement : contractCustomersArray) {
+			JsonObject customerJson = customerElement.isJsonObject() ? customerElement.getAsJsonObject()
+					: new JsonObject();
+			if (JSONUtil.hasKey(customerJson, CORECUSTOMERID)
+					&& StringUtils.isNotBlank(customerJson.get(CORECUSTOMERID).getAsString())
+					&& JSONUtil.hasKey(customerJson, ACCOUNTS) && customerJson.get(ACCOUNTS).isJsonArray()) {
+				JsonArray accountsArray = customerJson.get(ACCOUNTS).getAsJsonArray();
 
-            for (String givenAccountId : givenAccountsList) {
-                if (!existingContractAccounts.contains(givenAccountId)) {
-                    newlyAddedAccounts.add(givenAccountId);
-                }
-            }
+				if (accountsArray.size() == 0) {
+					logger.debug("no accounts in the contract payload");
+					throw new ApplicationException(ErrorCodeEnum.ERR_10408);
+				}
 
-            accountsStatus = contractAccountsBD.checkIfGivenAccountsAreValid(newlyAddedAccounts,
-                    dcRequest.getHeaderMap());
-        } else {
-            accountsStatus = contractAccountsBD.checkIfGivenAccountsAreValid(givenAccountsList,
-                    dcRequest.getHeaderMap());
-        }
+				for (JsonElement accountElement : accountsArray) {
+					JsonObject accountObject = accountElement.isJsonObject() ? accountElement.getAsJsonObject()
+							: new JsonObject();
+					String accountId = accountObject.has(ACCOUNTID) ? accountObject.get(ACCOUNTID).getAsString() : "";
+					String accountName = accountObject.has(ACCOUNTNAME) ? accountObject.get(ACCOUNTNAME).getAsString()
+							: "";
+					String typeId = accountObject.has(TYPEID) ? accountObject.get(TYPEID).getAsString() : "";
 
-        if (!accountsStatus) {
-        	logger.debug("incorrect accountsStatus in contract payload");
-            throw new ApplicationException(ErrorCodeEnum.ERR_10412);
-        }
-    }
+					if (StringUtils.isBlank(accountId) || StringUtils.isBlank(accountName)
+							|| StringUtils.isBlank(typeId)) {
+						logger.debug("incorrect details in the contract payload accountId,accountName,typeId : "
+								+ StringUtils.isBlank(accountId) + ", "
+								+ StringUtils.isBlank(accountName) + ", " + StringUtils.isBlank(typeId));
+						throw new ApplicationException(ErrorCodeEnum.ERR_10409);
+					}
+					givenAccountsList.add(accountId);
+				}
+			} else {
+				logger.debug("incorrect contract payload");
+				throw new ApplicationException(ErrorCodeEnum.ERR_10410);
+			}
+		}
+		if (StringUtils.isNotBlank(contractId)) {
+			Set<String> existingContractAccounts = new HashSet<>();
+			Set<String> newlyAddedAccounts = new HashSet<>();
+			List<ContractAccountsDTO> contractAccountsList = contractAccountsBD.getContractCustomerAccounts(contractId,
+					null, dcRequest.getHeaderMap());
+			for (ContractAccountsDTO dto : contractAccountsList) {
+				String accountId = dto.getAccountId();
+				if (StringUtils.isNotBlank(accountId)) {
+					existingContractAccounts.add(accountId);
+				}
+			}
 
-    private boolean verifyContractName(String contarctId, String contractName, DataControllerRequest dcRequest)
-            throws ApplicationException {
-        ContractBusinessDelegate contractBD = DBPAPIAbstractFactoryImpl
-                .getBusinessDelegate(ContractBusinessDelegate.class);
-        ContractDTO dto = new ContractDTO();
-        ContractDTO resultContractDTO;
-        if (StringUtils.isBlank(contarctId) && StringUtils.isNotBlank(contractName)) {
-            dto.setName(contractName);
-            resultContractDTO = contractBD.getContractDetails(dto, dcRequest.getHeaderMap());
-            if (null == resultContractDTO || StringUtils.isBlank(resultContractDTO.getId())) {
-                return true;
-            }
-        } else if (StringUtils.isNotBlank(contarctId) && StringUtils.isNotBlank(contractName)) {
-            dto.setName(contractName);
-            resultContractDTO = contractBD.getContractDetails(dto, dcRequest.getHeaderMap());
-            if (null == resultContractDTO || StringUtils.isBlank(resultContractDTO.getId())
-                    || (StringUtils.isNotBlank(resultContractDTO.getId())
-                            && contarctId.equalsIgnoreCase(resultContractDTO.getId()))) {
-                return true;
+			for (String givenAccountId : givenAccountsList) {
+				if (!existingContractAccounts.contains(givenAccountId)) {
+					newlyAddedAccounts.add(givenAccountId);
+				}
+			}
 
-            }
+			accountsStatus = contractAccountsBD.checkIfGivenAccountsAreValid(newlyAddedAccounts,
+					dcRequest.getHeaderMap());
+		} else {
+			accountsStatus = contractAccountsBD.checkIfGivenAccountsAreValid(givenAccountsList,
+					dcRequest.getHeaderMap());
+		}
 
-        }
-        return false;
+		if (!accountsStatus) {
+			logger.debug("incorrect accountsStatus in contract payload");
+			throw new ApplicationException(ErrorCodeEnum.ERR_10412);
+		}
+	}
 
-    }
+	private boolean verifyContractName(String contarctId, String contractName, DataControllerRequest dcRequest)
+			throws ApplicationException {
+		ContractBusinessDelegate contractBD = DBPAPIAbstractFactoryImpl
+				.getBusinessDelegate(ContractBusinessDelegate.class);
+		ContractDTO dto = new ContractDTO();
+		ContractDTO resultContractDTO;
+		if (StringUtils.isBlank(contarctId) && StringUtils.isNotBlank(contractName)) {
+			dto.setName(contractName);
+			resultContractDTO = contractBD.getContractDetails(dto, dcRequest.getHeaderMap());
+			if (null == resultContractDTO || StringUtils.isBlank(resultContractDTO.getId())) {
+				return true;
+			}
+		} else if (StringUtils.isNotBlank(contarctId) && StringUtils.isNotBlank(contractName)) {
+			dto.setName(contractName);
+			resultContractDTO = contractBD.getContractDetails(dto, dcRequest.getHeaderMap());
+			if (null == resultContractDTO || StringUtils.isBlank(resultContractDTO.getId())
+					|| (StringUtils.isNotBlank(resultContractDTO.getId())
+							&& contarctId.equalsIgnoreCase(resultContractDTO.getId()))) {
+				return true;
 
-    private void createDefaultApprovalMatrixEntry(String contractCustomers, String contractId,
-            Set<String> createdValidContractCoreCustomers, DataControllerRequest dcRequest, String legalEntityId )
-            throws ApplicationException {
-        JsonParser parser = new JsonParser();
-        JsonArray contractCustomersArray = parser.parse(contractCustomers).getAsJsonArray();
-        ContractCoreCustomerBusinessDelegate contractCoreCustomerBD = DBPAPIAbstractFactoryImpl
-                .getBusinessDelegate(ContractCoreCustomerBusinessDelegate.class);
+			}
 
-        ApprovalMatrixBusinessDelegate approvalmatrixDelegate = DBPAPIAbstractFactoryImpl.getInstance()
-                .getFactoryInstance(BusinessDelegateFactory.class)
-                .getBusinessDelegate(ApprovalMatrixBusinessDelegate.class);
+		}
+		return false;
 
-        for (JsonElement customerElement : contractCustomersArray) {
-            JsonObject customerJson = customerElement.isJsonObject() ? customerElement.getAsJsonObject()
-                    : new JsonObject();
-            if (JSONUtil.hasKey(customerJson, CORECUSTOMERID) && JSONUtil.hasKey(customerJson, ACCOUNTS)
-                    && customerJson.get(ACCOUNTS).isJsonArray()
-                    && createdValidContractCoreCustomers.contains(JSONUtil.getString(customerJson, CORECUSTOMERID))) {
+	}
 
-                String coreCustomerId = JSONUtil.getString(customerJson, CORECUSTOMERID);
-                Map<String, Set<String>> contractCoreCustomerDetailsMap = contractCoreCustomerBD
-                        .getCoreCustomerAccountsFeaturesActions(contractId, coreCustomerId, dcRequest.getHeaderMap());
+	private void createDefaultApprovalMatrixEntry(String contractCustomers, String contractId,
+			Set<String> createdValidContractCoreCustomers, DataControllerRequest dcRequest, String legalEntityId)
+			throws ApplicationException {
+		JsonParser parser = new JsonParser();
+		JsonArray contractCustomersArray = parser.parse(contractCustomers).getAsJsonArray();
+		ContractCoreCustomerBusinessDelegate contractCoreCustomerBD = DBPAPIAbstractFactoryImpl
+				.getBusinessDelegate(ContractCoreCustomerBusinessDelegate.class);
 
-                Set<String> customerAccounts = contractCoreCustomerDetailsMap.get("accounts");
-                Set<String> customerActions = contractCoreCustomerDetailsMap.get("actions");
-                customerActions = getActionWithApproveFeatureAction(customerActions, legalEntityId, dcRequest);
+		ApprovalMatrixBusinessDelegate approvalmatrixDelegate = DBPAPIAbstractFactoryImpl.getInstance()
+				.getFactoryInstance(BusinessDelegateFactory.class)
+				.getBusinessDelegate(ApprovalMatrixBusinessDelegate.class);
 
-                try {
-                    approvalmatrixDelegate.createDefaultApprovalMatrixEntry(contractId,
-                            String.join(DBPUtilitiesConstants.COMMA_SEPERATOR, customerAccounts),
-                            customerActions.toArray(new String[0]), coreCustomerId, legalEntityId);
-                } catch (Exception e) {
-                    logger.error("failed to create approval matrix", e);
-                }
+		for (JsonElement customerElement : contractCustomersArray) {
+			JsonObject customerJson = customerElement.isJsonObject() ? customerElement.getAsJsonObject()
+					: new JsonObject();
+			if (JSONUtil.hasKey(customerJson, CORECUSTOMERID) && JSONUtil.hasKey(customerJson, ACCOUNTS)
+					&& customerJson.get(ACCOUNTS).isJsonArray()
+					&& createdValidContractCoreCustomers.contains(JSONUtil.getString(customerJson, CORECUSTOMERID))) {
 
-            }
-        }
+				String coreCustomerId = JSONUtil.getString(customerJson, CORECUSTOMERID);
+				Map<String, Set<String>> contractCoreCustomerDetailsMap = contractCoreCustomerBD
+						.getCoreCustomerAccountsFeaturesActions(contractId, coreCustomerId, dcRequest.getHeaderMap());
 
-    }
+				Set<String> customerAccounts = contractCoreCustomerDetailsMap.get("accounts");
+				Set<String> customerActions = contractCoreCustomerDetailsMap.get("actions");
+				customerActions = getActionWithApproveFeatureAction(customerActions, legalEntityId, dcRequest);
 
-    private Set<String> getActionWithApproveFeatureAction(Set<String> actionsSet, String legalEntityId, DataControllerRequest dcRequest)
-            throws ApplicationException {
-        StringBuilder actionsString = new StringBuilder();
-        for (String action : actionsSet) {
-            actionsString.append(action);
-            actionsString.append(",");
-        }
-        if (actionsString.length() > 0)
-            actionsString.replace(actionsString.length() - 1, actionsString.length(), "");
+				try {
+					approvalmatrixDelegate.createDefaultApprovalMatrixEntry(contractId,
+							String.join(DBPUtilitiesConstants.COMMA_SEPERATOR, customerAccounts),
+							customerActions.toArray(new String[0]), coreCustomerId, legalEntityId);
+				} catch (Exception e) {
+					logger.error("failed to create approval matrix", e);
+				}
 
-        ContractFeatureActionsBusinessDelegate contractFeaturesBD = DBPAPIAbstractFactoryImpl
-                .getBusinessDelegate(ContractFeatureActionsBusinessDelegate.class);
+			}
+		}
+
+	}
+
+	private Set<String> getActionWithApproveFeatureAction(Set<String> actionsSet, String legalEntityId,
+			DataControllerRequest dcRequest)
+			throws ApplicationException {
+		StringBuilder actionsString = new StringBuilder();
+		for (String action : actionsSet) {
+			actionsString.append(action);
+			actionsString.append(",");
+		}
+		if (actionsString.length() > 0)
+			actionsString.replace(actionsString.length() - 1, actionsString.length(), "");
+
+		ContractFeatureActionsBusinessDelegate contractFeaturesBD = DBPAPIAbstractFactoryImpl
+				.getBusinessDelegate(ContractFeatureActionsBusinessDelegate.class);
 
 		String actions = contractFeaturesBD.getActionsWithApproveFeatureAction(actionsString.toString(), legalEntityId,
 				dcRequest.getHeaderMap());
 
-        return HelperMethods.splitString(actions, DBPUtilitiesConstants.COMMA_SEPERATOR);
-
-    }
-
-    private String getServiceType(String serviceDefinitionId, DataControllerRequest dcRequest)
-            throws ApplicationException {
-        ServiceDefinitionDTO dto = new ServiceDefinitionDTO();
-        dto.setId(serviceDefinitionId);
-        ServiceDefinitionBusinessDelegate serviceBD = DBPAPIAbstractFactoryImpl
-                .getBusinessDelegate(ServiceDefinitionBusinessDelegate.class);
-        dto = serviceBD.getServiceDefinitionDetails(dto, dcRequest.getHeaderMap());
-        if (dto == null || StringUtils.isBlank(dto.getId()) || StringUtils.isBlank(dto.getServiceType())) {
-            throw new ApplicationException(ErrorCodeEnum.ERR_10377);
-        }
-
-        return dto.getServiceType();
-    }
-
-    private Set<String> getValidContractCustomers(String contractCustomers,
-            boolean checkIfAtleastOnePrimaryCustomerInGivenList, String legalEntityId, DataControllerRequest dcRequest)
-            throws ApplicationException {
-        boolean isAtleastaCustomerisPrimary = false;
-      
-        Set<String> givenCustomers = new HashSet<>();
-        
-        JsonArray contractCustomersArray = JSONUtil.parseAsJsonArray(contractCustomers);
-        ContractCoreCustomerBusinessDelegate customerBD = DBPAPIAbstractFactoryImpl
-                .getBusinessDelegate(ContractCoreCustomerBusinessDelegate.class);
-        for (JsonElement customerElement : contractCustomersArray) {
-            if (JSONUtil.isJsonNotNull(customerElement) && customerElement.isJsonObject()) {
-                JsonObject customerJson = customerElement.getAsJsonObject();
-                String customerId = customerJson.has(CORECUSTOMERID) ? customerJson.get(CORECUSTOMERID).getAsString()
-                        : "";
-                String isPrimary = customerJson.has(ISPRIMARY) ? customerJson.get(ISPRIMARY).getAsString() : "";
-                if (StringUtils.isNotBlank(customerId)) {
-                    givenCustomers.add(customerId);
-                }
-                if (StringUtils.isNotBlank(customerId) && !isAtleastaCustomerisPrimary
-                        && "true".equalsIgnoreCase(isPrimary)) {
-                    isAtleastaCustomerisPrimary = true;
-                }
-
-            }
-        }
-        if (checkIfAtleastOnePrimaryCustomerInGivenList && !isAtleastaCustomerisPrimary) {
-        	logger.debug("ContractCustomers validation failed "
-        			+ "[checkIfAtleastOnePrimaryCustomerInGivenList, isAtleastaCustomerisPrimary] : "
-        			+checkIfAtleastOnePrimaryCustomerInGivenList+", "+isAtleastaCustomerisPrimary);
-            throw new ApplicationException(ErrorCodeEnum.ERR_10369);
-        }
-        return customerBD.getValidCoreContractCustomers(givenCustomers, legalEntityId, dcRequest.getHeaderMap());
-    }
-
-    private Set<String> createContractCustomers(String contractCustomers, Set<String> validContractCustomers,
-            String contractId, String legalEntityId, DataControllerRequest dcRequest) throws ApplicationException {
-        Set<String> createdValidCustomers = new HashSet<>();
-        JsonArray contractCustomersArray = JSONUtil.parseAsJsonArray(contractCustomers);
-        ContractCoreCustomerBusinessDelegate customerBD = DBPAPIAbstractFactoryImpl
-                .getBusinessDelegate(ContractCoreCustomerBusinessDelegate.class);
-        for (JsonElement customerElement : contractCustomersArray) {
-            if (JSONUtil.isJsonNotNull(customerElement) && customerElement.isJsonObject()) {
-                JsonObject customerJson = customerElement.getAsJsonObject();
-                String customerId = customerJson.has(CORECUSTOMERID) ? customerJson.get(CORECUSTOMERID).getAsString()
-                        : "";
-                String isPrimary = customerJson.has(ISPRIMARY) ? customerJson.get(ISPRIMARY).getAsString() : "";
-                String customerName = customerJson.has(CORECUSTOMER_NAME)
-                        ? customerJson.get(CORECUSTOMER_NAME).getAsString()
-                        : "";
-                String isBusinessType = customerJson.has(ISBUSINESS) ? customerJson.get(ISBUSINESS).getAsString() : "";
-                String sectorId = customerJson.has(SECTORID) ? customerJson.get(SECTORID).getAsString() : "";
-                String implicitAccountAccess = customerJson.has(IMPLICIT_ACCOUNT_ACCESS)
-                        ? customerJson.get(IMPLICIT_ACCOUNT_ACCESS).getAsString()
-                        : "";
-                if (StringUtils.isBlank(customerId) || StringUtils.isBlank(customerName)) {
-                    return createdValidCustomers;
-                }
-
-                if (StringUtils.isBlank(implicitAccountAccess)
-                        || !DBPUtilitiesConstants.BOOLEAN_STRING_TRUE.equalsIgnoreCase(implicitAccountAccess)) {
-                    implicitAccountAccess = DBPUtilitiesConstants.BOOLEAN_STRING_FALSE;
-                }
-                if (!validContractCustomers.contains(customerId) || !JSONUtil.hasKey(customerJson, ACCOUNTS)
-                        || !customerJson.get(ACCOUNTS).isJsonArray()
-                        || customerJson.get(ACCOUNTS).getAsJsonArray().size() == 0) {
-                    continue;
-                }
-                ContractCoreCustomersDTO coreCustomerDTO = new ContractCoreCustomersDTO();
-                coreCustomerDTO.setContractId(contractId);
-                coreCustomerDTO.setCoreCustomerId(customerId);
-                coreCustomerDTO.setId(idFormatter.format(new Date()));
-                coreCustomerDTO.setCoreCustomerName(customerName);
-                coreCustomerDTO.setImplicitAccountAccess(implicitAccountAccess);
-                if (isBusinessType.equalsIgnoreCase(DBPUtilitiesConstants.BOOLEAN_STRING_TRUE)) {
-                    coreCustomerDTO.setIsBusiness(DBPUtilitiesConstants.BOOLEAN_STRING_TRUE);
-                } else {
-                    coreCustomerDTO.setIsBusiness(DBPUtilitiesConstants.BOOLEAN_STRING_FALSE);
-                }
-
-                if (isPrimary.equalsIgnoreCase(DBPUtilitiesConstants.BOOLEAN_STRING_TRUE)) {
-                    coreCustomerDTO.setIsPrimary(DBPUtilitiesConstants.BOOLEAN_STRING_TRUE);
-                } else {
-                    coreCustomerDTO.setIsPrimary(DBPUtilitiesConstants.BOOLEAN_STRING_FALSE);
-                }
-
-                if (StringUtils.isNotBlank(sectorId)) {
-                    coreCustomerDTO.setSectorId(sectorId);
-                }
-                coreCustomerDTO.setCompanyLegalUnit(legalEntityId);
-
-                ContractCoreCustomersDTO resultCustomerDTO = customerBD.createContractCustomer(coreCustomerDTO,
-                        dcRequest.getHeaderMap());
-                if (resultCustomerDTO != null && StringUtils.isNotBlank(resultCustomerDTO.getCoreCustomerId())) {
-                    createdValidCustomers.add(customerId);
-                }
-
-            }
-
-        }
-
-        return createdValidCustomers;
-    }
-
-    private ContractDTO createContract(String contractName, String serviceDefinitionId, String serviceDefinitionType,
-            String faxId, String contractStatus, String legalEntityId, DataControllerRequest dcRequest) throws ApplicationException {
-        ContractDTO contractDTO = new ContractDTO();
-        contractDTO.setId(HelperMethods.generateUniqueContractId(dcRequest));
-        contractDTO.setName(contractName);
-        contractDTO.setServicedefinitionId(serviceDefinitionId);
-        contractDTO.setServiceType(serviceDefinitionType);
-        contractDTO.setFaxId(faxId);
-        contractDTO.setStatusId(contractStatus);
-        contractDTO.setCompanyLegalUnit(legalEntityId);
-
-        ContractBusinessDelegate contractBD = DBPAPIAbstractFactoryImpl
-                .getBusinessDelegate(ContractBusinessDelegate.class);
-        return contractBD.createContract(contractDTO, dcRequest.getHeaderMap());
-
-    }
-
-    private void createContractCommunication(String communication, String contractId, String legalEntityId, DataControllerRequest dcRequest)
-            throws ApplicationException {
-
-        if (StringUtils.isBlank(communication)) {
-            return;
-        }
-
-        ContractCommunicationBusinessDelegate contractCommunicationBD = DBPAPIAbstractFactoryImpl
-                .getBusinessDelegate(ContractCommunicationBusinessDelegate.class);
-        ContractCommunicationDTO contractCommunicationDTO = null;
-        JsonParser parser = new JsonParser();
-        JsonArray communicationArray = parser.parse(communication).getAsJsonArray();
-        for (JsonElement communicationElement : communicationArray) {
-            if (JSONUtil.isJsonNotNull(communicationElement) && communicationElement.isJsonObject()) {
-                JsonObject communicationJson = communicationElement.getAsJsonObject();
-                if (JSONUtil.hasKey(communicationJson, PHONE_NUMBER)
-                        && JSONUtil.hasKey(communicationJson, PHONE_COUNTRY_CODE)) {
-                    contractCommunicationDTO = new ContractCommunicationDTO();
-                    contractCommunicationDTO.setContractId(contractId);
-                    contractCommunicationDTO
-                            .setPhoneCountryCode(communicationJson.get(PHONE_COUNTRY_CODE).getAsString());
-                    contractCommunicationDTO.setValue(communicationJson.get(PHONE_NUMBER).getAsString());
-                    contractCommunicationDTO.setId(idFormatter.format(new Date()));
-                    contractCommunicationDTO.setIsPreferredContactMethod(DBPUtilitiesConstants.BOOLEAN_STRING_TRUE);
-                    contractCommunicationDTO.setTypeId(DBPUtilitiesConstants.COMM_TYPE_PHONE);
-                    contractCommunicationDTO.setCompanyLegalUnit(legalEntityId);
-                    contractCommunicationBD.createContractCommunication(contractCommunicationDTO,
-                            dcRequest.getHeaderMap());
-
-                }
-                if (JSONUtil.hasKey(communicationJson, EMAIL)) {
-                    contractCommunicationDTO = new ContractCommunicationDTO();
-                    contractCommunicationDTO.setContractId(contractId);
-                    contractCommunicationDTO.setValue(communicationJson.get(EMAIL).getAsString());
-                    contractCommunicationDTO.setId(idFormatter.format(new Date()));
-                    contractCommunicationDTO.setIsPreferredContactMethod(DBPUtilitiesConstants.BOOLEAN_STRING_TRUE);
-                    contractCommunicationDTO.setTypeId(DBPUtilitiesConstants.COMM_TYPE_EMAIL);
-                    contractCommunicationDTO.setCompanyLegalUnit(legalEntityId);
-                    contractCommunicationBD.createContractCommunication(contractCommunicationDTO,
-                            dcRequest.getHeaderMap());
-                }
-
-            }
-
-        }
-    }
-
-    private void createContractAddress(List<AddressDTO> addressList, String contractId, String legalEntityId, DataControllerRequest dcRequest)
-            throws ApplicationException {
-        AddressBusinessDelegate addressBD = DBPAPIAbstractFactoryImpl.getInstance()
-                .getFactoryInstance(BusinessDelegateFactory.class).getBusinessDelegate(AddressBusinessDelegate.class);
-
-        ContractAddressBusinessDelegate contractAddressBD = DBPAPIAbstractFactoryImpl
-                .getBusinessDelegate(ContractAddressBusinessDelegate.class);
-
-        for (AddressDTO inputDTO : addressList) {
-            inputDTO.setId(idFormatter.format(new Date()));
-            inputDTO.setCompanyLegalUnit(legalEntityId);
-            AddressDTO resultDTO = addressBD.createAddress(inputDTO, dcRequest.getHeaderMap());
-            if (null == resultDTO || StringUtils.isBlank(resultDTO.getId())) {
-                throw new ApplicationException(ErrorCodeEnum.ERR_10354);
-            }
-
-            ContractAddressDTO contractAddressDTO = new ContractAddressDTO();
-            contractAddressDTO.setId(idFormatter.format(new Date()));
-            contractAddressDTO.setContractId(contractId);
-            contractAddressDTO.setAddressId(resultDTO.getId());
-            contractAddressDTO.setCompanyLegalUnit(legalEntityId);
-
-            contractAddressBD.createContractAddress(contractAddressDTO, dcRequest.getHeaderMap());
-        }
-
-    }
-
-    /**
-     * 
-     * @param contractCustomers
-     * @param validContractCustomers
-     * @param coreCustomersAccountsMapToCreate
-     * @param contractId
-     * @param dcRequest
-     * @return
-     * @throws ApplicationException
-     */
-    private Map<String, Set<ContractAccountsDTO>> createContractAccounts(String contractCustomers,
-            Set<String> validContractCustomers, Map<String, Set<String>> coreCustomersAccountsMapToCreate,
-            String contractId, String legalEntityId, DataControllerRequest dcRequest) throws ApplicationException {
-        ContractAccountsDTO contractAccountDTO;
-
-        Map<String, Set<ContractAccountsDTO>> customerAccountsMap = new HashMap<>();
-        
-        JsonArray contractCustomersArray = JSONUtil.parseAsJsonArray(contractCustomers);
-
-        ContractAccountsBusinessDelegate contractAccountsBD = DBPAPIAbstractFactoryImpl
-                .getBusinessDelegate(ContractAccountsBusinessDelegate.class);
-
-        AccountsBusinessDelegate accountsBD = DBPAPIAbstractFactoryImpl.getInstance()
-                .getFactoryInstance(BusinessDelegateFactory.class).getBusinessDelegate(AccountsBusinessDelegate.class);
-
-        for (JsonElement customerElement : contractCustomersArray) {
-            JsonObject customerJson = customerElement.isJsonObject() ? customerElement.getAsJsonObject()
-                    : new JsonObject();
-            if (JSONUtil.hasKey(customerJson, CORECUSTOMERID)
-                    && validContractCustomers.contains(JSONUtil.getString(customerJson, CORECUSTOMERID))
-                    && (coreCustomersAccountsMapToCreate == null || coreCustomersAccountsMapToCreate
-                            .containsKey(JSONUtil.getString(customerJson, CORECUSTOMERID)))
-                    && JSONUtil.hasKey(customerJson, ACCOUNTS) && customerJson.get(ACCOUNTS).isJsonArray()) {
-                String coreCustomerId = JSONUtil.getString(customerJson, CORECUSTOMERID);
-                String coreCustomerName = JSONUtil.getString(customerJson, CORECUSTOMER_NAME);
-                JsonArray accountsArray = customerJson.get(ACCOUNTS).getAsJsonArray();
-
-                Set<ContractAccountsDTO> customerAccounts = new HashSet<>();
-
-                for (JsonElement accountElement : accountsArray) {
-                    JsonObject accountObject = accountElement.isJsonObject() ? accountElement.getAsJsonObject()
-                            : new JsonObject();
-                    String accountId = JSONUtil.hasKey(accountObject, ACCOUNTID)
-                            ? accountObject.get(ACCOUNTID).getAsString()
-                            : "";
-                    String accountName = JSONUtil.hasKey(accountObject, ACCOUNTNAME)
-                            ? accountObject.get(ACCOUNTNAME).getAsString()
-                            : "";
-                    String typeId = JSONUtil.hasKey(accountObject, TYPEID) ? accountObject.get(TYPEID).getAsString()
-                            : "";
-                    String ownerType = JSONUtil.hasKey(accountObject, OWNERTYPE)
-                            ? accountObject.get(OWNERTYPE).getAsString()
-                            : "";
-                    String arrangementId = JSONUtil.hasKey(accountObject, ARRANGEMENTID)
-                            ? accountObject.get(ARRANGEMENTID).getAsString()
-                            : "";
-                    String accountHoldername = JSONUtil.hasKey(accountObject, ACCOUNTHOLDERNAME)
-                            ? accountObject.get(ACCOUNTHOLDERNAME).getAsString()
-                            : "";
-                    String accountStatus = StringUtils.isNotBlank(JSONUtil.getString(accountObject, ACCOUNTSTATUS))
-                            ? JSONUtil.getString(accountObject, ACCOUNTSTATUS)
-                            : DBPUtilitiesConstants.DEFAULT_ACCOUNT_STATUS;
-                    String accountType = JSONUtil.hasKey(accountObject, ACCOUNTTYPE)
-                            ? accountObject.get(ACCOUNTTYPE).getAsString()
-                            : "";
-                    String productId = JSONUtil.hasKey(accountObject, PRODUCTID)
-                            ? accountObject.get(PRODUCTID).getAsString()
-                            : "";       
-
-                    if (StringUtils.isNotBlank(accountId) && StringUtils.isNotBlank(accountName)
-                            && StringUtils.isNotBlank(typeId) && (coreCustomersAccountsMapToCreate == null
-                                    || coreCustomersAccountsMapToCreate.get(coreCustomerId).contains(accountId))) {
-
-                        contractAccountDTO = new ContractAccountsDTO();
-                        contractAccountDTO.setAccountId(accountId);
-                        contractAccountDTO.setAccountName(accountName);
-                        contractAccountDTO.setContractId(contractId);
-                        contractAccountDTO.setCoreCustomerId(coreCustomerId);
-                        contractAccountDTO.setId(idFormatter.format(new Date()));
-                        contractAccountDTO.setTypeId(typeId);
-                        contractAccountDTO.setOwnerType(ownerType);
-                        contractAccountDTO.setArrangementId(arrangementId);
-                        contractAccountDTO.setStatusDesc(accountStatus);
-                        contractAccountDTO.setAccountType(accountType);
-                        contractAccountDTO.setProductId(productId);
-                        contractAccountDTO.setCompanyLegalUnit(legalEntityId);
-
-                        contractAccountDTO = contractAccountsBD.createContractAccount(contractAccountDTO,
-                                dcRequest.getHeaderMap());
-                        if (null == contractAccountDTO || StringUtils.isBlank(contractAccountDTO.getId())) {
-                        	logger.debug("contractaccount creation failed for accountId "+accountId);
-                            throw new ApplicationException(ErrorCodeEnum.ERR_10357);
-                        }
-
-                        AccountsDTO accountGetDTO = accountsBD.getAccountDetailsByAccountID(accountId,
-                                dcRequest.getHeaderMap());
-                        if (null == accountGetDTO || StringUtils.isBlank(accountGetDTO.getAccountId())) {
-                            AccountsDTO inputDTO = new AccountsDTO();
-                            inputDTO.setAccountId(accountId);
-                            inputDTO.setAccountName(accountName);
-                            inputDTO.setAccountType(accountType);
-                            inputDTO.setTypeId(typeId);
-                            inputDTO.setAccountHolder(accountHoldername);
-                            inputDTO.setStatusDescription(accountStatus);
-                            inputDTO.setArrangementId(arrangementId);
-                            inputDTO.setMembershipId(coreCustomerId);
-                            inputDTO.setMembershipName(coreCustomerName);
-                            inputDTO.setCompanyLegalUnit(legalEntityId);
-                            AccountsDTO accountCreatedDTO = accountsBD.createAccount(inputDTO,
-                                    dcRequest.getHeaderMap());
-                            if (null == accountCreatedDTO || StringUtils.isBlank(accountCreatedDTO.getAccountId())) {
-                            	logger.debug("account creation failed for accountId "+accountId);
-                                throw new ApplicationException(ErrorCodeEnum.ERR_10297);
-                            }
-
-                        }
-
-                        customerAccounts.add(contractAccountDTO);
-                    }
-                }
-
-                customerAccountsMap.put(coreCustomerId, customerAccounts);
-
-            }
-
-        }
-
-        return customerAccountsMap;
-    }
-
-    private Map<String, Set<String>> createContractFeatures(JsonArray globalLevelPermissionsJsonArray,JsonArray accountLevelPermissionsJsonArray,
-            Set<String> validContractCustomers, Map<String, Set<String>> coreCustomersFeaturesMapToCreate,
-            Map<String, Set<String>> coreCustomeraccountFeaturesMapToCreate,
-            String contractId, String serviceDefinitionType, String isDefaultActionsEnabled, String legalEntityId,
-            DataControllerRequest dcRequest) throws ApplicationException {
-
-        
-        //JsonArray contractCustomersArray = parser.parse(contractCustomers).getAsJsonArray();
-
-        Map<String, Set<String>> customerFeaturesCreatedMap = new HashMap<>();
-        ContractFeatureActionsBusinessDelegate contractFeatureActionBD = DBPAPIAbstractFactoryImpl
-                .getBusinessDelegate(ContractFeatureActionsBusinessDelegate.class);
-        Set<String> customerFeatures = new HashSet<>();
-        String coreCustomerId= null;
-        for (JsonElement customerElement : globalLevelPermissionsJsonArray) {
-            JsonObject customerJson = customerElement.isJsonObject() ? customerElement.getAsJsonObject()
-                    : new JsonObject();
-            if (JSONUtil.hasKey(customerJson, CORECUSTOMERID)
-                    && validContractCustomers.contains(JSONUtil.getString(customerJson, CORECUSTOMERID))
-                    && (coreCustomersFeaturesMapToCreate == null || coreCustomersFeaturesMapToCreate
-                            .containsKey(JSONUtil.getString(customerJson, CORECUSTOMERID)))) {
-                coreCustomerId = JSONUtil.getString(customerJson, CORECUSTOMERID);
-                JsonArray featuresArray = customerJson.get(FEATURES).getAsJsonArray();
-                for (JsonElement featureElement : featuresArray) {
-                    JsonObject featureJson = featureElement.isJsonObject() ? featureElement.getAsJsonObject()
-                            : new JsonObject();
-                    String featureId = featureJson.has(FEATUREID) ? featureJson.get(FEATUREID).getAsString() : "";
-                    JsonArray actionsArray = featureJson.has(permissions) && featureJson.get(permissions).isJsonArray()
-                            ? featureJson.get(permissions).getAsJsonArray()
-                            : new JsonArray();
-                    if (StringUtils.isNotBlank(featureId)
-                            && (actionsArray.size() > 0 || DBPUtilitiesConstants.BOOLEAN_STRING_TRUE
-                                    .equalsIgnoreCase(isDefaultActionsEnabled))
-                            && (coreCustomersFeaturesMapToCreate == null
-                                    || coreCustomersFeaturesMapToCreate.get(coreCustomerId).contains(featureId))) {
-                        customerFeatures.add(featureId);
-                    }
-
-                }
-
-            }
-
-        }
-
-        for (JsonElement customerElement : accountLevelPermissionsJsonArray) {
-            JsonObject customerJson = customerElement.isJsonObject() ? customerElement.getAsJsonObject()
-                    : new JsonObject();
-            if (JSONUtil.hasKey(customerJson, CORECUSTOMERID)
-                    && validContractCustomers.contains(JSONUtil.getString(customerJson, CORECUSTOMERID))
-                    && (coreCustomersFeaturesMapToCreate == null || coreCustomersFeaturesMapToCreate
-                            .containsKey(JSONUtil.getString(customerJson, CORECUSTOMERID)))
-                    && JSONUtil.hasKey(customerJson, ACCOUNTS) && customerJson.get(ACCOUNTS).isJsonArray()) {
-                coreCustomerId = JSONUtil.getString(customerJson, CORECUSTOMERID);
-                JsonArray accountsArray1 = customerJson.get(ACCOUNTS).getAsJsonArray();
-                for (JsonElement accountsElement1 : accountsArray1) {
-                    JsonObject accountObject = accountsElement1.isJsonObject() ? accountsElement1.getAsJsonObject()
-                            : new JsonObject();
-                    JsonArray featuresArray = accountObject.get(featurePermissions).getAsJsonArray();
-                  
-                    for (JsonElement featureElement : featuresArray) {
-                        JsonObject featureJson = featureElement.isJsonObject() ? featureElement.getAsJsonObject()
-                                : new JsonObject();
-                        String featureId = featureJson.has(FEATUREID) ? featureJson.get(FEATUREID).getAsString() : "";
-                        JsonArray actionsArray =
-                                featureJson.has(permissions) && featureJson.get(permissions).isJsonArray()
-                                        ? featureJson.get(permissions).getAsJsonArray()
-                                        : new JsonArray();
-                        if (StringUtils.isNotBlank(featureId)
-                                && (actionsArray.size() > 0 || DBPUtilitiesConstants.BOOLEAN_STRING_FALSE
-                                        .equalsIgnoreCase(isDefaultActionsEnabled))
-                                && (coreCustomeraccountFeaturesMapToCreate == null
-                                        || coreCustomeraccountFeaturesMapToCreate.get(coreCustomerId)
-                                                .contains(featureId))) {
-                            customerFeatures.add(featureId);
-                        }
-
-                    }
-
-                }
-
-            }
-        }
-
-                Set<String> createdCustomerFeatures = contractFeatureActionBD.createContractFeatures(customerFeatures,
-                        contractId, coreCustomerId, serviceDefinitionType, isDefaultActionsEnabled,
-                        legalEntityId, dcRequest.getHeaderMap());
-                if (createdCustomerFeatures != null && !createdCustomerFeatures.isEmpty()) {
-                    customerFeaturesCreatedMap.put(coreCustomerId, createdCustomerFeatures);
-                }
-
-        return customerFeaturesCreatedMap;
-    }
-
-
-
-
-    private boolean isValidContractActionLimits(JsonArray transactionLimitsJsonArray, Set<String> validContractCustomers,
-    		String contractId, String serviceDefinitionType, DataControllerRequest dcRequest)
-    				throws ApplicationException {
-    	//JsonParser parser = new JsonParser();
-    	//JsonArray contractCustomersArray = parser.parse(contractCustomers).getAsJsonArray();
-
-    	for (JsonElement customerElement : transactionLimitsJsonArray) {
-    		JsonObject customerJson =
-    				customerElement.isJsonObject() ? customerElement.getAsJsonObject() : new JsonObject();
-    		if (JSONUtil.hasKey(customerJson, CORECUSTOMERID)
-    				&& validContractCustomers.contains(JSONUtil.getString(customerJson, CORECUSTOMERID))) {
-    			JsonArray featuresArray = customerJson.get(featurePermissions).getAsJsonArray();
-    			for (JsonElement featureElement : featuresArray) {
-    				JsonObject featureJson =
-    						featureElement.isJsonObject() ? featureElement.getAsJsonObject() : new JsonObject();
-					
-    				String actionId = featureJson.has(ACTIONID) ? featureJson.get(ACTIONID).getAsString() : "";
-    			    JsonArray limitsArray = featureJson.has(LIMITS) && featureJson.get(LIMITS).isJsonArray()
-    							? featureJson.get(LIMITS).getAsJsonArray()
-    							: new JsonArray();
-    				 
-    				 if (StringUtils.isNotBlank(actionId)) {
-
-    						double max_txn_limit_value=0, daily_limit_value = 0, weekly_limit_value=0;
-
-    						for (JsonElement array_position : limitsArray) {
-
-    							JsonObject limitobject = array_position.isJsonObject() ? array_position.getAsJsonObject():new JsonObject();
-
-    							if(limitobject.has(LIMITID) && limitobject.get(LIMITID).getAsString().equals(MAX_TRANSACTION_LIMIT)) {
-
-    								max_txn_limit_value = Double.parseDouble(limitobject.get(LIMITVALUE).getAsString());
-
-    							}
-    							else if(limitobject.has(LIMITID) && limitobject.get(LIMITID).getAsString().equals(DAILY_LIMIT)) {
-
-    								daily_limit_value = Double.parseDouble(limitobject.get(LIMITVALUE).getAsString());
-    							}
-    							else if(limitobject.has(LIMITID) && limitobject.get(LIMITID).getAsString().equals(WEEKLY_LIMIT)) {
-
-    								weekly_limit_value = Double.parseDouble(limitobject.get(LIMITVALUE).getAsString());
-    							}
-
-    						}
-    						if((max_txn_limit_value > daily_limit_value) || (daily_limit_value>weekly_limit_value)) {
-    							logger.debug("limit validation failed {max_txn_limit_value, daily_limit_value, weekly_limit_value} "
-    									+"{"+max_txn_limit_value + ", "+ daily_limit_value+", "+weekly_limit_value+"}");
-    							return false;
-    						}
-
-    					}
-
-    				}
-
-    			}
-
-    		}
-
-
-    	return true;
-    } 
+		return HelperMethods.splitString(actions, DBPUtilitiesConstants.COMMA_SEPERATOR);
+
+	}
+
+	private String getServiceType(String serviceDefinitionId, DataControllerRequest dcRequest)
+			throws ApplicationException {
+		ServiceDefinitionDTO dto = new ServiceDefinitionDTO();
+		dto.setId(serviceDefinitionId);
+		ServiceDefinitionBusinessDelegate serviceBD = DBPAPIAbstractFactoryImpl
+				.getBusinessDelegate(ServiceDefinitionBusinessDelegate.class);
+		dto = serviceBD.getServiceDefinitionDetails(dto, dcRequest.getHeaderMap());
+		if (dto == null || StringUtils.isBlank(dto.getId()) || StringUtils.isBlank(dto.getServiceType())) {
+			throw new ApplicationException(ErrorCodeEnum.ERR_10377);
+		}
+
+		return dto.getServiceType();
+	}
+
+	private Set<String> getValidContractCustomers(String contractCustomers,
+			boolean checkIfAtleastOnePrimaryCustomerInGivenList, String legalEntityId, DataControllerRequest dcRequest)
+			throws ApplicationException {
+		boolean isAtleastaCustomerisPrimary = false;
+
+		Set<String> givenCustomers = new HashSet<>();
+
+		JsonArray contractCustomersArray = JSONUtil.parseAsJsonArray(contractCustomers);
+		ContractCoreCustomerBusinessDelegate customerBD = DBPAPIAbstractFactoryImpl
+				.getBusinessDelegate(ContractCoreCustomerBusinessDelegate.class);
+		for (JsonElement customerElement : contractCustomersArray) {
+			if (JSONUtil.isJsonNotNull(customerElement) && customerElement.isJsonObject()) {
+				JsonObject customerJson = customerElement.getAsJsonObject();
+				String customerId = customerJson.has(CORECUSTOMERID) ? customerJson.get(CORECUSTOMERID).getAsString()
+						: "";
+				String isPrimary = customerJson.has(ISPRIMARY) ? customerJson.get(ISPRIMARY).getAsString() : "";
+				if (StringUtils.isNotBlank(customerId)) {
+					givenCustomers.add(customerId);
+				}
+				if (StringUtils.isNotBlank(customerId) && !isAtleastaCustomerisPrimary
+						&& "true".equalsIgnoreCase(isPrimary)) {
+					isAtleastaCustomerisPrimary = true;
+				}
+
+			}
+		}
+		if (checkIfAtleastOnePrimaryCustomerInGivenList && !isAtleastaCustomerisPrimary) {
+			logger.debug("ContractCustomers validation failed "
+					+ "[checkIfAtleastOnePrimaryCustomerInGivenList, isAtleastaCustomerisPrimary] : "
+					+ checkIfAtleastOnePrimaryCustomerInGivenList + ", " + isAtleastaCustomerisPrimary);
+			throw new ApplicationException(ErrorCodeEnum.ERR_10369);
+		}
+		return customerBD.getValidCoreContractCustomers(givenCustomers, legalEntityId, dcRequest.getHeaderMap());
+	}
+
+	private Set<String> createContractCustomers(String contractCustomers, Set<String> validContractCustomers,
+			String contractId, String legalEntityId, DataControllerRequest dcRequest) throws ApplicationException {
+		Set<String> createdValidCustomers = new HashSet<>();
+		JsonArray contractCustomersArray = JSONUtil.parseAsJsonArray(contractCustomers);
+		ContractCoreCustomerBusinessDelegate customerBD = DBPAPIAbstractFactoryImpl
+				.getBusinessDelegate(ContractCoreCustomerBusinessDelegate.class);
+		for (JsonElement customerElement : contractCustomersArray) {
+			if (JSONUtil.isJsonNotNull(customerElement) && customerElement.isJsonObject()) {
+				JsonObject customerJson = customerElement.getAsJsonObject();
+				String customerId = customerJson.has(CORECUSTOMERID) ? customerJson.get(CORECUSTOMERID).getAsString()
+						: "";
+				String isPrimary = customerJson.has(ISPRIMARY) ? customerJson.get(ISPRIMARY).getAsString() : "";
+				String customerName = customerJson.has(CORECUSTOMER_NAME)
+						? customerJson.get(CORECUSTOMER_NAME).getAsString()
+						: "";
+				String isBusinessType = customerJson.has(ISBUSINESS) ? customerJson.get(ISBUSINESS).getAsString() : "";
+				String sectorId = customerJson.has(SECTORID) ? customerJson.get(SECTORID).getAsString() : "";
+				String implicitAccountAccess = customerJson.has(IMPLICIT_ACCOUNT_ACCESS)
+						? customerJson.get(IMPLICIT_ACCOUNT_ACCESS).getAsString()
+						: "";
+				if (StringUtils.isBlank(customerId) || StringUtils.isBlank(customerName)) {
+					return createdValidCustomers;
+				}
+
+				if (StringUtils.isBlank(implicitAccountAccess)
+						|| !DBPUtilitiesConstants.BOOLEAN_STRING_TRUE.equalsIgnoreCase(implicitAccountAccess)) {
+					implicitAccountAccess = DBPUtilitiesConstants.BOOLEAN_STRING_FALSE;
+				}
+				if (!validContractCustomers.contains(customerId) || !JSONUtil.hasKey(customerJson, ACCOUNTS)
+						|| !customerJson.get(ACCOUNTS).isJsonArray()
+						|| customerJson.get(ACCOUNTS).getAsJsonArray().size() == 0) {
+					continue;
+				}
+				ContractCoreCustomersDTO coreCustomerDTO = new ContractCoreCustomersDTO();
+				coreCustomerDTO.setContractId(contractId);
+				coreCustomerDTO.setCoreCustomerId(customerId);
+				coreCustomerDTO.setId(idFormatter.format(new Date()));
+				coreCustomerDTO.setCoreCustomerName(customerName);
+				coreCustomerDTO.setImplicitAccountAccess(implicitAccountAccess);
+				if (isBusinessType.equalsIgnoreCase(DBPUtilitiesConstants.BOOLEAN_STRING_TRUE)) {
+					coreCustomerDTO.setIsBusiness(DBPUtilitiesConstants.BOOLEAN_STRING_TRUE);
+				} else {
+					coreCustomerDTO.setIsBusiness(DBPUtilitiesConstants.BOOLEAN_STRING_FALSE);
+				}
+
+				if (isPrimary.equalsIgnoreCase(DBPUtilitiesConstants.BOOLEAN_STRING_TRUE)) {
+					coreCustomerDTO.setIsPrimary(DBPUtilitiesConstants.BOOLEAN_STRING_TRUE);
+				} else {
+					coreCustomerDTO.setIsPrimary(DBPUtilitiesConstants.BOOLEAN_STRING_FALSE);
+				}
+
+				if (StringUtils.isNotBlank(sectorId)) {
+					coreCustomerDTO.setSectorId(sectorId);
+				}
+				coreCustomerDTO.setCompanyLegalUnit(legalEntityId);
+
+				ContractCoreCustomersDTO resultCustomerDTO = customerBD.createContractCustomer(coreCustomerDTO,
+						dcRequest.getHeaderMap());
+				if (resultCustomerDTO != null && StringUtils.isNotBlank(resultCustomerDTO.getCoreCustomerId())) {
+					createdValidCustomers.add(customerId);
+				}
+
+			}
+
+		}
+
+		return createdValidCustomers;
+	}
+
+	private ContractDTO createContract(String contractName, String serviceDefinitionId, String serviceDefinitionType,
+			String faxId, String contractStatus, String legalEntityId, DataControllerRequest dcRequest)
+			throws ApplicationException {
+		ContractDTO contractDTO = new ContractDTO();
+		contractDTO.setId(HelperMethods.generateUniqueContractId(dcRequest));
+		contractDTO.setName(contractName);
+		contractDTO.setServicedefinitionId(serviceDefinitionId);
+		contractDTO.setServiceType(serviceDefinitionType);
+		contractDTO.setFaxId(faxId);
+		contractDTO.setStatusId(contractStatus);
+		contractDTO.setCompanyLegalUnit(legalEntityId);
+
+		ContractBusinessDelegate contractBD = DBPAPIAbstractFactoryImpl
+				.getBusinessDelegate(ContractBusinessDelegate.class);
+		return contractBD.createContract(contractDTO, dcRequest.getHeaderMap());
+
+	}
+
+	private void createContractCommunication(String communication, String contractId, String legalEntityId,
+			DataControllerRequest dcRequest)
+			throws ApplicationException {
+
+		if (StringUtils.isBlank(communication)) {
+			return;
+		}
+
+		ContractCommunicationBusinessDelegate contractCommunicationBD = DBPAPIAbstractFactoryImpl
+				.getBusinessDelegate(ContractCommunicationBusinessDelegate.class);
+		ContractCommunicationDTO contractCommunicationDTO = null;
+		JsonParser parser = new JsonParser();
+		JsonArray communicationArray = parser.parse(communication).getAsJsonArray();
+		for (JsonElement communicationElement : communicationArray) {
+			if (JSONUtil.isJsonNotNull(communicationElement) && communicationElement.isJsonObject()) {
+				JsonObject communicationJson = communicationElement.getAsJsonObject();
+				if (JSONUtil.hasKey(communicationJson, PHONE_NUMBER)
+						&& JSONUtil.hasKey(communicationJson, PHONE_COUNTRY_CODE)) {
+					contractCommunicationDTO = new ContractCommunicationDTO();
+					contractCommunicationDTO.setContractId(contractId);
+					contractCommunicationDTO
+							.setPhoneCountryCode(communicationJson.get(PHONE_COUNTRY_CODE).getAsString());
+					contractCommunicationDTO.setValue(communicationJson.get(PHONE_NUMBER).getAsString());
+					contractCommunicationDTO.setId(idFormatter.format(new Date()));
+					contractCommunicationDTO.setIsPreferredContactMethod(DBPUtilitiesConstants.BOOLEAN_STRING_TRUE);
+					contractCommunicationDTO.setTypeId(DBPUtilitiesConstants.COMM_TYPE_PHONE);
+					contractCommunicationDTO.setCompanyLegalUnit(legalEntityId);
+					contractCommunicationBD.createContractCommunication(contractCommunicationDTO,
+							dcRequest.getHeaderMap());
+
+				}
+				if (JSONUtil.hasKey(communicationJson, EMAIL)) {
+					contractCommunicationDTO = new ContractCommunicationDTO();
+					contractCommunicationDTO.setContractId(contractId);
+					contractCommunicationDTO.setValue(communicationJson.get(EMAIL).getAsString());
+					contractCommunicationDTO.setId(idFormatter.format(new Date()));
+					contractCommunicationDTO.setIsPreferredContactMethod(DBPUtilitiesConstants.BOOLEAN_STRING_TRUE);
+					contractCommunicationDTO.setTypeId(DBPUtilitiesConstants.COMM_TYPE_EMAIL);
+					contractCommunicationDTO.setCompanyLegalUnit(legalEntityId);
+					contractCommunicationBD.createContractCommunication(contractCommunicationDTO,
+							dcRequest.getHeaderMap());
+				}
+
+			}
+
+		}
+	}
+
+	private void createContractAddress(List<AddressDTO> addressList, String contractId, String legalEntityId,
+			DataControllerRequest dcRequest)
+			throws ApplicationException {
+		AddressBusinessDelegate addressBD = DBPAPIAbstractFactoryImpl.getInstance()
+				.getFactoryInstance(BusinessDelegateFactory.class).getBusinessDelegate(AddressBusinessDelegate.class);
+
+		ContractAddressBusinessDelegate contractAddressBD = DBPAPIAbstractFactoryImpl
+				.getBusinessDelegate(ContractAddressBusinessDelegate.class);
+
+		for (AddressDTO inputDTO : addressList) {
+			inputDTO.setId(idFormatter.format(new Date()));
+			inputDTO.setCompanyLegalUnit(legalEntityId);
+			AddressDTO resultDTO = addressBD.createAddress(inputDTO, dcRequest.getHeaderMap());
+			if (null == resultDTO || StringUtils.isBlank(resultDTO.getId())) {
+				throw new ApplicationException(ErrorCodeEnum.ERR_10354);
+			}
+
+			ContractAddressDTO contractAddressDTO = new ContractAddressDTO();
+			contractAddressDTO.setId(idFormatter.format(new Date()));
+			contractAddressDTO.setContractId(contractId);
+			contractAddressDTO.setAddressId(resultDTO.getId());
+			contractAddressDTO.setCompanyLegalUnit(legalEntityId);
+
+			contractAddressBD.createContractAddress(contractAddressDTO, dcRequest.getHeaderMap());
+		}
+
+	}
+
+	/**
+	 * 
+	 * @param contractCustomers
+	 * @param validContractCustomers
+	 * @param coreCustomersAccountsMapToCreate
+	 * @param contractId
+	 * @param dcRequest
+	 * @return
+	 * @throws ApplicationException
+	 */
+	private Map<String, Set<ContractAccountsDTO>> createContractAccounts(String contractCustomers,
+			Set<String> validContractCustomers, Map<String, Set<String>> coreCustomersAccountsMapToCreate,
+			String contractId, String legalEntityId, DataControllerRequest dcRequest) throws ApplicationException {
+		ContractAccountsDTO contractAccountDTO;
+
+		Map<String, Set<ContractAccountsDTO>> customerAccountsMap = new HashMap<>();
+
+		JsonArray contractCustomersArray = JSONUtil.parseAsJsonArray(contractCustomers);
+
+		ContractAccountsBusinessDelegate contractAccountsBD = DBPAPIAbstractFactoryImpl
+				.getBusinessDelegate(ContractAccountsBusinessDelegate.class);
+
+		AccountsBusinessDelegate accountsBD = DBPAPIAbstractFactoryImpl.getInstance()
+				.getFactoryInstance(BusinessDelegateFactory.class).getBusinessDelegate(AccountsBusinessDelegate.class);
+
+		for (JsonElement customerElement : contractCustomersArray) {
+			JsonObject customerJson = customerElement.isJsonObject() ? customerElement.getAsJsonObject()
+					: new JsonObject();
+			if (JSONUtil.hasKey(customerJson, CORECUSTOMERID)
+					&& validContractCustomers.contains(JSONUtil.getString(customerJson, CORECUSTOMERID))
+					&& (coreCustomersAccountsMapToCreate == null || coreCustomersAccountsMapToCreate
+							.containsKey(JSONUtil.getString(customerJson, CORECUSTOMERID)))
+					&& JSONUtil.hasKey(customerJson, ACCOUNTS) && customerJson.get(ACCOUNTS).isJsonArray()) {
+				String coreCustomerId = JSONUtil.getString(customerJson, CORECUSTOMERID);
+				String coreCustomerName = JSONUtil.getString(customerJson, CORECUSTOMER_NAME);
+				JsonArray accountsArray = customerJson.get(ACCOUNTS).getAsJsonArray();
+
+				Set<ContractAccountsDTO> customerAccounts = new HashSet<>();
+
+				for (JsonElement accountElement : accountsArray) {
+					JsonObject accountObject = accountElement.isJsonObject() ? accountElement.getAsJsonObject()
+							: new JsonObject();
+					String accountId = JSONUtil.hasKey(accountObject, ACCOUNTID)
+							? accountObject.get(ACCOUNTID).getAsString()
+							: "";
+					String accountName = JSONUtil.hasKey(accountObject, ACCOUNTNAME)
+							? accountObject.get(ACCOUNTNAME).getAsString()
+							: "";
+					String typeId = JSONUtil.hasKey(accountObject, TYPEID) ? accountObject.get(TYPEID).getAsString()
+							: "";
+					String ownerType = JSONUtil.hasKey(accountObject, OWNERTYPE)
+							? accountObject.get(OWNERTYPE).getAsString()
+							: "";
+					String arrangementId = JSONUtil.hasKey(accountObject, ARRANGEMENTID)
+							? accountObject.get(ARRANGEMENTID).getAsString()
+							: "";
+					String accountHoldername = JSONUtil.hasKey(accountObject, ACCOUNTHOLDERNAME)
+							? accountObject.get(ACCOUNTHOLDERNAME).getAsString()
+							: "";
+					String accountStatus = StringUtils.isNotBlank(JSONUtil.getString(accountObject, ACCOUNTSTATUS))
+							? JSONUtil.getString(accountObject, ACCOUNTSTATUS)
+							: DBPUtilitiesConstants.DEFAULT_ACCOUNT_STATUS;
+					String accountType = JSONUtil.hasKey(accountObject, ACCOUNTTYPE)
+							? accountObject.get(ACCOUNTTYPE).getAsString()
+							: "";
+					String productId = JSONUtil.hasKey(accountObject, PRODUCTID)
+							? accountObject.get(PRODUCTID).getAsString()
+							: "";
+
+					if (StringUtils.isNotBlank(accountId) && StringUtils.isNotBlank(accountName)
+							&& StringUtils.isNotBlank(typeId) && (coreCustomersAccountsMapToCreate == null
+									|| coreCustomersAccountsMapToCreate.get(coreCustomerId).contains(accountId))) {
+
+						contractAccountDTO = new ContractAccountsDTO();
+						contractAccountDTO.setAccountId(accountId);
+						contractAccountDTO.setAccountName(accountName);
+						contractAccountDTO.setContractId(contractId);
+						contractAccountDTO.setCoreCustomerId(coreCustomerId);
+						contractAccountDTO.setId(idFormatter.format(new Date()));
+						contractAccountDTO.setTypeId(typeId);
+						contractAccountDTO.setOwnerType(ownerType);
+						contractAccountDTO.setArrangementId(arrangementId);
+						contractAccountDTO.setStatusDesc(accountStatus);
+						contractAccountDTO.setAccountType(accountType);
+						contractAccountDTO.setProductId(productId);
+						contractAccountDTO.setCompanyLegalUnit(legalEntityId);
+
+						contractAccountDTO = contractAccountsBD.createContractAccount(contractAccountDTO,
+								dcRequest.getHeaderMap());
+						if (null == contractAccountDTO || StringUtils.isBlank(contractAccountDTO.getId())) {
+							logger.debug("contractaccount creation failed for accountId " + accountId);
+							throw new ApplicationException(ErrorCodeEnum.ERR_10357);
+						}
+
+						AccountsDTO accountGetDTO = accountsBD.getAccountDetailsByAccountID(accountId,
+								dcRequest.getHeaderMap());
+						if (null == accountGetDTO || StringUtils.isBlank(accountGetDTO.getAccountId())) {
+							AccountsDTO inputDTO = new AccountsDTO();
+							inputDTO.setAccountId(accountId);
+							inputDTO.setAccountName(accountName);
+							inputDTO.setAccountType(accountType);
+							inputDTO.setTypeId(typeId);
+							inputDTO.setAccountHolder(accountHoldername);
+							inputDTO.setStatusDescription(accountStatus);
+							inputDTO.setArrangementId(arrangementId);
+							inputDTO.setMembershipId(coreCustomerId);
+							inputDTO.setMembershipName(coreCustomerName);
+							inputDTO.setCompanyLegalUnit(legalEntityId);
+							AccountsDTO accountCreatedDTO = accountsBD.createAccount(inputDTO,
+									dcRequest.getHeaderMap());
+							if (null == accountCreatedDTO || StringUtils.isBlank(accountCreatedDTO.getAccountId())) {
+								logger.debug("account creation failed for accountId " + accountId);
+								throw new ApplicationException(ErrorCodeEnum.ERR_10297);
+							}
+
+						}
+
+						customerAccounts.add(contractAccountDTO);
+					}
+				}
+
+				customerAccountsMap.put(coreCustomerId, customerAccounts);
+
+			}
+
+		}
+
+		return customerAccountsMap;
+	}
+
+	private Map<String, Set<String>> createContractFeatures(JsonArray globalLevelPermissionsJsonArray,
+			JsonArray accountLevelPermissionsJsonArray,
+			Set<String> validContractCustomers, Map<String, Set<String>> coreCustomersFeaturesMapToCreate,
+			Map<String, Set<String>> coreCustomeraccountFeaturesMapToCreate,
+			String contractId, String serviceDefinitionType, String isDefaultActionsEnabled, String legalEntityId,
+			DataControllerRequest dcRequest) throws ApplicationException {
+
+		// JsonArray contractCustomersArray =
+		// parser.parse(contractCustomers).getAsJsonArray();
+
+		Map<String, Set<String>> customerFeaturesCreatedMap = new HashMap<>();
+		ContractFeatureActionsBusinessDelegate contractFeatureActionBD = DBPAPIAbstractFactoryImpl
+				.getBusinessDelegate(ContractFeatureActionsBusinessDelegate.class);
+		Set<String> customerFeatures = new HashSet<>();
+		String coreCustomerId = null;
+		for (JsonElement customerElement : globalLevelPermissionsJsonArray) {
+			JsonObject customerJson = customerElement.isJsonObject() ? customerElement.getAsJsonObject()
+					: new JsonObject();
+			if (JSONUtil.hasKey(customerJson, CORECUSTOMERID)
+					&& validContractCustomers.contains(JSONUtil.getString(customerJson, CORECUSTOMERID))
+					&& (coreCustomersFeaturesMapToCreate == null || coreCustomersFeaturesMapToCreate
+							.containsKey(JSONUtil.getString(customerJson, CORECUSTOMERID)))) {
+				coreCustomerId = JSONUtil.getString(customerJson, CORECUSTOMERID);
+				JsonArray featuresArray = customerJson.get(FEATURES).getAsJsonArray();
+				for (JsonElement featureElement : featuresArray) {
+					JsonObject featureJson = featureElement.isJsonObject() ? featureElement.getAsJsonObject()
+							: new JsonObject();
+					String featureId = featureJson.has(FEATUREID) ? featureJson.get(FEATUREID).getAsString() : "";
+					JsonArray actionsArray = featureJson.has(permissions) && featureJson.get(permissions).isJsonArray()
+							? featureJson.get(permissions).getAsJsonArray()
+							: new JsonArray();
+					if (StringUtils.isNotBlank(featureId)
+							&& (actionsArray.size() > 0 || DBPUtilitiesConstants.BOOLEAN_STRING_TRUE
+									.equalsIgnoreCase(isDefaultActionsEnabled))
+							&& (coreCustomersFeaturesMapToCreate == null
+									|| coreCustomersFeaturesMapToCreate.get(coreCustomerId).contains(featureId))) {
+						customerFeatures.add(featureId);
+					}
+
+				}
+
+			}
+
+		}
+
+		for (JsonElement customerElement : accountLevelPermissionsJsonArray) {
+			JsonObject customerJson = customerElement.isJsonObject() ? customerElement.getAsJsonObject()
+					: new JsonObject();
+			if (JSONUtil.hasKey(customerJson, CORECUSTOMERID)
+					&& validContractCustomers.contains(JSONUtil.getString(customerJson, CORECUSTOMERID))
+					&& (coreCustomersFeaturesMapToCreate == null || coreCustomersFeaturesMapToCreate
+							.containsKey(JSONUtil.getString(customerJson, CORECUSTOMERID)))
+					&& JSONUtil.hasKey(customerJson, ACCOUNTS) && customerJson.get(ACCOUNTS).isJsonArray()) {
+				coreCustomerId = JSONUtil.getString(customerJson, CORECUSTOMERID);
+				JsonArray accountsArray1 = customerJson.get(ACCOUNTS).getAsJsonArray();
+				for (JsonElement accountsElement1 : accountsArray1) {
+					JsonObject accountObject = accountsElement1.isJsonObject() ? accountsElement1.getAsJsonObject()
+							: new JsonObject();
+					JsonArray featuresArray = accountObject.get(featurePermissions).getAsJsonArray();
+
+					for (JsonElement featureElement : featuresArray) {
+						JsonObject featureJson = featureElement.isJsonObject() ? featureElement.getAsJsonObject()
+								: new JsonObject();
+						String featureId = featureJson.has(FEATUREID) ? featureJson.get(FEATUREID).getAsString() : "";
+						JsonArray actionsArray = featureJson.has(permissions)
+								&& featureJson.get(permissions).isJsonArray()
+										? featureJson.get(permissions).getAsJsonArray()
+										: new JsonArray();
+						if (StringUtils.isNotBlank(featureId)
+								&& (actionsArray.size() > 0 || DBPUtilitiesConstants.BOOLEAN_STRING_FALSE
+										.equalsIgnoreCase(isDefaultActionsEnabled))
+								&& (coreCustomeraccountFeaturesMapToCreate == null
+										|| coreCustomeraccountFeaturesMapToCreate.get(coreCustomerId)
+												.contains(featureId))) {
+							customerFeatures.add(featureId);
+						}
+
+					}
+
+				}
+
+			}
+		}
+
+		Set<String> createdCustomerFeatures = contractFeatureActionBD.createContractFeatures(customerFeatures,
+				contractId, coreCustomerId, serviceDefinitionType, isDefaultActionsEnabled,
+				legalEntityId, dcRequest.getHeaderMap());
+		if (createdCustomerFeatures != null && !createdCustomerFeatures.isEmpty()) {
+			customerFeaturesCreatedMap.put(coreCustomerId, createdCustomerFeatures);
+		}
+
+		return customerFeaturesCreatedMap;
+	}
+
+	private boolean isValidContractActionLimits(JsonArray transactionLimitsJsonArray,
+			Set<String> validContractCustomers,
+			String contractId, String serviceDefinitionType, DataControllerRequest dcRequest)
+			throws ApplicationException {
+		// JsonParser parser = new JsonParser();
+		// JsonArray contractCustomersArray =
+		// parser.parse(contractCustomers).getAsJsonArray();
+
+		for (JsonElement customerElement : transactionLimitsJsonArray) {
+			JsonObject customerJson = customerElement.isJsonObject() ? customerElement.getAsJsonObject()
+					: new JsonObject();
+			if (JSONUtil.hasKey(customerJson, CORECUSTOMERID)
+					&& validContractCustomers.contains(JSONUtil.getString(customerJson, CORECUSTOMERID))) {
+				JsonArray featuresArray = customerJson.get(featurePermissions).getAsJsonArray();
+				for (JsonElement featureElement : featuresArray) {
+					JsonObject featureJson = featureElement.isJsonObject() ? featureElement.getAsJsonObject()
+							: new JsonObject();
+
+					String actionId = featureJson.has(ACTIONID) ? featureJson.get(ACTIONID).getAsString() : "";
+					JsonArray limitsArray = featureJson.has(LIMITS) && featureJson.get(LIMITS).isJsonArray()
+							? featureJson.get(LIMITS).getAsJsonArray()
+							: new JsonArray();
+
+					if (StringUtils.isNotBlank(actionId)) {
+
+						double max_txn_limit_value = 0, daily_limit_value = 0, weekly_limit_value = 0;
+
+						for (JsonElement array_position : limitsArray) {
+
+							JsonObject limitobject = array_position.isJsonObject() ? array_position.getAsJsonObject()
+									: new JsonObject();
+
+							if (limitobject.has(LIMITID)
+									&& limitobject.get(LIMITID).getAsString().equals(MAX_TRANSACTION_LIMIT)) {
+
+								max_txn_limit_value = Double.parseDouble(limitobject.get(LIMITVALUE).getAsString());
+
+							} else if (limitobject.has(LIMITID)
+									&& limitobject.get(LIMITID).getAsString().equals(DAILY_LIMIT)) {
+
+								daily_limit_value = Double.parseDouble(limitobject.get(LIMITVALUE).getAsString());
+							} else if (limitobject.has(LIMITID)
+									&& limitobject.get(LIMITID).getAsString().equals(WEEKLY_LIMIT)) {
+
+								weekly_limit_value = Double.parseDouble(limitobject.get(LIMITVALUE).getAsString());
+							}
+
+						}
+						if ((max_txn_limit_value > daily_limit_value) || (daily_limit_value > weekly_limit_value)) {
+							logger.debug(
+									"limit validation failed {max_txn_limit_value, daily_limit_value, weekly_limit_value} "
+											+ "{" + max_txn_limit_value + ", " + daily_limit_value + ", "
+											+ weekly_limit_value + "}");
+							return false;
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+		return true;
+	}
+
 	private void createContractActionLimits(String contractCustomers, Map<String, Set<String>> featuresCreated,
-			String contractId, String serviceDefinitionType, String legalEntityId,DataControllerRequest dcRequest)
+			String contractId, String serviceDefinitionType, String legalEntityId, DataControllerRequest dcRequest)
 			throws ApplicationException {
 		String isNewAction = "0";
 		JsonParser parser = new JsonParser();
@@ -1083,14 +1096,14 @@ public class ContractResourceImpl implements ContractResource {
 											: "";
 									if (StringUtils.isNotBlank(limitId) && StringUtils.isNotBlank(limitValue)) {
 										queryString.append(getQueryString(contractId, coreCustomerId, null, featureId,
-												actionId, isNewAction, limitId, limitValue,legalEntityId));
+												actionId, isNewAction, limitId, limitValue, legalEntityId));
 									}
 
 								}
 							} else {
 
-								queryString.append(getQueryString(contractId, coreCustomerId,null, featureId, actionId,
-										isNewAction, "@", "@",legalEntityId));
+								queryString.append(getQueryString(contractId, coreCustomerId, null, featureId, actionId,
+										isNewAction, "@", "@", legalEntityId));
 							}
 						}
 
@@ -1109,7 +1122,8 @@ public class ContractResourceImpl implements ContractResource {
 
 	}
 
-	private String getQueryString(String contractId, String coreCustomerId, String accountId,String featureId, String actionId,
+	private String getQueryString(String contractId, String coreCustomerId, String accountId, String featureId,
+			String actionId,
 			String isNewAction, String limitId, String limitValue, String legalEntityId) {
 		StringBuilder query = new StringBuilder("");
 
@@ -1147,14 +1161,17 @@ public class ContractResourceImpl implements ContractResource {
 		String phoneCountryCode = inputParams.get(PHONE_COUNTRY_CODE);
 		String phoneNumber = inputParams.get(PHONE_NUMBER);
 		String country = inputParams.get(COUNTRY);
-		
+
 		String legalEntityId = inputParams.get(LEGAL_ENTITY_ID);
 
-		if (((StringUtils.isBlank(coreCustomerId) && StringUtils.isBlank(contractId) && StringUtils.isBlank(contractName)
+		if (((StringUtils.isBlank(coreCustomerId) && StringUtils.isBlank(contractId)
+				&& StringUtils.isBlank(contractName)
 				&& StringUtils.isBlank(serviceDefinitionId) && StringUtils.isBlank(coreCustomerName)
 				&& StringUtils.isBlank(email) && StringUtils.isBlank(phoneCountryCode)
-				&& StringUtils.isBlank(phoneNumber) && StringUtils.isBlank(country) && StringUtils.isNotBlank(legalEntityId))
-				|| (StringUtils.isNotBlank(phoneNumber) && StringUtils.isBlank(phoneCountryCode))) || StringUtils.isBlank(legalEntityId)) {
+				&& StringUtils.isBlank(phoneNumber) && StringUtils.isBlank(country)
+				&& StringUtils.isNotBlank(legalEntityId))
+				|| (StringUtils.isNotBlank(phoneNumber) && StringUtils.isBlank(phoneCountryCode)))
+				|| StringUtils.isBlank(legalEntityId)) {
 			throw new ApplicationException(ErrorCodeEnum.ERR_10755);
 		}
 
@@ -1183,7 +1200,7 @@ public class ContractResourceImpl implements ContractResource {
 		Result result = new Result();
 		Map<String, String> inputParams = HelperMethods.getInputParamMap(inputArray);
 		String contractId = inputParams.get(CONTRACT_ID);
-		String legalEntityId ="";
+		String legalEntityId = "";
 
 		if (StringUtils.isBlank(contractId)) {
 			contractId = getPrimaryContractId(dcRequest, HelperMethods.getCustomerIdFromSession(dcRequest));
@@ -1192,39 +1209,41 @@ public class ContractResourceImpl implements ContractResource {
 		if (StringUtils.isBlank(contractId)) {
 			throw new ApplicationException(ErrorCodeEnum.ERR_10360);
 		}
-		
+
 		Boolean isSuperAdmin = false;
-						
+
 		Map<String, String> loggedInUserInfo = HelperMethods.getCustomerFromAPIDBPIdentityService(dcRequest);
 		if (!HelperMethods.isAuthenticationCheckRequiredForService(loggedInUserInfo)) {
-				isSuperAdmin =  true;
+			isSuperAdmin = true;
 		}
-		
-		if(isSuperAdmin)
+
+		if (isSuperAdmin)
 			legalEntityId = LegalEntityUtil.getLegalEntityFromPayload(inputParams, dcRequest);
 		else
 			legalEntityId = LegalEntityUtil.getLegalEntityIdFromSessionOrCache(dcRequest);
 
-	        if(StringUtils.isBlank(legalEntityId)) {
-	        	return ErrorCodeEnum.ERR_10001.setErrorCode(new Result());
-	        }
-	        
-	        List<String> allLegalEntities = LegalEntityUtil.getAllCompanyLegalUnits(dcRequest);
-			if (!allLegalEntities.contains(legalEntityId)) {
-				logger.error("Logged in user do not have access to this legalEntity ");
-				throw new ApplicationException(ErrorCodeEnum.ERR_12403);
-			}
+		if (StringUtils.isBlank(legalEntityId)) {
+			return ErrorCodeEnum.ERR_10001.setErrorCode(new Result());
+		}
+
+		List<String> allLegalEntities = LegalEntityUtil.getAllCompanyLegalUnits(dcRequest);
+		if (!allLegalEntities.contains(legalEntityId)) {
+			logger.error("Logged in user do not have access to this legalEntity ");
+			throw new ApplicationException(ErrorCodeEnum.ERR_12403);
+		}
 		try {
 			ContractBusinessDelegate businessDelegate = DBPAPIAbstractFactoryImpl
 					.getBusinessDelegate(ContractBusinessDelegate.class);
-			ContractDTO contractDTO = businessDelegate.getCompleteContractDetails(contractId, legalEntityId, dcRequest.getHeaderMap());
+			ContractDTO contractDTO = businessDelegate.getCompleteContractDetails(contractId, legalEntityId,
+					dcRequest.getHeaderMap());
 
 			if (null != contractDTO) {
 				String contractString = JSONUtils.stringify(contractDTO);
 				JsonParser parser = new JsonParser();
 				JsonObject resultJson = formatContractDetailsRespnse(parser.parse(contractString).getAsJsonObject());
-                updateJobStatus(resultJson, dcRequest.getHeaderMap());
-				result = JSONToResult.convert(HelperMethods.replaceCompanyLegalUnitWithLegalEntityId(resultJson.toString()));
+				updateJobStatus(resultJson, dcRequest.getHeaderMap());
+				result = JSONToResult
+						.convert(HelperMethods.replaceCompanyLegalUnitWithLegalEntityId(resultJson.toString()));
 			}
 
 		} catch (ApplicationException e) {
@@ -1236,29 +1255,31 @@ public class ContractResourceImpl implements ContractResource {
 		return result;
 	}
 
+	private void updateJobStatus(JsonObject resultJson, Map<String, Object> headerMap) {
 
-    private void updateJobStatus(JsonObject resultJson, Map<String, Object> headerMap) {
-		
-    	String servicedefinitionId = resultJson.has(InfinityConstants.servicedefinitionId) && 
-    			!resultJson.get(InfinityConstants.servicedefinitionId).isJsonNull()
-    			?resultJson.get(InfinityConstants.servicedefinitionId).getAsString() : "";
-		if(StringUtils.isNoneBlank(servicedefinitionId)) {
-			if(isServiceDefintionEditInProgress(servicedefinitionId, headerMap)) {
-				resultJson.addProperty(InfinityConstants.updateJobStatus, InfinityConstants.jobStatus.SID_JOB_INPROGRESS.toString());
-			}
-			else{
-				resultJson.addProperty(InfinityConstants.updateJobStatus, InfinityConstants.jobStatus.SID_JOB_COMPLETED.toString());
+		String servicedefinitionId = resultJson.has(InfinityConstants.servicedefinitionId) &&
+				!resultJson.get(InfinityConstants.servicedefinitionId).isJsonNull()
+						? resultJson.get(InfinityConstants.servicedefinitionId).getAsString()
+						: "";
+		if (StringUtils.isNoneBlank(servicedefinitionId)) {
+			if (isServiceDefintionEditInProgress(servicedefinitionId, headerMap)) {
+				resultJson.addProperty(InfinityConstants.updateJobStatus,
+						InfinityConstants.jobStatus.SID_JOB_INPROGRESS.toString());
+			} else {
+				resultJson.addProperty(InfinityConstants.updateJobStatus,
+						InfinityConstants.jobStatus.SID_JOB_COMPLETED.toString());
 			}
 		}
 	}
-    
-    private boolean isServiceDefintionEditInProgress(String serviceDefinitonId, Map<String, Object> headerMap) {
+
+	private boolean isServiceDefintionEditInProgress(String serviceDefinitonId, Map<String, Object> headerMap) {
 		Map<String, Object> inputParams = new HashMap<String, Object>();
 		JsonObject jsonObject = new JsonObject();
 		jsonObject.addProperty(InfinityConstants.serviceDefinitionId, serviceDefinitonId);
-		String filter = InfinityConstants.data + DBPUtilitiesConstants.EQUAL+ "'"+jsonObject.toString() +"'"+
-				DBPUtilitiesConstants.AND+
-				InfinityConstants.status + DBPUtilitiesConstants.EQUAL + InfinityConstants.jobStatus.SID_JOB_INPROGRESS.toString();
+		String filter = InfinityConstants.data + DBPUtilitiesConstants.EQUAL + "'" + jsonObject.toString() + "'" +
+				DBPUtilitiesConstants.AND +
+				InfinityConstants.status + DBPUtilitiesConstants.EQUAL
+				+ InfinityConstants.jobStatus.SID_JOB_INPROGRESS.toString();
 		inputParams.put(DBPUtilitiesConstants.FILTER, filter);
 		JsonObject infinityJobJson = ServiceCallHelper.invokeServiceAndGetJson(inputParams, headerMap,
 				URLConstants.INIFNITY_JOB_GET);
@@ -1266,14 +1287,13 @@ public class ContractResourceImpl implements ContractResource {
 				&& JSONUtil.hasKey(infinityJobJson, DBPDatasetConstants.DATASET_INFINITY_JOB)
 				&& infinityJobJson.get(DBPDatasetConstants.DATASET_INFINITY_JOB).isJsonArray()) {
 			JsonArray array = infinityJobJson.get(DBPDatasetConstants.DATASET_INFINITY_JOB).getAsJsonArray();
-			if(array.size() >0) {
+			if (array.size() > 0) {
 				return true;
 			}
 		}
 
 		return false;
 	}
-
 
 	private String getPrimaryContractId(DataControllerRequest dcRequest, String customerId) {
 
@@ -1374,44 +1394,43 @@ public class ContractResourceImpl implements ContractResource {
 			String faxId = inputParams.get(FAX_ID);
 			contractId = inputParams.get(CONTRACT_ID);
 			String deletedCustomers = inputParams.get(DELETEDCUSTOMERS);
-            String accountLevelPermissions = inputParams.get("accountLevelPermissions1");
-            String globalLevelPermissions = inputParams.get("globalLevelPermissions1");
-            String transactionLimits = inputParams.get("transactionLimits1");
-            String legalEntityId = inputParams.get(LEGAL_ENTITY_ID);
-            JsonArray accountLevelPermissionsJsonArray = new JsonArray();
-            JsonArray globalLevelPermissionsJsonArray = new JsonArray();
-            JsonArray transactionLimitsJsonArray = new JsonArray();
+			String accountLevelPermissions = inputParams.get("accountLevelPermissions1");
+			String globalLevelPermissions = inputParams.get("globalLevelPermissions1");
+			String transactionLimits = inputParams.get("transactionLimits1");
+			String legalEntityId = inputParams.get(LEGAL_ENTITY_ID);
+			JsonArray accountLevelPermissionsJsonArray = new JsonArray();
+			JsonArray globalLevelPermissionsJsonArray = new JsonArray();
+			JsonArray transactionLimitsJsonArray = new JsonArray();
 
+			if (StringUtils.isBlank(accountLevelPermissions) || StringUtils.isBlank(globalLevelPermissions)
+					|| StringUtils.isBlank(transactionLimits))
+				throw new ApplicationException(ErrorCodeEnum.ERR_10348);
+			else {
+				accountLevelPermissionsJsonArray = JSONUtil.parseAsJsonArray(accountLevelPermissions);
+				globalLevelPermissionsJsonArray = JSONUtil.parseAsJsonArray(globalLevelPermissions);
+				transactionLimitsJsonArray = JSONUtil.parseAsJsonArray(transactionLimits);
+			}
 
-
-                if (StringUtils.isBlank(accountLevelPermissions) || StringUtils.isBlank(globalLevelPermissions)
-                        || StringUtils.isBlank(transactionLimits))
-                    throw new ApplicationException(ErrorCodeEnum.ERR_10348);
-                else {
-                    accountLevelPermissionsJsonArray = JSONUtil.parseAsJsonArray(accountLevelPermissions);
-                    globalLevelPermissionsJsonArray = JSONUtil.parseAsJsonArray(globalLevelPermissions);
-                    transactionLimitsJsonArray = JSONUtil.parseAsJsonArray(transactionLimits);
-                }
-            
 			if (StringUtils.isBlank(contractName) || StringUtils.isBlank(contractId)
 					|| StringUtils.isBlank(contractCustomers)) {
 				throw new ApplicationException(ErrorCodeEnum.ERR_10364);
 
 			}
-			
-			if (StringUtils.isBlank(legalEntityId)){
-            	throw new ApplicationException(ErrorCodeEnum.ERR_29040);
-            }
-			
+
+			if (StringUtils.isBlank(legalEntityId)) {
+				throw new ApplicationException(ErrorCodeEnum.ERR_29040);
+			}
+
 			String serviceDefinitionId = getServiceDefinitionID(contractId, dcRequest);
 			String serviceDefinitionType = getServiceType(serviceDefinitionId, dcRequest);
 
 			if (StringUtils.isBlank(serviceDefinitionType)) {
 				throw new ApplicationException(ErrorCodeEnum.ERR_10365);
 			}
-            if(jobInProgress(serviceDefinitionId, dcRequest.getHeaderMap())) {
-            	throw new ApplicationException(ErrorCodeEnum.ERR_10365, "Features Job is in progress, please try after some time");
-            }
+			if (jobInProgress(serviceDefinitionId, dcRequest.getHeaderMap())) {
+				throw new ApplicationException(ErrorCodeEnum.ERR_10365,
+						"Features Job is in progress, please try after some time");
+			}
 
 			boolean isNotExists = verifyContractName(contractId, contractName, dcRequest);
 
@@ -1427,29 +1446,39 @@ public class ContractResourceImpl implements ContractResource {
 			}
 
 			segregateGivenCustomersListAndUpdateCoreCustomerId(contractCustomers, contractId, addedCustomersList,
-					removedCustomersList, existingCustomersList, currentPrimaryCoreCustomerId, dcRequest, deletedCustomers);
+					removedCustomersList, existingCustomersList, currentPrimaryCoreCustomerId, dcRequest,
+					deletedCustomers);
 
-			if (currentPrimaryCoreCustomerId.length() > 0 && 
+			if (currentPrimaryCoreCustomerId.length() > 0 &&
 					!existingPrimaryCoreCustomerId.equalsIgnoreCase(currentPrimaryCoreCustomerId.toString())) {
 				updateCoreCustomerDetails(existingPrimaryCoreCustomerId, contractId, false, legalEntityId, dcRequest);
 			}
 
 			updateContractDetails(contractId, contractName, faxId, legalEntityId, dcRequest);
 
-			/* it should add permssions only for new customers but now it is creating for all*/
-			addNewCustomers(contractCustomers, addedCustomersList, contractId, serviceDefinitionType,globalLevelPermissionsJsonArray, accountLevelPermissionsJsonArray, transactionLimitsJsonArray, legalEntityId, dcRequest);
+			/*
+			 * it should add permssions only for new customers but now it is creating for
+			 * all
+			 */
+			addNewCustomers(contractCustomers, addedCustomersList, contractId, serviceDefinitionType,
+					globalLevelPermissionsJsonArray, accountLevelPermissionsJsonArray, transactionLimitsJsonArray,
+					legalEntityId, dcRequest);
 
 			deleteRemovedCustomers(contractId, removedCustomersList, dcRequest);
-			if(!isValidCustomerLimits(transactionLimitsJsonArray, existingCustomersList, contractId, serviceDefinitionType,
-                    dcRequest)) {
-            	throw new ApplicationException(ErrorCodeEnum.ERR_10420);
-            }
+			if (!isValidCustomerLimits(transactionLimitsJsonArray, existingCustomersList, contractId,
+					serviceDefinitionType,
+					dcRequest)) {
+				throw new ApplicationException(ErrorCodeEnum.ERR_10420);
+			}
 
-			updateExistingCutomers(contractCustomers, existingCustomersList, contractId, serviceDefinitionType, globalLevelPermissionsJsonArray, accountLevelPermissionsJsonArray, transactionLimitsJsonArray, legalEntityId, 
+			updateExistingCutomers(contractCustomers, existingCustomersList, contractId, serviceDefinitionType,
+					globalLevelPermissionsJsonArray, accountLevelPermissionsJsonArray, transactionLimitsJsonArray,
+					legalEntityId,
 					dcRequest);
 
 			if (!existingPrimaryCoreCustomerId.equalsIgnoreCase(currentPrimaryCoreCustomerId.toString())) {
-				updateCoreCustomerDetails(currentPrimaryCoreCustomerId.toString(), contractId, true, legalEntityId, dcRequest);
+				updateCoreCustomerDetails(currentPrimaryCoreCustomerId.toString(), contractId, true, legalEntityId,
+						dcRequest);
 			}
 
 			deleteContractCommunicationAddress(contractId, dcRequest);
@@ -1464,20 +1493,18 @@ public class ContractResourceImpl implements ContractResource {
 		} catch (ApplicationException e) {
 			throw new ApplicationException(e.getErrorCodeEnum());
 		} catch (Exception e) {
-			logger.error("Error Occured",e);
+			logger.error("Error Occured", e);
 			throw new ApplicationException(ErrorCodeEnum.ERR_10365);
 
 		}
 		return result;
 	}
-	
-	
-	
 
-    private boolean jobInProgress(String serviceDefinitionId, Map<String, Object> headerMap) {
-    	Map<String, Object> inputParams = new HashMap<String, Object>();
-		String filter = InfinityConstants.serviceDefinitionId + DBPUtilitiesConstants.EQUAL + serviceDefinitionId+
-				DBPUtilitiesConstants.AND + InfinityConstants.status + DBPUtilitiesConstants.EQUAL + InfinityConstants.jobStatus.SID_JOB_INPROGRESS;
+	private boolean jobInProgress(String serviceDefinitionId, Map<String, Object> headerMap) {
+		Map<String, Object> inputParams = new HashMap<String, Object>();
+		String filter = InfinityConstants.serviceDefinitionId + DBPUtilitiesConstants.EQUAL + serviceDefinitionId +
+				DBPUtilitiesConstants.AND + InfinityConstants.status + DBPUtilitiesConstants.EQUAL
+				+ InfinityConstants.jobStatus.SID_JOB_INPROGRESS;
 		inputParams.put(DBPUtilitiesConstants.FILTER, filter);
 		JsonObject infinityJobJson = ServiceCallHelper.invokeServiceAndGetJson(inputParams, headerMap,
 				URLConstants.INIFNITY_JOB_GET);
@@ -1486,10 +1513,12 @@ public class ContractResourceImpl implements ContractResource {
 				&& infinityJobJson.get(DBPDatasetConstants.DATASET_INFINITY_JOB).isJsonArray()) {
 			return infinityJobJson.get(DBPDatasetConstants.DATASET_INFINITY_JOB).getAsJsonArray().size() > 0;
 		}
-		
+
 		return false;
 	}
-	private void updateCoreCustomerDetails(String coreCustomerId, String contractId, boolean isPrimary, String legalEntityId, 
+
+	private void updateCoreCustomerDetails(String coreCustomerId, String contractId, boolean isPrimary,
+			String legalEntityId,
 			DataControllerRequest dcRequest) throws ApplicationException {
 		ContractCoreCustomerBusinessDelegate coreCustomerBD = DBPAPIAbstractFactoryImpl
 				.getBusinessDelegate(ContractCoreCustomerBusinessDelegate.class);
@@ -1559,93 +1588,98 @@ public class ContractResourceImpl implements ContractResource {
 		return contractDTO.getServicedefinitionId();
 	}
 
-  private boolean isValidCustomerLimits(JsonArray transactionLimitsJsonArray, Set<String> existingCustomersList, String contractId,
-    		String serviceDefinitionType, DataControllerRequest dcRequest) throws ApplicationException {
+	private boolean isValidCustomerLimits(JsonArray transactionLimitsJsonArray, Set<String> existingCustomersList,
+			String contractId,
+			String serviceDefinitionType, DataControllerRequest dcRequest) throws ApplicationException {
 
-    	//JsonParser parser = new JsonParser();
-    	//JsonArray contractCustomersArray = parser.parse(contractCustomers).getAsJsonArray();
+		// JsonParser parser = new JsonParser();
+		// JsonArray contractCustomersArray =
+		// parser.parse(contractCustomers).getAsJsonArray();
 
-    	for (JsonElement customerElement : transactionLimitsJsonArray) {
-    		JsonObject customerJson =
-    				customerElement.isJsonObject() ? customerElement.getAsJsonObject() : new JsonObject();
-    		if (JSONUtil.hasKey(customerJson, CORECUSTOMERID)
-    				&& existingCustomersList.contains(JSONUtil.getString(customerJson, CORECUSTOMERID))) {
+		for (JsonElement customerElement : transactionLimitsJsonArray) {
+			JsonObject customerJson = customerElement.isJsonObject() ? customerElement.getAsJsonObject()
+					: new JsonObject();
+			if (JSONUtil.hasKey(customerJson, CORECUSTOMERID)
+					&& existingCustomersList.contains(JSONUtil.getString(customerJson, CORECUSTOMERID))) {
 
-    			JsonArray featuresArray = customerJson.get(featurePermissions).getAsJsonArray();
+				JsonArray featuresArray = customerJson.get(featurePermissions).getAsJsonArray();
 
-    			for (JsonElement featureElement : featuresArray) {
-    				JsonObject featureJson =
-    						featureElement.isJsonObject() ? featureElement.getAsJsonObject() : new JsonObject();
+				for (JsonElement featureElement : featuresArray) {
+					JsonObject featureJson = featureElement.isJsonObject() ? featureElement.getAsJsonObject()
+							: new JsonObject();
 
-   					JsonArray limitsArray =
-    							featureJson.has(LIMITS) && featureJson.get(LIMITS).isJsonArray()
-    							? featureJson.get(LIMITS).getAsJsonArray()
-    									: new JsonArray();
+					JsonArray limitsArray = featureJson.has(LIMITS) && featureJson.get(LIMITS).isJsonArray()
+							? featureJson.get(LIMITS).getAsJsonArray()
+							: new JsonArray();
 
-    				double max_txn_limit_value=0, daily_limit_value = 0, weekly_limit_value = 0;
+					double max_txn_limit_value = 0, daily_limit_value = 0, weekly_limit_value = 0;
 
-    					for (JsonElement array_position : limitsArray) {
+					for (JsonElement array_position : limitsArray) {
 
-    						JsonObject limitobject = array_position.isJsonObject() ? array_position.getAsJsonObject():new JsonObject();
+						JsonObject limitobject = array_position.isJsonObject() ? array_position.getAsJsonObject()
+								: new JsonObject();
 
-    						if(limitobject.has(LIMITID) && limitobject.get(LIMITID).getAsString().equals(MAX_TRANSACTION_LIMIT)) {
+						if (limitobject.has(LIMITID)
+								&& limitobject.get(LIMITID).getAsString().equals(MAX_TRANSACTION_LIMIT)) {
 
-    							max_txn_limit_value = Double.parseDouble(limitobject.get(LIMITVALUE).getAsString());
+							max_txn_limit_value = Double.parseDouble(limitobject.get(LIMITVALUE).getAsString());
 
-    						}
-    						else if(limitobject.has(LIMITID) && limitobject.get(LIMITID).getAsString().equals(DAILY_LIMIT)) {
+						} else if (limitobject.has(LIMITID)
+								&& limitobject.get(LIMITID).getAsString().equals(DAILY_LIMIT)) {
 
-    							daily_limit_value = Double.parseDouble(limitobject.get(LIMITVALUE).getAsString());
-    						}
-    						else if(limitobject.has(LIMITID) && limitobject.get(LIMITID).getAsString().equals(WEEKLY_LIMIT)) {
+							daily_limit_value = Double.parseDouble(limitobject.get(LIMITVALUE).getAsString());
+						} else if (limitobject.has(LIMITID)
+								&& limitobject.get(LIMITID).getAsString().equals(WEEKLY_LIMIT)) {
 
-    							weekly_limit_value = Double.parseDouble(limitobject.get(LIMITVALUE).getAsString());
-    						}
+							weekly_limit_value = Double.parseDouble(limitobject.get(LIMITVALUE).getAsString());
+						}
 
-    					}
-    					if((max_txn_limit_value > daily_limit_value) || (daily_limit_value > weekly_limit_value) ) {
-    						return false;
-    					}
+					}
+					if ((max_txn_limit_value > daily_limit_value) || (daily_limit_value > weekly_limit_value)) {
+						return false;
+					}
 
-    				//}
+					// }
 
-    			}
-    			
-    		}
-    	}
-    	return true;
-    }
+				}
+
+			}
+		}
+		return true;
+	}
 
 	private void updateExistingCutomers(String contractCustomers, Set<String> existingCustomersList, String contractId,
 			String serviceDefinitionType, JsonArray globalLevelPermissionsJsonArray,
-            JsonArray accountLevelPermissionsJsonArray, JsonArray transactionLimitsJsonArray, String legalEntityId, DataControllerRequest dcRequest) throws ApplicationException {
+			JsonArray accountLevelPermissionsJsonArray, JsonArray transactionLimitsJsonArray, String legalEntityId,
+			DataControllerRequest dcRequest) throws ApplicationException {
 
 		Map<String, Set<String>> removedCustomerAccountsMap = new HashMap<>();
 		Map<String, Set<String>> removedCustomerFeaturesMap = new HashMap<>();
 		Map<String, Set<String>> removedCustomerActionsMap = new HashMap<>();
 		Map<String, Set<String>> removedCustomerFeaturesMap1 = new HashMap<>();
-        Map<String, Set<String>> removedCustomerActionsMap1 = new HashMap<>();
+		Map<String, Set<String>> removedCustomerActionsMap1 = new HashMap<>();
 
 		Map<String, Set<String>> addedCustomerAccountsMap = new HashMap<>();
 		Map<String, Set<String>> addedCustomerFeaturesMap = new HashMap<>();
 		Map<String, Set<String>> addedCustomerActionsMap = new HashMap<>();
 		Map<String, Set<String>> addedCustomerFeaturesMap1 = new HashMap<>();
-        Map<String, Set<String>> addedCustomerActionsMap1 = new HashMap<>();
+		Map<String, Set<String>> addedCustomerActionsMap1 = new HashMap<>();
 
 		Map<String, Set<String>> existingCustomerAccountsMap = new HashMap<>();
 		Map<String, Set<String>> existingCustomerFeaturesMap = new HashMap<>();
 		Map<String, Set<String>> existingCustomerActionsMap = new HashMap<>();
 		Map<String, Set<String>> existingCustomerFeaturesMap1 = new HashMap<>();
-        Map<String, Set<String>> existingCustomerActionsMap1 = new HashMap<>();
+		Map<String, Set<String>> existingCustomerActionsMap1 = new HashMap<>();
 
 		StringBuilder changedActionLimitsQuery = new StringBuilder();
 		StringBuilder decreasedLimitsQuery = new StringBuilder();
 
-		Map<String, Map<String, Map<String, String>>> existingTransactionLimitsMap = getExistingTransactionLimits(contractId,
+		Map<String, Map<String, Map<String, String>>> existingTransactionLimitsMap = getExistingTransactionLimits(
+				contractId,
 				dcRequest);
-		
+
 		String account = "";
-		
+
 		JsonArray contractCustomersArray = JSONUtil.parseAsJsonArray(contractCustomers);
 		ContractCoreCustomerBusinessDelegate contractCoreCustomerBD = DBPAPIAbstractFactoryImpl
 				.getBusinessDelegate(ContractCoreCustomerBusinessDelegate.class);
@@ -1667,23 +1701,24 @@ public class ContractResourceImpl implements ContractResource {
 				Set<String> existingActionsList = new HashSet<>();
 				Set<String> addedActionsList = new HashSet<>();
 				Set<String> removedActionsList = new HashSet<>();
-				
-				Set<String> existingFeaturesList1 = new HashSet<>();
-		        Set<String> addedFeaturesList1 = new HashSet<>();
-		        Set<String> removedFeaturesList1 = new HashSet<>();
 
-		        Set<String> existingActionsList1 = new HashSet<>();
-		        Set<String> addedActionsList1 = new HashSet<>();
-		        Set<String> removedActionsList1 = new HashSet<>();
+				Set<String> existingFeaturesList1 = new HashSet<>();
+				Set<String> addedFeaturesList1 = new HashSet<>();
+				Set<String> removedFeaturesList1 = new HashSet<>();
+
+				Set<String> existingActionsList1 = new HashSet<>();
+				Set<String> addedActionsList1 = new HashSet<>();
+				Set<String> removedActionsList1 = new HashSet<>();
 
 				String coreCustomerId = JSONUtil.getString(customerJson, CORECUSTOMERID);
-				/* not sure of its usage
-				if (!existingTransactionLimitsMap.containsKey(coreCustomerId)) {
-					Map<String, Map<String, String>> actionsMap = new HashMap<>();
-					existingTransactionLimitsMap.put(coreCustomerId, actionsMap);
-				}
-				*/
-				
+				/*
+				 * not sure of its usage
+				 * if (!existingTransactionLimitsMap.containsKey(coreCustomerId)) {
+				 * Map<String, Map<String, String>> actionsMap = new HashMap<>();
+				 * existingTransactionLimitsMap.put(coreCustomerId, actionsMap);
+				 * }
+				 */
+
 				Map<String, Set<String>> contractCoreCustomerDetailsMap = contractCoreCustomerBD
 						.getCoreCustomerAccountsFeaturesActions(contractId, coreCustomerId, dcRequest.getHeaderMap());
 				JsonArray accountsArray = customerJson.get(ACCOUNTS).getAsJsonArray();
@@ -1697,7 +1732,7 @@ public class ContractResourceImpl implements ContractResource {
 					String accountId = accountObject.has(ACCOUNTID) ? accountObject.get(ACCOUNTID).getAsString() : "";
 					String accountName = accountObject.has(ACCOUNTNAME) ? accountObject.get(ACCOUNTNAME).getAsString()
 							: "";
-					String typeId = accountObject.has(TYPEID) ? accountObject.get(TYPEID).getAsString() : "";					
+					String typeId = accountObject.has(TYPEID) ? accountObject.get(TYPEID).getAsString() : "";
 					if (StringUtils.isNotBlank(accountId) && StringUtils.isNotBlank(accountName)
 							&& StringUtils.isNotBlank(typeId)) {
 						if (customerAccounts.contains(accountId)) {
@@ -1706,297 +1741,299 @@ public class ContractResourceImpl implements ContractResource {
 							addedAccountsList.add(accountId);
 						}
 					} else {
-	                    removedAccountsList.add(accountId);
-	                 }
-			                 
-			          contractCoreCustomerBD.deleteCoreCustomerAccounts(removedAccountsList, contractId,coreCustomerId,
-			                      dcRequest.getHeaderMap());
-			          removedCustomerAccountsMap.put(coreCustomerId, removedAccountsList);
-			          addedCustomerAccountsMap.put(coreCustomerId, addedAccountsList);
-			          existingCustomerAccountsMap.put(coreCustomerId, existingAccountsList);
-			              
-			          }
-			                    
-			   // Getting existing contract feature actions
-				
-				    ContractBusinessDelegate ContractBusinessDelegate = DBPAPIAbstractFactoryImpl
-	                        .getBusinessDelegate(ContractBusinessDelegate.class);
-	                
-			               
-					Map<String, FeatureActionLimitsDTO> coreCustomerFeatureActionDTO = ContractBusinessDelegate.getContractActions(
-				            contractId, coreCustomerId, dcRequest.getHeaderMap());
+						removedAccountsList.add(accountId);
+					}
 
-				    Set<String> coreCustomerGlobalActions = coreCustomerFeatureActionDTO
-				    		.get(coreCustomerId).getGlobalLevelActions();
-				    Map<String, Map<String, Set<String>>> coreCustomerAccountActions = coreCustomerFeatureActionDTO
-				    		.get(coreCustomerId).getAsscoiatedAccountActions();
-				                   
-				                    		             
-			  // global level
+					contractCoreCustomerBD.deleteCoreCustomerAccounts(removedAccountsList, contractId, coreCustomerId,
+							dcRequest.getHeaderMap());
+					removedCustomerAccountsMap.put(coreCustomerId, removedAccountsList);
+					addedCustomerAccountsMap.put(coreCustomerId, addedAccountsList);
+					existingCustomerAccountsMap.put(coreCustomerId, existingAccountsList);
 
-			       for (JsonElement customerElement1 : globalLevelPermissionsJsonArray) {
-			          JsonObject customerJson2 =
-			                    customerElement1.isJsonObject() ? customerElement1.getAsJsonObject() : new JsonObject();
-			          JsonArray featuresArray2 = customerJson2.get(FEATURES).getAsJsonArray();
-			             for (JsonElement featureElement2 : featuresArray2) {
-			               JsonObject featureJson2 =
-			                          featureElement2.isJsonObject() ? featureElement2.getAsJsonObject()
-			                           : new JsonObject();
-			               String featureId2 =
-			                           featureJson2.has(FEATUREID) ? featureJson2.get(FEATUREID).getAsString() : "";
-			               JsonArray actionsArray2 =
-			                         featureJson2.has(permissions) && featureJson2.get(permissions).isJsonArray()
-			                         ? featureJson2.get(permissions).getAsJsonArray()
-			                         : new JsonArray();
-			                       
-		                    boolean areActionsAllowed = false;
-		                    for (JsonElement action2 : actionsArray2) {
-	                            JsonObject actionJson2 =
-	                                  action2.isJsonObject() ? action2.getAsJsonObject() : new JsonObject();
-	                            String actionId1 =
-	                                  actionJson2.has(ACTIONID) ? actionJson2.get(ACTIONID).getAsString() : "";
-	                            String isEnabled =
-	                                  actionJson2.has("isEnabled") ? actionJson2.get("isEnabled").getAsString()
-	                                                   : "";
-	                            String isNewAction =
-	                                  actionJson2.has(ISNEWACTION) ? actionJson2.get(ISNEWACTION).getAsString()
-	                                  : "";
+				}
 
-	                            if (StringUtils.isNotBlank(isNewAction) && "true".equalsIgnoreCase(isNewAction)) {
-	                                   isNewAction = "1";
-	                            } else {
-	                                   isNewAction = "0";
-	                              }
-	                            
-	                            if (StringUtils.isNotBlank(actionId1) && "true".equalsIgnoreCase(isEnabled)) {
-	                                areActionsAllowed = true;
-	                                        
-	                            if (coreCustomerGlobalActions.contains(actionId1)) {
-	                                existingActionsList.add(actionId1);
-	                            } else {
-	                                addedActionsList.add(actionId1);
-	                              }
-	                            } else {
-	                                removedActionsList.add(actionId1);
-	                               }
-		                          
-	                            if (StringUtils.isNotBlank(actionId1) && addedActionsList.contains(actionId1)) {
-	                                /*updateLimitQueries(changedActionLimitsQuery, decreasedLimitsQuery,
-	                                existingTransactionLimitsMap,contractId, coreCustomerId, null, featureId2, actionId1, "@", "@",
-	                                                isNewAction, legalEntityId);*/
-	                                changedActionLimitsQuery.append(
-	                    					getQueryString(contractId, coreCustomerId, null,featureId2, actionId1, isNewAction, "@", "@", legalEntityId));
-	                            }
-	                          }
-	                          if (areActionsAllowed) {
-	                            if (StringUtils.isNotBlank(featureId2) && actionsArray2.size() > 0) {
-	                              if (customerFeatures.contains(featureId2)) {
-	                                 existingFeaturesList.add(featureId2);
-	                              } else {
-	                                 addedFeaturesList.add(featureId2);
-	                                 }
-	                            }
-	                          }
-	                          else {
-				                   removedFeaturesList.add(featureId2);
-				             }
-	                        }		                            
-			                                
-			        contractCoreCustomerBD.deleteCoreCustomerFeatures(removedFeaturesList, contractId, coreCustomerId,
-				                  dcRequest.getHeaderMap());
-				    contractCoreCustomerBD.deleteCoreCustomerActions(removedActionsList, contractId, coreCustomerId,
-				                  account,dcRequest.getHeaderMap());
-				    updateApprovalMatrixEntriesForNewActionsAdded(addedActionsList, existingAccountsList,
-				                  addedAccountsList,coreCustomerId, contractId, dcRequest, legalEntityId);		         
-			       }
+				// Getting existing contract feature actions
 
-			   // account level
-			       
-			       for (JsonElement accountElement : accountLevelPermissionsJsonArray) {
-		                JsonObject accountJson = accountElement.isJsonObject() ? accountElement.getAsJsonObject()
-		                  : new JsonObject();
-		                JsonArray accountsArray1 = accountJson.get(ACCOUNTS).getAsJsonArray();
-		                  for (JsonElement accountsElement1 : accountsArray1) {
-		                	  JsonObject accountObject =
-			                             accountsElement1.isJsonObject() ? accountsElement1.getAsJsonObject()
-			                                                : new JsonObject();
-			                  String accountId1 =
-			                          accountObject.has(ACCOUNTID) ? accountObject.get(ACCOUNTID).getAsString()
-			                                                : "";
-			               JsonArray featuresArray1 = accountObject.get(featurePermissions).getAsJsonArray();
-			               for (JsonElement featureElement1 : featuresArray1) {
-	                           JsonObject featureJson1 =
-	                                featureElement1.isJsonObject() ? featureElement1.getAsJsonObject()
-	                                : new JsonObject();
-	                             String featureId1 =
-	                                featureJson1.has(FEATUREID) ? featureJson1.get(FEATUREID).getAsString()
-	                                 : "";
-	                            JsonArray actionsArray1 =
-	                               featureJson1.has(permissions) && featureJson1.get(permissions).isJsonArray()
-	                               ? featureJson1.get(permissions).getAsJsonArray()
-	                               : new JsonArray();
-		                                
-	                             boolean areActionsAllowed = false;
-			                     for (JsonElement action1 : actionsArray1) {
-			                       JsonObject actionJson1 =
-			                             action1.isJsonObject() ? action1.getAsJsonObject() : new JsonObject();
-			                       String actionId =
-			                              actionJson1.has(ACTIONID) ? actionJson1.get(ACTIONID).getAsString()
-			                              : "";
-			                       String isEnabled = actionJson1.has("isEnabled")
-			                              ? actionJson1.get("isEnabled").getAsString() : "";
-			                       String isNewAction = actionJson1.has(ISNEWACTION)
-			                              ? actionJson1.get(ISNEWACTION).getAsString()
-			                              : "";
-			                       if (StringUtils.isNotBlank(isNewAction)&& "true".equalsIgnoreCase(isNewAction)) {
-			                             isNewAction = "1";
-			                       } else {
-			                             isNewAction = "0";
-			                         }
-			                                   		                            
-			                       if(coreCustomerAccountActions.containsKey(accountId1)
-			                    		   && coreCustomerAccountActions.get(accountId1).containsKey(featureId1)){
-				                        if (StringUtils.isNotBlank(actionId) && "true".equalsIgnoreCase(isEnabled)) {
-				                               areActionsAllowed = true;
-				                         if (coreCustomerAccountActions.get(accountId1).get(featureId1).contains(actionId)) {
-				                                existingActionsList1.add(actionId);
-				                         } else {
-				                                addedActionsList1.add(actionId);
-				                           }
-				                        } else {
-				                                removedActionsList1.add(actionId);
-				                          }
-				                    } else
-				                            
-				                       if (StringUtils.isNotBlank(actionId) && "true".equalsIgnoreCase(isEnabled)) {
-				                           areActionsAllowed = true;
-				                        
-				                            addedActionsList1.add(actionId);
-				                       
-				                       } else {
-				                            removedActionsList1.add(actionId);
-				                         }
+				ContractBusinessDelegate ContractBusinessDelegate = DBPAPIAbstractFactoryImpl
+						.getBusinessDelegate(ContractBusinessDelegate.class);
 
-			                         if (StringUtils.isNotBlank(actionId) && addedActionsList1.contains(actionId)){
-				                            /*updateLimitQueries(changedActionLimitsQuery, decreasedLimitsQuery,
-				                            existingTransactionLimitsMap,contractId, coreCustomerId, accountId1, featureId1, actionId, "@",
-				                            "@", isNewAction, legalEntityId);*/
-				                            changedActionLimitsQuery.append(
-			                    					getQueryString(contractId, coreCustomerId, accountId1,featureId1, actionId, isNewAction, "@", "@", legalEntityId));
-				                       }
-				                     }
-				                     
-				                     if (areActionsAllowed) {
-				                        if (StringUtils.isNotBlank(featureId1) && actionsArray1.size() > 0 
-				                            && StringUtils.isNotBlank(accountId1)) {
-				                          if (customerFeatures.contains(featureId1)){
-				                               existingFeaturesList1.add(featureId1);
-				                          } else {
-				                               addedFeaturesList1.add(featureId1);
-				                            }
-				                         }
-				                      }else {
-			                                removedFeaturesList1.add(featureId1);
-			                           }
-				                 }		                            
-		                        
+				Map<String, FeatureActionLimitsDTO> coreCustomerFeatureActionDTO = ContractBusinessDelegate
+						.getContractActions(
+								contractId, coreCustomerId, dcRequest.getHeaderMap());
 
-			        contractCoreCustomerBD.deleteCoreCustomerFeatures(removedFeaturesList1, contractId,coreCustomerId,
-			                 dcRequest.getHeaderMap());
-			             
-			        removedFeaturesList1.clear(); 
-			             
-			        contractCoreCustomerBD.deleteCoreCustomerActions(removedActionsList1, contractId,coreCustomerId, accountId1,
-			             dcRequest.getHeaderMap());
-			        removedActionsList1.clear(); 
+				Set<String> coreCustomerGlobalActions = coreCustomerFeatureActionDTO
+						.get(coreCustomerId).getGlobalLevelActions();
+				Map<String, Map<String, Set<String>>> coreCustomerAccountActions = coreCustomerFeatureActionDTO
+						.get(coreCustomerId).getAsscoiatedAccountActions();
 
-			        updateApprovalMatrixEntriesForNewAccountsCreated(addedAccountsList, existingActionsList1,coreCustomerId,
-			                 contractId, dcRequest, legalEntityId);
-			        updateApprovalMatrixEntriesForNewActionsAdded(addedActionsList1, existingAccountsList,addedAccountsList,
-			                 coreCustomerId, contractId, dcRequest, legalEntityId);
-			         }
-			       }
+				// global level
 
-			   // transaction limits
-			       Set<String> existingActionslimits = new HashSet<>();
-			       Set<String> addedActionslimits = new HashSet<>();
-			       for (JsonElement customerElement : transactionLimitsJsonArray) {
-			              JsonObject customerJson1 = customerElement.isJsonObject() ? customerElement.getAsJsonObject()
-			              : new JsonObject();
-			                JsonArray featuresArray = customerJson1.get(featurePermissions).getAsJsonArray();
-			                
-			            for (JsonElement featureElement : featuresArray) {
-			               JsonObject featureJson =
-			                 featureElement.isJsonObject() ? featureElement.getAsJsonObject() : new JsonObject();
-			                String featureId = featureJson.has(FEATUREID) ? featureJson.get(FEATUREID).getAsString() : "";
+				for (JsonElement customerElement1 : globalLevelPermissionsJsonArray) {
+					JsonObject customerJson2 = customerElement1.isJsonObject() ? customerElement1.getAsJsonObject()
+							: new JsonObject();
+					JsonArray featuresArray2 = customerJson2.get(FEATURES).getAsJsonArray();
+					for (JsonElement featureElement2 : featuresArray2) {
+						JsonObject featureJson2 = featureElement2.isJsonObject() ? featureElement2.getAsJsonObject()
+								: new JsonObject();
+						String featureId2 = featureJson2.has(FEATUREID) ? featureJson2.get(FEATUREID).getAsString()
+								: "";
+						JsonArray actionsArray2 = featureJson2.has(permissions)
+								&& featureJson2.get(permissions).isJsonArray()
+										? featureJson2.get(permissions).getAsJsonArray()
+										: new JsonArray();
 
-			                String actionId = featureJson.has(ACTIONID) ? featureJson.get(ACTIONID).getAsString() : "";
-			                               
-			                if (coreCustomerGlobalActions.contains(actionId)) {
-			                	existingActionslimits.add(actionId);
-                            } else {
-                            	addedActionslimits.add(actionId);
-                              }
-                            
-			                String isNewAction = featureJson.has(ISNEWACTION) ? featureJson.get(ISNEWACTION).getAsString() : "";
-			                 if (StringUtils.isNotBlank(isNewAction) && "true".equalsIgnoreCase(isNewAction)) {
-			                     isNewAction = "1";
-			                 } else {
-			                     isNewAction = "0";
-			                   }
-			         
-			              JsonArray limitsArray = featureJson.has(LIMITS) && featureJson.get(LIMITS).isJsonArray()
-				                    ? featureJson.get(LIMITS).getAsJsonArray()
-				                    : new JsonArray();
-				                  
-				             if (limitsArray.size() > 0) {
-				            	 for (JsonElement limitRecord : limitsArray) {
-			                          JsonObject limitJson =
-			                            limitRecord.isJsonObject() ? limitRecord.getAsJsonObject()
-			                            : new JsonObject();
-			                             String limitId =
-			                               limitJson.has(LIMITID) ? limitJson.get(LIMITID).getAsString() : "";
-			                             String limitValue =
-			                               limitJson.has(LIMITVALUE) ? limitJson.get(LIMITVALUE).getAsString()
-			                               : "";
-				                                
-											if (existingActionslimits.contains(actionId))
-												updateLimitQueries(changedActionLimitsQuery, decreasedLimitsQuery,
-														existingTransactionLimitsMap, contractId, coreCustomerId, null,
-														featureId, actionId, limitId, limitValue, isNewAction,
-														legalEntityId);
-											else
-												changedActionLimitsQuery.append(getQueryString(contractId,
-														coreCustomerId, null, featureId, actionId, isNewAction, limitId,
-														limitValue, legalEntityId));
+						boolean areActionsAllowed = false;
+						for (JsonElement action2 : actionsArray2) {
+							JsonObject actionJson2 = action2.isJsonObject() ? action2.getAsJsonObject()
+									: new JsonObject();
+							String actionId1 = actionJson2.has(ACTIONID) ? actionJson2.get(ACTIONID).getAsString() : "";
+							String isEnabled = actionJson2.has("isEnabled") ? actionJson2.get("isEnabled").getAsString()
+									: "";
+							String isNewAction = actionJson2.has(ISNEWACTION)
+									? actionJson2.get(ISNEWACTION).getAsString()
+									: "";
 
-				                  }
-				              }
-				         }
-				   }		                 
-			          
-			       removedCustomerFeaturesMap.put(coreCustomerId, removedFeaturesList);
-	               addedCustomerFeaturesMap.put(coreCustomerId, addedFeaturesList);
-	               existingCustomerFeaturesMap.put(coreCustomerId, existingFeaturesList);
+							if (StringUtils.isNotBlank(isNewAction) && "true".equalsIgnoreCase(isNewAction)) {
+								isNewAction = "1";
+							} else {
+								isNewAction = "0";
+							}
 
-	               removedCustomerActionsMap.put(coreCustomerId, removedActionsList);
-	               addedCustomerActionsMap.put(coreCustomerId, addedActionsList);
-	               existingCustomerActionsMap.put(coreCustomerId, existingActionsList);
+							if (StringUtils.isNotBlank(actionId1) && "true".equalsIgnoreCase(isEnabled)) {
+								areActionsAllowed = true;
 
-	               removedCustomerFeaturesMap1.put(coreCustomerId, removedFeaturesList1);
-	               addedCustomerFeaturesMap1.put(coreCustomerId, addedFeaturesList1);
-	               existingCustomerFeaturesMap1.put(coreCustomerId, existingFeaturesList1);
+								if (coreCustomerGlobalActions.contains(actionId1)) {
+									existingActionsList.add(actionId1);
+								} else {
+									addedActionsList.add(actionId1);
+								}
+							} else {
+								removedActionsList.add(actionId1);
+							}
 
-	               removedCustomerActionsMap1.put(coreCustomerId, removedActionsList1);
-	               addedCustomerActionsMap1.put(coreCustomerId, addedActionsList1);
-	               existingCustomerActionsMap1.put(coreCustomerId, existingActionsList1);  
+							if (StringUtils.isNotBlank(actionId1) && addedActionsList.contains(actionId1)) {
+								/*
+								 * updateLimitQueries(changedActionLimitsQuery, decreasedLimitsQuery,
+								 * existingTransactionLimitsMap,contractId, coreCustomerId, null, featureId2,
+								 * actionId1, "@", "@",
+								 * isNewAction, legalEntityId);
+								 */
+								changedActionLimitsQuery.append(
+										getQueryString(contractId, coreCustomerId, null, featureId2, actionId1,
+												isNewAction, "@", "@", legalEntityId));
+							}
+						}
+						if (areActionsAllowed) {
+							if (StringUtils.isNotBlank(featureId2) && actionsArray2.size() > 0) {
+								if (customerFeatures.contains(featureId2)) {
+									existingFeaturesList.add(featureId2);
+								} else {
+									addedFeaturesList.add(featureId2);
+								}
+							}
+						} else {
+							removedFeaturesList.add(featureId2);
+						}
+					}
+
+					contractCoreCustomerBD.deleteCoreCustomerFeatures(removedFeaturesList, contractId, coreCustomerId,
+							dcRequest.getHeaderMap());
+					contractCoreCustomerBD.deleteCoreCustomerActions(removedActionsList, contractId, coreCustomerId,
+							account, dcRequest.getHeaderMap());
+					updateApprovalMatrixEntriesForNewActionsAdded(addedActionsList, existingAccountsList,
+							addedAccountsList, coreCustomerId, contractId, dcRequest, legalEntityId);
+				}
+
+				// account level
+
+				for (JsonElement accountElement : accountLevelPermissionsJsonArray) {
+					JsonObject accountJson = accountElement.isJsonObject() ? accountElement.getAsJsonObject()
+							: new JsonObject();
+					JsonArray accountsArray1 = accountJson.get(ACCOUNTS).getAsJsonArray();
+					for (JsonElement accountsElement1 : accountsArray1) {
+						JsonObject accountObject = accountsElement1.isJsonObject() ? accountsElement1.getAsJsonObject()
+								: new JsonObject();
+						String accountId1 = accountObject.has(ACCOUNTID) ? accountObject.get(ACCOUNTID).getAsString()
+								: "";
+						JsonArray featuresArray1 = accountObject.get(featurePermissions).getAsJsonArray();
+						for (JsonElement featureElement1 : featuresArray1) {
+							JsonObject featureJson1 = featureElement1.isJsonObject() ? featureElement1.getAsJsonObject()
+									: new JsonObject();
+							String featureId1 = featureJson1.has(FEATUREID) ? featureJson1.get(FEATUREID).getAsString()
+									: "";
+							JsonArray actionsArray1 = featureJson1.has(permissions)
+									&& featureJson1.get(permissions).isJsonArray()
+											? featureJson1.get(permissions).getAsJsonArray()
+											: new JsonArray();
+
+							boolean areActionsAllowed = false;
+							for (JsonElement action1 : actionsArray1) {
+								JsonObject actionJson1 = action1.isJsonObject() ? action1.getAsJsonObject()
+										: new JsonObject();
+								String actionId = actionJson1.has(ACTIONID) ? actionJson1.get(ACTIONID).getAsString()
+										: "";
+								String isEnabled = actionJson1.has("isEnabled")
+										? actionJson1.get("isEnabled").getAsString()
+										: "";
+								String isNewAction = actionJson1.has(ISNEWACTION)
+										? actionJson1.get(ISNEWACTION).getAsString()
+										: "";
+								if (StringUtils.isNotBlank(isNewAction) && "true".equalsIgnoreCase(isNewAction)) {
+									isNewAction = "1";
+								} else {
+									isNewAction = "0";
+								}
+
+								if (coreCustomerAccountActions.containsKey(accountId1)
+										&& coreCustomerAccountActions.get(accountId1).containsKey(featureId1)) {
+									if (StringUtils.isNotBlank(actionId) && "true".equalsIgnoreCase(isEnabled)) {
+										areActionsAllowed = true;
+										if (coreCustomerAccountActions.get(accountId1).get(featureId1)
+												.contains(actionId)) {
+											existingActionsList1.add(actionId);
+										} else {
+											addedActionsList1.add(actionId);
+										}
+									} else {
+										removedActionsList1.add(actionId);
+									}
+								} else
+
+								if (StringUtils.isNotBlank(actionId) && "true".equalsIgnoreCase(isEnabled)) {
+									areActionsAllowed = true;
+
+									addedActionsList1.add(actionId);
+
+								} else {
+									removedActionsList1.add(actionId);
+								}
+
+								if (StringUtils.isNotBlank(actionId) && addedActionsList1.contains(actionId)) {
+									/*
+									 * updateLimitQueries(changedActionLimitsQuery, decreasedLimitsQuery,
+									 * existingTransactionLimitsMap,contractId, coreCustomerId, accountId1,
+									 * featureId1, actionId, "@",
+									 * "@", isNewAction, legalEntityId);
+									 */
+									changedActionLimitsQuery.append(
+											getQueryString(contractId, coreCustomerId, accountId1, featureId1, actionId,
+													isNewAction, "@", "@", legalEntityId));
+								}
+							}
+
+							if (areActionsAllowed) {
+								if (StringUtils.isNotBlank(featureId1) && actionsArray1.size() > 0
+										&& StringUtils.isNotBlank(accountId1)) {
+									if (customerFeatures.contains(featureId1)) {
+										existingFeaturesList1.add(featureId1);
+									} else {
+										addedFeaturesList1.add(featureId1);
+									}
+								}
+							} else {
+								removedFeaturesList1.add(featureId1);
+							}
+						}
+
+						contractCoreCustomerBD.deleteCoreCustomerFeatures(removedFeaturesList1, contractId,
+								coreCustomerId,
+								dcRequest.getHeaderMap());
+
+						removedFeaturesList1.clear();
+
+						contractCoreCustomerBD.deleteCoreCustomerActions(removedActionsList1, contractId,
+								coreCustomerId, accountId1,
+								dcRequest.getHeaderMap());
+						removedActionsList1.clear();
+
+						updateApprovalMatrixEntriesForNewAccountsCreated(addedAccountsList, existingActionsList1,
+								coreCustomerId,
+								contractId, dcRequest, legalEntityId);
+						updateApprovalMatrixEntriesForNewActionsAdded(addedActionsList1, existingAccountsList,
+								addedAccountsList,
+								coreCustomerId, contractId, dcRequest, legalEntityId);
+					}
+				}
+
+				// transaction limits
+				Set<String> existingActionslimits = new HashSet<>();
+				Set<String> addedActionslimits = new HashSet<>();
+				for (JsonElement customerElement : transactionLimitsJsonArray) {
+					JsonObject customerJson1 = customerElement.isJsonObject() ? customerElement.getAsJsonObject()
+							: new JsonObject();
+					JsonArray featuresArray = customerJson1.get(featurePermissions).getAsJsonArray();
+
+					for (JsonElement featureElement : featuresArray) {
+						JsonObject featureJson = featureElement.isJsonObject() ? featureElement.getAsJsonObject()
+								: new JsonObject();
+						String featureId = featureJson.has(FEATUREID) ? featureJson.get(FEATUREID).getAsString() : "";
+
+						String actionId = featureJson.has(ACTIONID) ? featureJson.get(ACTIONID).getAsString() : "";
+
+						if (coreCustomerGlobalActions.contains(actionId)) {
+							existingActionslimits.add(actionId);
+						} else {
+							addedActionslimits.add(actionId);
+						}
+
+						String isNewAction = featureJson.has(ISNEWACTION) ? featureJson.get(ISNEWACTION).getAsString()
+								: "";
+						if (StringUtils.isNotBlank(isNewAction) && "true".equalsIgnoreCase(isNewAction)) {
+							isNewAction = "1";
+						} else {
+							isNewAction = "0";
+						}
+
+						JsonArray limitsArray = featureJson.has(LIMITS) && featureJson.get(LIMITS).isJsonArray()
+								? featureJson.get(LIMITS).getAsJsonArray()
+								: new JsonArray();
+
+						if (limitsArray.size() > 0) {
+							for (JsonElement limitRecord : limitsArray) {
+								JsonObject limitJson = limitRecord.isJsonObject() ? limitRecord.getAsJsonObject()
+										: new JsonObject();
+								String limitId = limitJson.has(LIMITID) ? limitJson.get(LIMITID).getAsString() : "";
+								String limitValue = limitJson.has(LIMITVALUE) ? limitJson.get(LIMITVALUE).getAsString()
+										: "";
+
+								if (existingActionslimits.contains(actionId))
+									updateLimitQueries(changedActionLimitsQuery, decreasedLimitsQuery,
+											existingTransactionLimitsMap, contractId, coreCustomerId, null,
+											featureId, actionId, limitId, limitValue, isNewAction,
+											legalEntityId);
+								else
+									changedActionLimitsQuery.append(getQueryString(contractId,
+											coreCustomerId, null, featureId, actionId, isNewAction, limitId,
+											limitValue, legalEntityId));
+
+							}
+						}
+					}
+				}
+
+				removedCustomerFeaturesMap.put(coreCustomerId, removedFeaturesList);
+				addedCustomerFeaturesMap.put(coreCustomerId, addedFeaturesList);
+				existingCustomerFeaturesMap.put(coreCustomerId, existingFeaturesList);
+
+				removedCustomerActionsMap.put(coreCustomerId, removedActionsList);
+				addedCustomerActionsMap.put(coreCustomerId, addedActionsList);
+				existingCustomerActionsMap.put(coreCustomerId, existingActionsList);
+
+				removedCustomerFeaturesMap1.put(coreCustomerId, removedFeaturesList1);
+				addedCustomerFeaturesMap1.put(coreCustomerId, addedFeaturesList1);
+				existingCustomerFeaturesMap1.put(coreCustomerId, existingFeaturesList1);
+
+				removedCustomerActionsMap1.put(coreCustomerId, removedActionsList1);
+				addedCustomerActionsMap1.put(coreCustomerId, addedActionsList1);
+				existingCustomerActionsMap1.put(coreCustomerId, existingActionsList1);
 
 			}
 		}
 
 		createContractAccounts(contractCustomers, existingCustomersList, addedCustomerAccountsMap, contractId,
 				legalEntityId, dcRequest);
-		createContractFeatures(globalLevelPermissionsJsonArray, accountLevelPermissionsJsonArray, existingCustomersList, addedCustomerFeaturesMap, addedCustomerFeaturesMap1,contractId,
+		createContractFeatures(globalLevelPermissionsJsonArray, accountLevelPermissionsJsonArray, existingCustomersList,
+				addedCustomerFeaturesMap, addedCustomerFeaturesMap1, contractId,
 				serviceDefinitionType, DBPUtilitiesConstants.BOOLEAN_STRING_FALSE, legalEntityId, dcRequest);
 
 		updateContractActions(changedActionLimitsQuery, decreasedLimitsQuery, dcRequest);
@@ -2025,7 +2062,8 @@ public class ContractResourceImpl implements ContractResource {
 	}
 
 	private void updateApprovalMatrixEntriesForNewAccountsCreated(Set<String> addedAccountsList,
-			Set<String> existingActionsList, String coreCustomerId, String contractId, DataControllerRequest dcRequest, String legalEntityId)
+			Set<String> existingActionsList, String coreCustomerId, String contractId, DataControllerRequest dcRequest,
+			String legalEntityId)
 			throws ApplicationException {
 		ApprovalMatrixBusinessDelegate approvalmatrixDelegate = DBPAPIAbstractFactoryImpl.getInstance()
 				.getFactoryInstance(BusinessDelegateFactory.class)
@@ -2066,20 +2104,24 @@ public class ContractResourceImpl implements ContractResource {
 	}
 
 	private void updateLimitQueries(StringBuilder changedActionLimitsQuery, StringBuilder decreasedLimitsQuery,
-			Map<String, Map<String, Map<String, String>>> existingActionsMap, String contractId, String coreCustomerId,String accountId,
-			String featureId, String actionId, String limitId, String limitValue,String isNewAction, String legalEntityId) {
+			Map<String, Map<String, Map<String, String>>> existingActionsMap, String contractId, String coreCustomerId,
+			String accountId,
+			String featureId, String actionId, String limitId, String limitValue, String isNewAction,
+			String legalEntityId) {
 		if (existingActionsMap.containsKey(coreCustomerId)
 				&& existingActionsMap.get(coreCustomerId).containsKey(actionId)
 				&& existingActionsMap.get(coreCustomerId).get(actionId).containsKey(limitId)) {
 			String existingLimitValue = existingActionsMap.get(coreCustomerId).get(actionId).get(limitId);
 			if (StringUtils.isNotBlank(existingLimitValue) && StringUtils.isNotBlank(limitValue)) {
 				if (Double.parseDouble(existingLimitValue) > Double.parseDouble(limitValue)) {
-					decreasedLimitsQuery.append(getQueryString(contractId, coreCustomerId, accountId,featureId, actionId,
-							isNewAction, limitId, limitValue, legalEntityId));
+					decreasedLimitsQuery
+							.append(getQueryString(contractId, coreCustomerId, accountId, featureId, actionId,
+									isNewAction, limitId, limitValue, legalEntityId));
 				}
 				if (Double.parseDouble(existingLimitValue) != Double.parseDouble(limitValue)) {
-					changedActionLimitsQuery.append(getQueryString(contractId, coreCustomerId,accountId, featureId, actionId,
-							isNewAction, limitId, limitValue , legalEntityId));
+					changedActionLimitsQuery
+							.append(getQueryString(contractId, coreCustomerId, accountId, featureId, actionId,
+									isNewAction, limitId, limitValue, legalEntityId));
 				}
 
 			}
@@ -2088,7 +2130,8 @@ public class ContractResourceImpl implements ContractResource {
 				&& StringUtils.isNotBlank(limitId)) {
 
 			changedActionLimitsQuery.append(
-					getQueryString(contractId, coreCustomerId, accountId,featureId, actionId, isNewAction, limitId, limitValue, legalEntityId));
+					getQueryString(contractId, coreCustomerId, accountId, featureId, actionId, isNewAction, limitId,
+							limitValue, legalEntityId));
 
 		}
 	}
@@ -2149,8 +2192,9 @@ public class ContractResourceImpl implements ContractResource {
 	}
 
 	private Set<String> addNewCustomers(String contractCustomers, Set<String> addedCustomersList, String contractId,
-			String serviceDefinitionType,JsonArray globalLevelPermissionsJsonArray,
-            JsonArray accountLevelPermissionsJsonArray, JsonArray transactionLimitsJsonArray, String legalEntityId, DataControllerRequest dcRequest) throws ApplicationException {
+			String serviceDefinitionType, JsonArray globalLevelPermissionsJsonArray,
+			JsonArray accountLevelPermissionsJsonArray, JsonArray transactionLimitsJsonArray, String legalEntityId,
+			DataControllerRequest dcRequest) throws ApplicationException {
 		Set<String> createdValidContractCustomers = new HashSet<>();
 		if (!addedCustomersList.isEmpty()) {
 			ContractCoreCustomerBusinessDelegate customerBD = DBPAPIAbstractFactoryImpl
@@ -2160,7 +2204,8 @@ public class ContractResourceImpl implements ContractResource {
 			createdValidContractCustomers = createContractCustomers(contractCustomers, validCustomers, contractId,
 					legalEntityId, dcRequest);
 
-			createContractAccounts(contractCustomers, createdValidContractCustomers, null, contractId, legalEntityId, dcRequest);
+			createContractAccounts(contractCustomers, createdValidContractCustomers, null, contractId, legalEntityId,
+					dcRequest);
 			/*
 			 * Map<String, Set<String>> featuresCreated =
 			 * createContractFeatures(contractCustomers, createdValidContractCustomers,
@@ -2172,40 +2217,41 @@ public class ContractResourceImpl implements ContractResource {
 			JsonArray accountLevelPermissionsforNewCustomer = new JsonArray();
 			JsonArray globalLevelPermissionsforNewCustomer = new JsonArray();
 			JsonArray transactionLimitsforNewCustomer = new JsonArray();
-			
-			for(JsonElement actionElement : accountLevelPermissionsJsonArray) {
-				if(addedCustomersList.contains(
+
+			for (JsonElement actionElement : accountLevelPermissionsJsonArray) {
+				if (addedCustomersList.contains(
 						JSONUtil.getString(actionElement.getAsJsonObject(), "coreCustomerId"))) {
 					accountLevelPermissionsforNewCustomer.add(actionElement);
 				}
 			}
-			
-			for(JsonElement globalElement : globalLevelPermissionsJsonArray) {
-				if(addedCustomersList.contains(
+
+			for (JsonElement globalElement : globalLevelPermissionsJsonArray) {
+				if (addedCustomersList.contains(
 						JSONUtil.getString(globalElement.getAsJsonObject(), "coreCustomerId"))) {
 					globalLevelPermissionsforNewCustomer.add(globalElement);
 				}
 			}
-			
-			for(JsonElement transactionLimitElement : transactionLimitsJsonArray) {
-				if(addedCustomersList.contains(
+
+			for (JsonElement transactionLimitElement : transactionLimitsJsonArray) {
+				if (addedCustomersList.contains(
 						JSONUtil.getString(transactionLimitElement.getAsJsonObject(), "coreCustomerId"))) {
 					transactionLimitsforNewCustomer.add(transactionLimitElement);
 				}
 			}
-			
-			 JsonObject contractActionObj = new JsonObject();
-	         contractActionObj.add("accountLevelPermissions", accountLevelPermissionsforNewCustomer);
-	         contractActionObj.add("globalLevelPermissions", globalLevelPermissionsforNewCustomer);
-	         contractActionObj.add("transactionLimits", transactionLimitsforNewCustomer);
-	         contractActionObj.addProperty("serviceDefinitionType", serviceDefinitionType);
 
-	         ContractBusinessDelegate ContractBusinessDelegate = DBPAPIAbstractFactoryImpl
-	                    .getBusinessDelegate(ContractBusinessDelegate.class);
-	         ContractBusinessDelegate.createContractActionLimit(contractActionObj, contractId,
-	        		 legalEntityId, dcRequest.getHeaderMap());
-	            
-			createDefaultApprovalMatrixEntry(contractCustomers, contractId, createdValidContractCustomers, dcRequest, legalEntityId);
+			JsonObject contractActionObj = new JsonObject();
+			contractActionObj.add("accountLevelPermissions", accountLevelPermissionsforNewCustomer);
+			contractActionObj.add("globalLevelPermissions", globalLevelPermissionsforNewCustomer);
+			contractActionObj.add("transactionLimits", transactionLimitsforNewCustomer);
+			contractActionObj.addProperty("serviceDefinitionType", serviceDefinitionType);
+
+			ContractBusinessDelegate ContractBusinessDelegate = DBPAPIAbstractFactoryImpl
+					.getBusinessDelegate(ContractBusinessDelegate.class);
+			ContractBusinessDelegate.createContractActionLimit(contractActionObj, contractId,
+					legalEntityId, dcRequest.getHeaderMap());
+
+			createDefaultApprovalMatrixEntry(contractCustomers, contractId, createdValidContractCustomers, dcRequest,
+					legalEntityId);
 		}
 		return createdValidContractCustomers;
 
@@ -2227,11 +2273,15 @@ public class ContractResourceImpl implements ContractResource {
 
 	private void segregateGivenCustomersListAndUpdateCoreCustomerId(String contractCustomers, String contractId,
 			Set<String> addedCustomersList, Set<String> removedCustomersList, Set<String> notUpdatedCustomersList,
-			StringBuilder currentPrimaryCoreCustomerId, DataControllerRequest dcRequest, String deletedCustomers) throws ApplicationException {
+			StringBuilder currentPrimaryCoreCustomerId, DataControllerRequest dcRequest, String deletedCustomers)
+			throws ApplicationException {
 		boolean isAtleastaCustomerisPrimary = false;
-		/*if (StringUtils.isBlank(contractId) || StringUtils.isBlank(contractCustomers)) {
-			throw new ApplicationException(ErrorCodeEnum.ERR_10365);
-		}*/
+		/*
+		 * if (StringUtils.isBlank(contractId) ||
+		 * StringUtils.isBlank(contractCustomers)) {
+		 * throw new ApplicationException(ErrorCodeEnum.ERR_10365);
+		 * }
+		 */
 
 		Set<String> createdCustomers = new HashSet<>();
 		ContractCoreCustomerBusinessDelegate customersBD = DBPAPIAbstractFactoryImpl
@@ -2241,7 +2291,7 @@ public class ContractResourceImpl implements ContractResource {
 		for (ContractCoreCustomersDTO dto : customersList) {
 			createdCustomers.add(dto.getCoreCustomerId());
 		}
-		
+
 		JsonArray contractCustomersArray = JSONUtil.parseAsJsonArray(contractCustomers);
 		for (JsonElement customerElement : contractCustomersArray) {
 			if (JSONUtil.isJsonNotNull(customerElement) && customerElement.isJsonObject()) {
@@ -2269,17 +2319,20 @@ public class ContractResourceImpl implements ContractResource {
 
 		}
 		calculateRemovedCustomers(deletedCustomers, createdCustomers, removedCustomersList);
-		
-		/*for (ContractCoreCustomersDTO dto : customersList) {
-			if (!notUpdatedCustomersList.contains(dto.getCoreCustomerId())) {
-				removedCustomersList.add(dto.getCoreCustomerId());
-			}
-		}
-		if (!isAtleastaCustomerisPrimary) {
-			throw new ApplicationException(ErrorCodeEnum.ERR_10369);
-		}*/
+
+		/*
+		 * for (ContractCoreCustomersDTO dto : customersList) {
+		 * if (!notUpdatedCustomersList.contains(dto.getCoreCustomerId())) {
+		 * removedCustomersList.add(dto.getCoreCustomerId());
+		 * }
+		 * }
+		 * if (!isAtleastaCustomerisPrimary) {
+		 * throw new ApplicationException(ErrorCodeEnum.ERR_10369);
+		 * }
+		 */
 
 	}
+
 	private void calculateRemovedCustomers(String deletedCustomers, Set<String> existingcoreCustomers,
 			Set<String> removedCustomersList) {
 
@@ -2289,14 +2342,14 @@ public class ContractResourceImpl implements ContractResource {
 		try {
 			deletedcontractCustomerselement = JSONUtil.parseAsJsonArray(deletedCustomers);
 		} catch (Exception e) {
-			logger.error("Error in calculating deleted customers",e);
+			logger.error("Error in calculating deleted customers", e);
 			return;
 		}
-		logger.debug("existingcoreCustomers"+existingcoreCustomers);
+		logger.debug("existingcoreCustomers" + existingcoreCustomers);
 		if (deletedcontractCustomerselement == null || deletedcontractCustomerselement.isJsonNull()
 				|| !deletedcontractCustomerselement.isJsonArray())
 			return;
-		logger.debug("deletedcontractCustomerselement"+deletedcontractCustomerselement);
+		logger.debug("deletedcontractCustomerselement" + deletedcontractCustomerselement);
 		JsonArray deletedcontractCustomersArray = deletedcontractCustomerselement.getAsJsonArray();
 		for (JsonElement deletedcustomerElement : deletedcontractCustomersArray) {
 			if (JSONUtil.isJsonNotNull(deletedcustomerElement) && deletedcustomerElement.isJsonObject()) {
@@ -2304,12 +2357,13 @@ public class ContractResourceImpl implements ContractResource {
 				String deletedcustomerId = customerJson.has(CORECUSTOMERID)
 						? customerJson.get(CORECUSTOMERID).getAsString()
 						: "";
-				logger.debug("deletedcustomerId"+deletedcustomerId);
+				logger.debug("deletedcustomerId" + deletedcustomerId);
 				if (existingcoreCustomers.contains(deletedcustomerId))
 					removedCustomersList.add(deletedcustomerId);
 			}
 		}
-	} 
+	}
+
 	@Override
 	public Result getContractFeatureActionLimits(String methodID, Object[] inputArray, DataControllerRequest dcRequest,
 			DataControllerResponse dcResponse) throws ApplicationException {
@@ -2318,7 +2372,8 @@ public class ContractResourceImpl implements ContractResource {
 		Map<String, String> inputParams = HelperMethods.getInputParamMap(inputArray);
 		String contractId = StringUtils.isNotBlank(inputParams.get(CONTRACT_ID)) ? inputParams.get(CONTRACT_ID)
 				: dcRequest.getParameter(CONTRACT_ID);
-		String legalEntityId = StringUtils.isNotBlank(inputParams.get(LEGAL_ENTITY_ID)) ? inputParams.get(LEGAL_ENTITY_ID)
+		String legalEntityId = StringUtils.isNotBlank(inputParams.get(LEGAL_ENTITY_ID))
+				? inputParams.get(LEGAL_ENTITY_ID)
 				: dcRequest.getParameter(LEGAL_ENTITY_ID);
 		if (StringUtils.isBlank(contractId)) {
 			throw new ApplicationException(ErrorCodeEnum.ERR_10774);
@@ -2338,13 +2393,13 @@ public class ContractResourceImpl implements ContractResource {
 			}
 		} catch (ApplicationException e) {
 			logger.error(
-					"ContractResourceImpl : Exception occured while fetching the contract level feature action limits"
-							, e);
+					"ContractResourceImpl : Exception occured while fetching the contract level feature action limits",
+					e);
 			throw new ApplicationException(e.getErrorCodeEnum());
 		} catch (Exception e) {
 			logger.error(
-					"ContractResourceImpl : Exception occured while fetching the contract level feature action limits"
-							, e);
+					"ContractResourceImpl : Exception occured while fetching the contract level feature action limits",
+					e);
 			throw new ApplicationException(ErrorCodeEnum.ERR_10775);
 		}
 		return result;
@@ -2398,7 +2453,7 @@ public class ContractResourceImpl implements ContractResource {
 	}
 
 	private void updateEmailForUsers(JsonArray resultJson, DataControllerRequest dcRequest) {
-        LegalEntityUtil.addCompanyIDToHeaders(dcRequest);
+		LegalEntityUtil.addCompanyIDToHeaders(dcRequest);
 		if (JSONUtil.isJsonNotNull(resultJson) && resultJson.size() > 0) {
 			for (JsonElement element : resultJson) {
 				if (JSONUtil.isJsonNotNull(element) && element.isJsonObject()) {
@@ -2442,19 +2497,21 @@ public class ContractResourceImpl implements ContractResource {
 			String statusId = StringUtils.isNotBlank(inputParams.get(STATUSID)) ? inputParams.get(STATUSID)
 					: dcRequest.getParameter(STATUSID);
 
-			String legalEntityId = StringUtils.isNotBlank(inputParams.get(LEGAL_ENTITY_ID)) ? inputParams.get(LEGAL_ENTITY_ID)
+			String legalEntityId = StringUtils.isNotBlank(inputParams.get(LEGAL_ENTITY_ID))
+					? inputParams.get(LEGAL_ENTITY_ID)
 					: dcRequest.getParameter(LEGAL_ENTITY_ID);
-			
-			if(StringUtils.isBlank(legalEntityId)) {
+
+			if (StringUtils.isBlank(legalEntityId)) {
 				result = ErrorCodeEnum.ERR_29040.setErrorCode(result);
 				return result;
 			}
-			
+
 			ContractBusinessDelegate contractBD = DBPAPIAbstractFactoryImpl.getInstance()
 					.getFactoryInstance(BusinessDelegateFactory.class)
 					.getBusinessDelegate(ContractBusinessDelegate.class);
 
-			List<ContractDTO> dtoList = contractBD.getListOfContractsByStatus(statusId, legalEntityId, dcRequest.getHeaderMap());
+			List<ContractDTO> dtoList = contractBD.getListOfContractsByStatus(statusId, legalEntityId,
+					dcRequest.getHeaderMap());
 			if (null != dtoList) {
 				String contractString = JSONUtils.stringifyCollectionWithTypeInfo(dtoList, ContractDTO.class);
 				contractString = HelperMethods.replaceCompanyLegalUnitWithLegalEntityId(contractString);
@@ -2564,8 +2621,8 @@ public class ContractResourceImpl implements ContractResource {
 				? inputParams.get("coreCustomerRoleIdList")
 				: dcRequest.getParameter("coreCustomerRoleIdList");
 		String legalEntityId = StringUtils.isNotBlank(inputParams.get("legalEntityId"))
-						? inputParams.get("legalEntityId")
-						: dcRequest.getParameter("legalEntityId");
+				? inputParams.get("legalEntityId")
+				: dcRequest.getParameter("legalEntityId");
 		if (StringUtils.isBlank(coreCustomerRoleIdList)) {
 			throw new ApplicationException(ErrorCodeEnum.ERR_10779);
 		}
@@ -2604,21 +2661,22 @@ public class ContractResourceImpl implements ContractResource {
 				? inputParams.get(CORECUSTOMERID)
 				: dcRequest.getParameter("coreCustomerRoleIdList");
 		String legalEntityId = StringUtils.isNotBlank(inputParams.get(LEGAL_ENTITY_ID))
-						? inputParams.get(LEGAL_ENTITY_ID)
-						: dcRequest.getParameter("legalEntityId");
+				? inputParams.get(LEGAL_ENTITY_ID)
+				: dcRequest.getParameter("legalEntityId");
 		if (StringUtils.isBlank(coreCustomerId)) {
 			throw new ApplicationException(ErrorCodeEnum.ERR_10779);
 		}
-		if(StringUtils.isBlank(legalEntityId)) {
+		if (StringUtils.isBlank(legalEntityId)) {
 			ErrorCodeEnum.ERR_29040.setErrorCode(result);
 			return result;
 		}
-		
+
 		DBXResult response = new DBXResult();
 		try {
 			ContractBusinessDelegate businessDelegate = DBPAPIAbstractFactoryImpl
 					.getBusinessDelegate(ContractBusinessDelegate.class);
-			response = businessDelegate.getCoreCustomerBasedContractDetails(coreCustomerId, dcRequest.getHeaderMap(),legalEntityId);
+			response = businessDelegate.getCoreCustomerBasedContractDetails(coreCustomerId, dcRequest.getHeaderMap(),
+					legalEntityId);
 			if (response != null && response.getResponse() != null) {
 				JSONArray jsonarray = new JSONArray();
 				List<ContractDTO> dto = (List<ContractDTO>) response.getResponse();
@@ -2665,7 +2723,7 @@ public class ContractResourceImpl implements ContractResource {
 		try {
 			ContractBusinessDelegate businessDelegate = DBPAPIAbstractFactoryImpl
 					.getBusinessDelegate(ContractBusinessDelegate.class);
-			response = businessDelegate.getRelativeCoreCustomerBasedContractDetails(configurations, legalEntityId, 
+			response = businessDelegate.getRelativeCoreCustomerBasedContractDetails(configurations, legalEntityId,
 					coreCustomerId, dcRequest.getHeaderMap());
 			if (response != null && response.getResponse() != null) {
 				JsonArray jsonarray = new JsonArray();
@@ -2884,193 +2942,191 @@ public class ContractResourceImpl implements ContractResource {
 		}
 		return DBPUtilitiesConstants.CONTRACT_STATUS_ACTIVE;
 	}
-	
+
 	private Map<String, Set<String>> createContractDefaultFeatureActionLimits(String contractCustomers,
-            Set<String> validContractCustomers, Map<String, Set<ContractAccountsDTO>> createdCustomerAccounts,
-            Map<String, Set<String>> coreCustomersFeaturesMapToCreate, String contractId, String serviceDefinitionType,
-            String isDefaultActionsEnabled, String serviceDefinitionId, String legalEntityId, DataControllerRequest dcRequest)
-            throws ApplicationException {
+			Set<String> validContractCustomers, Map<String, Set<ContractAccountsDTO>> createdCustomerAccounts,
+			Map<String, Set<String>> coreCustomersFeaturesMapToCreate, String contractId, String serviceDefinitionType,
+			String isDefaultActionsEnabled, String serviceDefinitionId, String legalEntityId,
+			DataControllerRequest dcRequest)
+			throws ApplicationException {
 
-        JsonArray contractCustomersArray = JSONUtil.parseAsJsonArray(contractCustomers);
+		JsonArray contractCustomersArray = JSONUtil.parseAsJsonArray(contractCustomers);
 
-        Map<String, Set<String>> customerFeaturesCreatedMap = new HashMap<>();
-        ContractFeatureActionsBusinessDelegate contractFeatureActionBD = DBPAPIAbstractFactoryImpl
-                .getBusinessDelegate(ContractFeatureActionsBusinessDelegate.class);
+		Map<String, Set<String>> customerFeaturesCreatedMap = new HashMap<>();
+		ContractFeatureActionsBusinessDelegate contractFeatureActionBD = DBPAPIAbstractFactoryImpl
+				.getBusinessDelegate(ContractFeatureActionsBusinessDelegate.class);
 
-        for (JsonElement customerElement : contractCustomersArray) {
-            JsonObject customerJson = customerElement.isJsonObject() ? customerElement.getAsJsonObject()
-                    : new JsonObject();
-            if (JSONUtil.hasKey(customerJson, CORECUSTOMERID)
-                    && validContractCustomers.contains(JSONUtil.getString(customerJson, CORECUSTOMERID))
-                    && (coreCustomersFeaturesMapToCreate == null || coreCustomersFeaturesMapToCreate
-                            .containsKey(JSONUtil.getString(customerJson, CORECUSTOMERID)))
-                    && JSONUtil.hasKey(customerJson, FEATURES) && customerJson.get(FEATURES).isJsonArray()) {
-                String coreCustomerId = JSONUtil.getString(customerJson, CORECUSTOMERID);
-                JsonArray featuresArray = customerJson.get(FEATURES).getAsJsonArray();
-                Set<String> customerFeatures = new HashSet<>();
-                for (JsonElement featureElement : featuresArray) {
-                    JsonObject featureJson = featureElement.isJsonObject() ? featureElement.getAsJsonObject()
-                            : new JsonObject();
-                    String featureId = featureJson.has(FEATUREID) ? featureJson.get(FEATUREID).getAsString() : "";
-                    JsonArray actionsArray = featureJson.has(ACTIONS) && featureJson.get(ACTIONS).isJsonArray()
-                            ? featureJson.get(ACTIONS).getAsJsonArray()
-                            : new JsonArray();
-                    if (StringUtils.isNotBlank(featureId)
-                            && (actionsArray.size() > 0 || DBPUtilitiesConstants.BOOLEAN_STRING_TRUE
-                                    .equalsIgnoreCase(isDefaultActionsEnabled))
-                            && (coreCustomersFeaturesMapToCreate == null
-                                    || coreCustomersFeaturesMapToCreate.get(coreCustomerId).contains(featureId))) {
-                        customerFeatures.add(featureId);
-                    }
-                }
-                Set<String> createdCustomerFeatures = contractFeatureActionBD.createContractFeatures(customerFeatures,
-                        contractId, coreCustomerId, serviceDefinitionType, isDefaultActionsEnabled,
-                        legalEntityId, dcRequest.getHeaderMap());
-                if (createdCustomerFeatures != null && !createdCustomerFeatures.isEmpty()) {
-                    customerFeaturesCreatedMap.put(coreCustomerId, createdCustomerFeatures);
-                }
-            }
-        }
-        return customerFeaturesCreatedMap;
-    }	
-	
-    public Result getCoreCustomerProductRolesFeatureActionLimits(String methodID, Object[] inputArray,
-            DataControllerRequest dcRequest, DataControllerResponse dcResponse) throws ApplicationException {
-        Result result = new Result();
-        Map<String, String> inputParams = HelperMethods.getInputParamMap(inputArray);
-        String coreCustomerRoleIdList = StringUtils.isNotBlank(inputParams.get("coreCustomerRoleIdList"))
-                ? inputParams.get("coreCustomerRoleIdList")
-                : dcRequest.getParameter("coreCustomerRoleIdList");
-        String legalEntityId = StringUtils.isNotBlank(inputParams.get("legalEntityId"))
-                ? inputParams.get("legalEntityId")
-                : dcRequest.getParameter("legalEntityId");
-        String contractId = StringUtils.isNotBlank(inputParams.get("contractId"))
-                ? inputParams.get("contractId")
-                : dcRequest.getParameter("contractId");
-        if (StringUtils.isBlank(coreCustomerRoleIdList)
-        		|| StringUtils.isBlank(legalEntityId)) {
-            throw new ApplicationException(ErrorCodeEnum.ERR_10779);
-        }
+		for (JsonElement customerElement : contractCustomersArray) {
+			JsonObject customerJson = customerElement.isJsonObject() ? customerElement.getAsJsonObject()
+					: new JsonObject();
+			if (JSONUtil.hasKey(customerJson, CORECUSTOMERID)
+					&& validContractCustomers.contains(JSONUtil.getString(customerJson, CORECUSTOMERID))
+					&& (coreCustomersFeaturesMapToCreate == null || coreCustomersFeaturesMapToCreate
+							.containsKey(JSONUtil.getString(customerJson, CORECUSTOMERID)))
+					&& JSONUtil.hasKey(customerJson, FEATURES) && customerJson.get(FEATURES).isJsonArray()) {
+				String coreCustomerId = JSONUtil.getString(customerJson, CORECUSTOMERID);
+				JsonArray featuresArray = customerJson.get(FEATURES).getAsJsonArray();
+				Set<String> customerFeatures = new HashSet<>();
+				for (JsonElement featureElement : featuresArray) {
+					JsonObject featureJson = featureElement.isJsonObject() ? featureElement.getAsJsonObject()
+							: new JsonObject();
+					String featureId = featureJson.has(FEATUREID) ? featureJson.get(FEATUREID).getAsString() : "";
+					JsonArray actionsArray = featureJson.has(ACTIONS) && featureJson.get(ACTIONS).isJsonArray()
+							? featureJson.get(ACTIONS).getAsJsonArray()
+							: new JsonArray();
+					if (StringUtils.isNotBlank(featureId)
+							&& (actionsArray.size() > 0 || DBPUtilitiesConstants.BOOLEAN_STRING_TRUE
+									.equalsIgnoreCase(isDefaultActionsEnabled))
+							&& (coreCustomersFeaturesMapToCreate == null
+									|| coreCustomersFeaturesMapToCreate.get(coreCustomerId).contains(featureId))) {
+						customerFeatures.add(featureId);
+					}
+				}
+				Set<String> createdCustomerFeatures = contractFeatureActionBD.createContractFeatures(customerFeatures,
+						contractId, coreCustomerId, serviceDefinitionType, isDefaultActionsEnabled,
+						legalEntityId, dcRequest.getHeaderMap());
+				if (createdCustomerFeatures != null && !createdCustomerFeatures.isEmpty()) {
+					customerFeaturesCreatedMap.put(coreCustomerId, createdCustomerFeatures);
+				}
+			}
+		}
+		return customerFeaturesCreatedMap;
+	}
 
+	public Result getCoreCustomerProductRolesFeatureActionLimits(String methodID, Object[] inputArray,
+			DataControllerRequest dcRequest, DataControllerResponse dcResponse) throws ApplicationException {
+		Result result = new Result();
+		Map<String, String> inputParams = HelperMethods.getInputParamMap(inputArray);
+		String coreCustomerRoleIdList = StringUtils.isNotBlank(inputParams.get("coreCustomerRoleIdList"))
+				? inputParams.get("coreCustomerRoleIdList")
+				: dcRequest.getParameter("coreCustomerRoleIdList");
+		String legalEntityId = StringUtils.isNotBlank(inputParams.get("legalEntityId"))
+				? inputParams.get("legalEntityId")
+				: dcRequest.getParameter("legalEntityId");
+		String contractId = StringUtils.isNotBlank(inputParams.get("contractId"))
+				? inputParams.get("contractId")
+				: dcRequest.getParameter("contractId");
+		if (StringUtils.isBlank(coreCustomerRoleIdList)
+				|| StringUtils.isBlank(legalEntityId)) {
+			throw new ApplicationException(ErrorCodeEnum.ERR_10779);
+		}
 
-        JsonArray coreCustomersArray = JSONUtil.parseAsJsonArray(coreCustomerRoleIdList);
+		JsonArray coreCustomersArray = JSONUtil.parseAsJsonArray(coreCustomerRoleIdList);
 
-        JsonArray globalPermissionJsonArray = new JsonArray();
-        JsonArray accountPermissionJsonArray = new JsonArray();
-        JsonArray transactionlimitsJsonArray = new JsonArray();
-        
-        /**
-         * Fetch C360 bundle configuration - its fetching all.. better to restrict to a single config
-         */
-        Map<String, String> bundleConfigurations = null;
-        String rolemapping = null;
-        if(FeatureConfiguration.isAMSRoleFeatureEnabled()) {
-        	bundleConfigurations = BundleConfigurationHandler
-                    .fetchBundleConfigurations(BundleConfigurationHandler.BUDLENAME_C360, dcRequest);
-        }
+		JsonArray globalPermissionJsonArray = new JsonArray();
+		JsonArray accountPermissionJsonArray = new JsonArray();
+		JsonArray transactionlimitsJsonArray = new JsonArray();
 
-        for (JsonElement customerElement : coreCustomersArray) {
-            JsonObject customerJson = customerElement.isJsonObject() ? customerElement.getAsJsonObject()
-                    : new JsonObject();
+		/**
+		 * Fetch C360 bundle configuration - its fetching all.. better to restrict to a
+		 * single config
+		 */
+		Map<String, String> bundleConfigurations = null;
+		String rolemapping = null;
+		if (FeatureConfiguration.isAMSRoleFeatureEnabled()) {
+			bundleConfigurations = BundleConfigurationHandler
+					.fetchBundleConfigurations(BundleConfigurationHandler.BUDLENAME_C360, dcRequest);
+		}
 
-            if (JSONUtil.hasKey(customerJson, CORECUSTOMERID) && JSONUtil.hasKey(customerJson, PRODUCTSLIST)
-                    && customerJson.get(PRODUCTSLIST).isJsonArray()) {
-                String coreCustomerId =
-                        JSONUtil.getString(customerJson, CORECUSTOMERID);
+		for (JsonElement customerElement : coreCustomersArray) {
+			JsonObject customerJson = customerElement.isJsonObject() ? customerElement.getAsJsonObject()
+					: new JsonObject();
 
-                String serviceDefinitionId = JSONUtil.getString(customerJson, SERVICE_DEFINITION_ID);
-                String roleId = JSONUtil.getString(customerJson, ROLE_ID);
+			if (JSONUtil.hasKey(customerJson, CORECUSTOMERID) && JSONUtil.hasKey(customerJson, PRODUCTSLIST)
+					&& customerJson.get(PRODUCTSLIST).isJsonArray()) {
+				String coreCustomerId = JSONUtil.getString(customerJson, CORECUSTOMERID);
 
-                JsonArray productArray = customerJson.get(PRODUCTSLIST).getAsJsonArray();
-               
-                /**
-                 * AMS role mapping for each legal entity
-                 */
-                if(FeatureConfiguration.isAMSRoleFeatureEnabled()) {
-                	rolemapping = bundleConfigurations
-                            .get(legalEntityId + BundleConfigurationHandler.CUSTOMER_ROLE_MAPPING);
-                }
+				String serviceDefinitionId = JSONUtil.getString(customerJson, SERVICE_DEFINITION_ID);
+				String roleId = JSONUtil.getString(customerJson, ROLE_ID);
 
-                DBXResult response = null;
-                try {
-                    ContractBusinessDelegate businessDelegate = DBPAPIAbstractFactoryImpl
-                            .getBusinessDelegate(ContractBusinessDelegate.class);
-                    response = businessDelegate.getCoreCustomerProductRolesFeatureActionLimits(coreCustomerId, 
-                    		contractId, legalEntityId, serviceDefinitionId, roleId, 
-                            productArray,rolemapping,dcRequest.getHeaderMap());
-                    JsonObject corecustomer = (JsonObject) response.getResponse();
-                    JsonObject globalpermissions = (JsonObject) corecustomer.get("globalLevelPermissions");
-                    JsonObject accountpermissions = (JsonObject) corecustomer.get("accountLevelPermissions");
-                    JsonObject transactionlimits = (JsonObject) corecustomer.get("transactionLimits");
-                    globalPermissionJsonArray.add(globalpermissions);
-                    accountPermissionJsonArray.add(accountpermissions);
-                    transactionlimitsJsonArray.add(transactionlimits);
-                    
+				JsonArray productArray = customerJson.get(PRODUCTSLIST).getAsJsonArray();
 
-                } catch (Exception e) {
-                    logger.error(
-                            "ContractResourceImpl : Exception occured while fetching the core customer product feature action limits"
-                                    , e);
-                    throw new ApplicationException(ErrorCodeEnum.ERR_29039);
-                }
-                
+				/**
+				 * AMS role mapping for each legal entity
+				 */
+				if (FeatureConfiguration.isAMSRoleFeatureEnabled()) {
+					rolemapping = bundleConfigurations
+							.get(legalEntityId + BundleConfigurationHandler.CUSTOMER_ROLE_MAPPING);
+				}
 
-            }
-        }
-        JsonObject finalResponse = new JsonObject();
-        finalResponse.add("globalLevelPermissions", globalPermissionJsonArray);
-        finalResponse.add("accountLevelPermissions", accountPermissionJsonArray);
-        finalResponse.add("transactionLimits", transactionlimitsJsonArray);
-        result = ConvertJsonToResult.convert(finalResponse);
-        return result;
-    }
+				DBXResult response = null;
+				try {
+					ContractBusinessDelegate businessDelegate = DBPAPIAbstractFactoryImpl
+							.getBusinessDelegate(ContractBusinessDelegate.class);
+					response = businessDelegate.getCoreCustomerProductRolesFeatureActionLimits(coreCustomerId,
+							contractId, legalEntityId, serviceDefinitionId, roleId,
+							productArray, rolemapping, dcRequest.getHeaderMap());
+					JsonObject corecustomer = (JsonObject) response.getResponse();
+					JsonObject globalpermissions = (JsonObject) corecustomer.get("globalLevelPermissions");
+					JsonObject accountpermissions = (JsonObject) corecustomer.get("accountLevelPermissions");
+					JsonObject transactionlimits = (JsonObject) corecustomer.get("transactionLimits");
+					globalPermissionJsonArray.add(globalpermissions);
+					accountPermissionJsonArray.add(accountpermissions);
+					transactionlimitsJsonArray.add(transactionlimits);
 
-    @Override
-    public Result getProductLevelPermissions(String methodID, Object[] inputArray, DataControllerRequest dcRequest,
-            DataControllerResponse dcResponse) throws ApplicationException {
-        Map<String, String> inputParams = HelperMethods.getInputParamMap(inputArray);
-        
-        String productRef = StringUtils.isNotBlank(inputParams.get("productRef"))
-        		?inputParams.get("productRef") : dcRequest.getParameter("productRef");
-        
-        if(StringUtils.isBlank(productRef)) {
-        	throw new ApplicationException(ErrorCodeEnum.ERR_10204);
-        }
-        
-        ContractBusinessDelegate contractBusinessDelegate = DBPAPIAbstractFactoryImpl
-                .getBusinessDelegate(ContractBusinessDelegate.class);
-        return contractBusinessDelegate.getProductLevelPermissions(productRef);
-    }
+				} catch (Exception e) {
+					logger.error(
+							"ContractResourceImpl : Exception occured while fetching the core customer product feature action limits",
+							e);
+					throw new ApplicationException(ErrorCodeEnum.ERR_29039);
+				}
 
-    @Override
-    public Result getServiceDefinitionProductPermissions(String methodID, Object[] inputArray,
-            DataControllerRequest dcRequest, DataControllerResponse dcResponse) throws ApplicationException {
-        Result result = new Result();
-        Map<String, String> inputParams = HelperMethods.getInputParamMap(inputArray);
-        String serviceDefinitionId = StringUtils.isNotBlank(inputParams.get("serviceDefinitionId"))
-                ? inputParams.get("serviceDefinitionId")
-                : dcRequest.getParameter("serviceDefinitionId");
-        String productIdList = StringUtils.isNotBlank(inputParams.get("productIdList"))
-                ? inputParams.get("productIdList")
-                : dcRequest.getParameter("productIdList");
-        String legalEntityId = StringUtils.isNotBlank(inputParams.get("legalEntityId"))
-                ? inputParams.get("legalEntityId")
-                : dcRequest.getParameter("legalEntityId");
-        if (StringUtils.isBlank(serviceDefinitionId) || StringUtils.isBlank(productIdList)
-        		|| StringUtils.isBlank(legalEntityId)) {
+			}
+		}
+		JsonObject finalResponse = new JsonObject();
+		finalResponse.add("globalLevelPermissions", globalPermissionJsonArray);
+		finalResponse.add("accountLevelPermissions", accountPermissionJsonArray);
+		finalResponse.add("transactionLimits", transactionlimitsJsonArray);
+		result = ConvertJsonToResult.convert(finalResponse);
+		return result;
+	}
 
-            throw new ApplicationException(ErrorCodeEnum.ERR_10396);
-        }
-        ContractBusinessDelegate contractBusinessDelegate = DBPAPIAbstractFactoryImpl
-                .getBusinessDelegate(ContractBusinessDelegate.class);
-        DBXResult response = contractBusinessDelegate.getServiceDefinitionProductPermissions(serviceDefinitionId,
-                productIdList, legalEntityId, dcRequest.getHeaderMap());
-        if (response != null && response.getResponse() != null) {
-            JsonObject jsonObject = (JsonObject) response.getResponse();
-            result = ConvertJsonToResult.convert(jsonObject);
-        }
-        return result;
-    }
+	@Override
+	public Result getProductLevelPermissions(String methodID, Object[] inputArray, DataControllerRequest dcRequest,
+			DataControllerResponse dcResponse) throws ApplicationException {
+		Map<String, String> inputParams = HelperMethods.getInputParamMap(inputArray);
 
-	
+		String productRef = StringUtils.isNotBlank(inputParams.get("productRef"))
+				? inputParams.get("productRef")
+				: dcRequest.getParameter("productRef");
+
+		if (StringUtils.isBlank(productRef)) {
+			throw new ApplicationException(ErrorCodeEnum.ERR_10204);
+		}
+
+		ContractBusinessDelegate contractBusinessDelegate = DBPAPIAbstractFactoryImpl
+				.getBusinessDelegate(ContractBusinessDelegate.class);
+		return contractBusinessDelegate.getProductLevelPermissions(productRef);
+	}
+
+	@Override
+	public Result getServiceDefinitionProductPermissions(String methodID, Object[] inputArray,
+			DataControllerRequest dcRequest, DataControllerResponse dcResponse) throws ApplicationException {
+		Result result = new Result();
+		Map<String, String> inputParams = HelperMethods.getInputParamMap(inputArray);
+		String serviceDefinitionId = StringUtils.isNotBlank(inputParams.get("serviceDefinitionId"))
+				? inputParams.get("serviceDefinitionId")
+				: dcRequest.getParameter("serviceDefinitionId");
+		String productIdList = StringUtils.isNotBlank(inputParams.get("productIdList"))
+				? inputParams.get("productIdList")
+				: dcRequest.getParameter("productIdList");
+		String legalEntityId = StringUtils.isNotBlank(inputParams.get("legalEntityId"))
+				? inputParams.get("legalEntityId")
+				: dcRequest.getParameter("legalEntityId");
+		if (StringUtils.isBlank(serviceDefinitionId) || StringUtils.isBlank(productIdList)
+				|| StringUtils.isBlank(legalEntityId)) {
+
+			throw new ApplicationException(ErrorCodeEnum.ERR_10396);
+		}
+		ContractBusinessDelegate contractBusinessDelegate = DBPAPIAbstractFactoryImpl
+				.getBusinessDelegate(ContractBusinessDelegate.class);
+		DBXResult response = contractBusinessDelegate.getServiceDefinitionProductPermissions(serviceDefinitionId,
+				productIdList, legalEntityId, dcRequest.getHeaderMap());
+		if (response != null && response.getResponse() != null) {
+			JsonObject jsonObject = (JsonObject) response.getResponse();
+			result = ConvertJsonToResult.convert(jsonObject);
+		}
+		return result;
+	}
+
 }

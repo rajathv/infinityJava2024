@@ -28,6 +28,7 @@ import com.dbp.core.api.factory.BusinessDelegateFactory;
 import com.dbp.core.api.factory.ResourceFactory;
 import com.dbp.core.api.factory.impl.DBPAPIAbstractFactoryImpl;
 import com.dbp.core.constants.DBPConstants;
+import com.dbp.core.error.DBPApplicationException;
 import com.dbp.core.fabric.extn.DBPServiceExecutorBuilder;
 import com.dbp.core.util.JSONUtils;
 import com.google.gson.Gson;
@@ -48,11 +49,14 @@ import com.kony.dbputilities.util.MWConstants;
 import com.kony.dbputilities.util.URLConstants;
 import com.kony.dbputilities.util.logger.LoggerUtil;
 import com.kony.eum.dbputilities.util.ServiceCallHelper;
+import com.konylabs.middleware.api.ServicesManager;
+import com.konylabs.middleware.api.processor.IdentityHandler;
 import com.konylabs.middleware.controller.DataControllerRequest;
 import com.konylabs.middleware.controller.DataControllerResponse;
 import com.konylabs.middleware.dataobject.JSONToResult;
 import com.konylabs.middleware.dataobject.Param;
 import com.konylabs.middleware.dataobject.Result;
+import com.konylabs.middleware.exceptions.MiddlewareException;
 import com.temenos.dbx.datamigrationservices.business.api.MigrateInfinityUserBusinessDelegate;
 import com.temenos.dbx.datamigrationservices.resource.api.MigrateInfinityUserResource;
 import com.temenos.dbx.datamigrationservices.utils.DataFetchUtils;
@@ -118,6 +122,14 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 					map.put(key, request.getParameter(key));
 				}
 			}
+			// logger.error("@@MYMSG@@ Request from service@@");
+			// logger.error("CIF"+request.getParameter(InfinityConstants.cif) );
+			// logger.error("legalEntityId"+request.getParameter(InfinityConstants.legalEntityId)
+			// );
+			// logger.error("serviceDefId"+request.getParameter(InfinityConstants.serviceDefinitionId)
+			// );
+			// logger.error("accounts"+request.getParameter(InfinityConstants.accounts) );
+
 			String cif = map.get(InfinityConstants.cif);
 			String legalEntityId = map.get(InfinityConstants.legalEntityId);
 			String serviceDefId = map.get(InfinityConstants.serviceDefinitionId);
@@ -137,7 +149,7 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 	}
 
 	private Result createContractAndUser(String methodId, Object[] inputArray, Map<String, String> map,
-			DataControllerRequest request, DataControllerResponse response) {
+			DataControllerRequest request, DataControllerResponse response) throws Exception {
 
 		Result result = new Result();
 		try {
@@ -147,6 +159,16 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 			getContractPayload(map, request, cif, serviceDefinitionId);
 
 			ContractResource resource = DBPAPIAbstractFactoryImpl.getResource(ContractResource.class);
+			// for (Object object : inputArray) {
+			// logger.error("InputArrayContract:::MYMSG12::::"+object);
+
+			// }
+
+			logger.error("LOG For Length NSHM12:" + inputArray.length);
+
+			for (int i = 0; i < inputArray.length; i++)
+				logger.error("INPUT ARRAY ELEMENTS" + i);
+
 			try {
 				result = resource.createContract(methodId, inputArray, request, response);
 			} catch (ApplicationException e) {
@@ -162,8 +184,8 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 
 			String contractId = result.getParamValueByName(InfinityConstants.contractId);
 			JsonObject jsonObject = createInfinityUserPayload(map, contractId, request.getHeaderMap(),
-					 request, true);
-			
+					request, true);
+
 			InfinityUserManagementBackendDelegate infinityUserManagementBackendDelegate = DBPAPIAbstractFactoryImpl
 					.getBackendDelegate(InfinityUserManagementBackendDelegate.class);
 			JsonObject jsonResult = (JsonObject) infinityUserManagementBackendDelegate
@@ -173,12 +195,15 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 			if (result.hasParamByName(InfinityConstants.id)
 					&& StringUtils.isNotBlank(result.getParamValueByName(InfinityConstants.id))) {
 				customerId = result.getParamValueByName(InfinityConstants.id);
+				logger.error("::CustoemrID outside IF Condition :::"+customerId);
 				CustomerDTO customerDTO = new CustomerDTO();
 				customerDTO = (CustomerDTO) customerDTO.loadDTO(customerId);
 				if (customerDTO != null) {
+					logger.error("::CustoemrID inside IF Condition :::"+customerId);
+
 					HashMap<String, Object> input = new HashMap<String, Object>();
 					input.put(InfinityConstants.id, customerId);
-					input.put(InfinityConstants.Status_id, HelperMethods.getCustomerStatus().get("NEW"));
+					input.put(InfinityConstants.Status_id, HelperMethods.getCustomerStatus().get("ACTIVE"));
 					input.put(InfinityConstants.CustomerType_id, HelperMethods.getCustomerTypes().get("Retail"));
 					customerDTO.setIsChanged(true);
 					customerDTO.persist(input, request.getHeaderMap());
@@ -199,7 +224,7 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 			return result;
 		} catch (Exception e) {
 			logger.error("Exception occured while creating a contract " + e.getStackTrace());
-        	return ErrorCodeEnum.ERR_10351.setErrorCode(result);
+			return ErrorCodeEnum.ERR_10351.setErrorCode(result);
 		}
 		return result;
 
@@ -227,77 +252,77 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 			String contractId = map.get(InfinityConstants.contractId);
 			String cif = map.get(InfinityConstants.cif);
 			String contractCif = map.get("contractCif");
-			
-			if(StringUtils.isBlank(userId) && StringUtils.isBlank(contractCif)) {
+
+			if (StringUtils.isBlank(userId) && StringUtils.isBlank(contractCif)) {
 				return ErrorCodeEnum.ERR_10001.setErrorCode(result);
 			}
-			
+
 			if (HelperMethods.isBlank(legalEntityId, accounts, roleId)) {
 				return ErrorCodeEnum.ERR_10001.setErrorCode(result);
-			}			
-			String customerId = getCustomerIdForCif(cif, legalEntityId,request);
+			}
+			String customerId = getCustomerIdForCif(cif, legalEntityId, request);
 			boolean isCifExists = StringUtils.isNotBlank(customerId);
-			if(StringUtils.isBlank(userId) && !isCifExists) {
+			if (StringUtils.isBlank(userId) && !isCifExists) {
 				Map<String, String> membershipDetails = getMembershipDetails(cif, legalEntityId, request);
-				if(membershipDetails.isEmpty()) {
+				if (membershipDetails.isEmpty()) {
 					return ErrorCodeEnum.ERR_10001.setErrorCode(result);
 				}
 				map.putAll(membershipDetails);
 				map.put(InfinityConstants.coreCustomerId, cif);
-				createFlow = true;		
+				createFlow = true;
 			} else {
-				if(StringUtils.isNotBlank(userId)) {
+				if (StringUtils.isNotBlank(userId)) {
 					CustomerDTO customerDTO = new CustomerDTO();
 					customerDTO.setUserName(userId);
 					customerDTO = (CustomerDTO) customerDTO.loadDTO();
-					if(customerDTO == null) {
+					if (customerDTO == null) {
 						return ErrorCodeEnum.ERR_10404.setErrorCode(result);
 					}
 					map.put(InfinityConstants.id, customerDTO.getId());
-				} else {				
+				} else {
 					map.put(InfinityConstants.id, customerId);
-				}			
+				}
 				map.put("isExistingUser", "true");
 			}
 			boolean doesContractExists = checkIfContractExists(contractId, contractCif, request);
-			if(!doesContractExists) {
+			if (!doesContractExists) {
 				return ErrorCodeEnum.ERR_10790.setErrorCode(result, "Invalid Account Ids");
 			}
 			accounts = getContractAccountDetails(contractCif, contractId, accounts, request);
 			if (StringUtils.isBlank(accounts)) {
 				return ErrorCodeEnum.ERR_10784.setErrorCode(result, "Invalid Account Ids");
 			}
-			
+
 			map.put(InfinityConstants.accounts, accounts);
 			// get service def from contract
 			String serviceDefId = getServiceDefinitionIdByContract(contractId, request);
-			if(StringUtils.isBlank(serviceDefId)) {
+			if (StringUtils.isBlank(serviceDefId)) {
 				return ErrorCodeEnum.ERR_10001.setErrorCode(result);
 			}
 			map.put(InfinityConstants.serviceDefinition, serviceDefId);
 			map.put(InfinityConstants.cif, contractCif);
-			
+
 			JsonObject jsonObject = createInfinityUserPayload(map, contractId, request.getHeaderMap(),
-					 request, true);
+					request, true);
 			InfinityUserManagementBackendDelegate infinityUserManagementBackendDelegate = DBPAPIAbstractFactoryImpl
 					.getBackendDelegate(InfinityUserManagementBackendDelegate.class);
-			if(createFlow) {
+			if (createFlow) {
 				JsonObject jsonResult = (JsonObject) infinityUserManagementBackendDelegate
 						.createInfinityUser(jsonObject, request.getHeaderMap()).getResponse();
 				result = JSONToResult.convert(jsonResult.toString());
-				return generateUsernameAndActivationCode("", result, map, request, response);	
+				return generateUsernameAndActivationCode("", result, map, request, response);
 			}
 			JsonObject jsonResult = (JsonObject) infinityUserManagementBackendDelegate
 					.editInfinityUser(jsonObject, request.getHeaderMap()).getResponse();
 			result = JSONToResult.convert(jsonResult.toString());
-			return result;	
-			
+			return result;
+
 		} catch (Exception e) {
 			logger.error("Exception occured while creating a contract " + e.getStackTrace());
 			return ErrorCodeEnum.ERR_10001.setErrorCode(result);
 		}
 	}
-	
+
 	private String getCustomerIdForCif(String cif, String legalEntityId, DataControllerRequest request) {
 		Map<String, Object> input = new HashMap<String, Object>();
 		String filter = InfinityConstants.coreCustomerId + DBPUtilitiesConstants.EQUAL + cif + DBPUtilitiesConstants.AND
@@ -332,7 +357,7 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 					map.put(key, request.getParameter(key));
 				}
 			}
-			
+
 			String legalEntityId = map.get(InfinityConstants.legalEntityId);
 			String contractId = map.get(InfinityConstants.contractId);
 			String contractCif = map.get("contractCif");
@@ -355,26 +380,27 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 			if (!isPayloadValid) {
 				return result;
 			}
-			map.put(DTOConstants.PHONE, phoneCountryCode+"-"+phone);
-			// boolean doesContractExists = checkIfContractExists(contractId, contractCif, request);
+			map.put(DTOConstants.PHONE, phoneCountryCode + "-" + phone);
+			// boolean doesContractExists = checkIfContractExists(contractId, contractCif,
+			// request);
 			// if(!doesContractExists) {
-			// 	return ErrorCodeEnum.ERR_10790.setErrorCode(result, "Invalid Account Ids");
+			// return ErrorCodeEnum.ERR_10790.setErrorCode(result, "Invalid Account Ids");
 			// }
 			accounts = getContractAccountDetails(contractCif, contractId, accounts, request);
 			if (StringUtils.isBlank(accounts)) {
 				return ErrorCodeEnum.ERR_10784.setErrorCode(result, "Invalid Account Ids");
 			}
-			
+
 			map.put(InfinityConstants.accounts, accounts);
 			// get service def from contract
 			String serviceDefId = getServiceDefinitionIdByContract(contractId, request);
-			if(StringUtils.isBlank(serviceDefId)) {
+			if (StringUtils.isBlank(serviceDefId)) {
 				return ErrorCodeEnum.ERR_10001.setErrorCode(result);
 			}
 			map.put(InfinityConstants.serviceDefinition, serviceDefId);
 			map.put(InfinityConstants.cif, contractCif);
-			
-			JsonObject jsonObject = createInfinityUserPayload(map,contractId, request.getHeaderMap(), request, true);
+
+			JsonObject jsonObject = createInfinityUserPayload(map, contractId, request.getHeaderMap(), request, true);
 			InfinityUserManagementBackendDelegate infinityUserManagementBackendDelegate = DBPAPIAbstractFactoryImpl
 					.getBackendDelegate(InfinityUserManagementBackendDelegate.class);
 			JsonObject jsonResult = (JsonObject) infinityUserManagementBackendDelegate
@@ -385,15 +411,15 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 			return ErrorCodeEnum.ERR_10001.setErrorCode(result);
 		}
 	}
-	
+
 	private boolean checkIfContractExists(String contractId, String contractCif, DataControllerRequest request) {
 		JsonObject contractDetails = getContractDetails(contractCif, contractId, request);
 		if (null != contractDetails
-                && JSONUtil.hasKey(contractDetails, DBPDatasetConstants.DATASET_CONTRACTCORECUSTOMERS)
-                && contractDetails.get(DBPDatasetConstants.DATASET_CONTRACTCORECUSTOMERS).isJsonArray()) {
-            JsonArray array = contractDetails.get(DBPDatasetConstants.DATASET_CONTRACTCORECUSTOMERS).getAsJsonArray();
-            if(array.size() > 0)
-            	return true;
+				&& JSONUtil.hasKey(contractDetails, DBPDatasetConstants.DATASET_CONTRACTCORECUSTOMERS)
+				&& contractDetails.get(DBPDatasetConstants.DATASET_CONTRACTCORECUSTOMERS).isJsonArray()) {
+			JsonArray array = contractDetails.get(DBPDatasetConstants.DATASET_CONTRACTCORECUSTOMERS).getAsJsonArray();
+			if (array.size() > 0)
+				return true;
 		}
 		return false;
 	}
@@ -406,7 +432,6 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 		return ServiceCallHelper.invokeServiceAndGetJson(input, request.getHeaderMap(),
 				URLConstants.CONTRACTCORECUSTOMER_GET);
 	}
-
 
 	@SuppressWarnings("deprecation")
 	private void getContractPayload(Map<String, String> map, DataControllerRequest request, String cif,
@@ -422,13 +447,13 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 		} catch (Exception e) {
 			throw new ApplicationException(ErrorCodeEnum.ERR_10349, "Invalid Accounts input");
 		}
-		if(!isValidMembershipDetails(map, request)) {
+		if (!isValidMembershipDetails(map, request)) {
 			throw new ApplicationException(ErrorCodeEnum.ERR_10340);
 		}
-		if(!isValidAccountDetails(map, request)) {
+		if (!isValidAccountDetails(map, request)) {
 			throw new ApplicationException(ErrorCodeEnum.ERR_10349, "Invalid Accounts input");
 		}
-		
+
 		String serviceDefinitionName = "";
 		String coreCustomerName = map.get(InfinityConstants.coreCustomerName);
 
@@ -455,14 +480,14 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 							: "serviceDefinition";
 			String serviceType = serviceDefinition.has(InfinityConstants.serviceType)
 					&& !serviceDefinition.get(InfinityConstants.serviceType).isJsonNull()
-					? serviceDefinition.get(InfinityConstants.serviceType).getAsString()
-					: "TYPE_ID_RETAIL";
+							? serviceDefinition.get(InfinityConstants.serviceType).getAsString()
+							: "TYPE_ID_RETAIL";
 			map.put(InfinityConstants.serviceType, serviceType);
 			try {
-				if(!isValidServiceDefinitionRole(serviceDefinitionId, roleId, legalEntityId, request)) {
+				if (!isValidServiceDefinitionRole(serviceDefinitionId, roleId, legalEntityId, request)) {
 					throw new ApplicationException(ErrorCodeEnum.ERR_10349, "Invalid roleId");
 				}
-			} catch(Exception e) {
+			} catch (Exception e) {
 				throw new ApplicationException(ErrorCodeEnum.ERR_10349, "Invalid roleId");
 			}
 		} else {
@@ -476,8 +501,7 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 		map.put(InfinityConstants.serviceDefinitionName, serviceDefinitionName);
 		map.put(InfinityConstants.serviceDefinitionId, serviceDefinitionId);
 		map.put(InfinityConstants.serviceDefinition, serviceDefinitionId);
-		map.put(InfinityConstants.coreCustomerId, cif);		
-
+		map.put(InfinityConstants.coreCustomerId, cif);
 
 		JsonObject jsonObject = new JsonObject();
 		jsonObject.addProperty(InfinityConstants.isPrimary, "true");
@@ -625,21 +649,23 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 		map.put("accountLevelPermissions1", accountLevelPermissions.toString());
 		map.put("globalLevelPermissions1", globalLevelpermissions.toString());
 		map.put("transactionLimits1", transactionLimits.toString());
-		logger.error("Contract map : "+map);
+		logger.error("Contract map : " + map);
 	}
 
 	@SuppressWarnings("deprecation")
 	private JsonObject createInfinityUserPayload(Map<String, String> map, String contractId,
 			Map<String, Object> headerMap, DataControllerRequest request,
 			boolean isGlobalRequired) throws ApplicationException {
-
+logger.error("createInfinityUserPayload");
 		JsonObject jsonObject = new JsonObject();
-		
+
 		// Populate Company List Details
 		JsonArray companyList = new JsonArray();
 		JsonObject company = new JsonObject();
 		String cif = map.get(InfinityConstants.cif);
-		String coreCustomerId = map.containsKey(InfinityConstants.coreCustomerId) ? map.get(InfinityConstants.coreCustomerId): cif;
+		String coreCustomerId = map.containsKey(InfinityConstants.coreCustomerId)
+				? map.get(InfinityConstants.coreCustomerId)
+				: cif;
 		String serviceDefinition = map.get(InfinityConstants.serviceDefinition);
 		String roleId = map.get(InfinityConstants.roleId);
 		String accountsString = map.get(InfinityConstants.accounts);
@@ -647,17 +673,18 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 		String phone = map.get(InfinityConstants.phone);
 		String phoneCountryCode = map.get(InfinityConstants.phoneCountryCode);
 		String email = map.get(InfinityConstants.email);
-		boolean isVirtualUser = Boolean.parseBoolean(map.get("isVirtualUser")) || Boolean.parseBoolean(map.get("isExistingUser"));
-		
-		if(!isValidServiceDefinitionRole(serviceDefinition, roleId, legalEntityId, request)) {
+		boolean isVirtualUser = Boolean.parseBoolean(map.get("isVirtualUser"))
+				|| Boolean.parseBoolean(map.get("isExistingUser"));
+
+		if (!isValidServiceDefinitionRole(serviceDefinition, roleId, legalEntityId, request)) {
 			throw new ApplicationException(ErrorCodeEnum.ERR_10349, "Invalid roleId");
 		}
-		
+
 		// Populate account related data
 		JsonArray accounts = new JsonArray();
 		try {
 			accounts = new JsonParser().parse(accountsString).getAsJsonArray();
-			if(accounts.size() == 0) {
+			if (accounts.size() == 0) {
 				throw new ApplicationException(ErrorCodeEnum.ERR_10349, "Invalid accounts");
 			}
 			for (JsonElement accountElement : accounts) {
@@ -680,7 +707,7 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 		company.add(InfinityConstants.accounts, accounts);
 		company.addProperty(InfinityConstants.autoSyncAccounts, false);
 		companyList.add(company);
-		
+
 		// Populate User Details
 		String firstName = map.get(InfinityConstants.firstName);
 		String lastName = map.get(InfinityConstants.lastName);
@@ -695,18 +722,17 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 		userDetails.addProperty(InfinityConstants.firstName, firstName);
 		userDetails.addProperty(InfinityConstants.lastName, lastName);
 		userDetails.addProperty(InfinityConstants.middleName, middleName);
-		userDetails.addProperty(InfinityConstants.ssn, ssn);
+		userDetails.addProperty(InfinityConstants.ssn, cif);
 		userDetails.addProperty(InfinityConstants.dob, dob);
 		userDetails.addProperty(InfinityConstants.drivingLicenseNumber, drivingLicense);
 		userDetails.addProperty(InfinityConstants.phone, phone);
 		userDetails.addProperty(InfinityConstants.phoneCountryCode, phoneCountryCode);
 		userDetails.addProperty(InfinityConstants.email, email);
-		if(isVirtualUser) {
+		if (isVirtualUser) {
 			String id = map.get(InfinityConstants.id);
 			userDetails.remove(InfinityConstants.coreCustomerId);
 			userDetails.addProperty(InfinityConstants.id, id);
 		}
-
 
 		// Populate accountLevel And Global Level Permissions
 		ContractBackendDelegate contractBackendDelegate = DBPAPIAbstractFactoryImpl
@@ -885,7 +911,7 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 				features.add(feature);
 			}
 		}
-		
+
 		limitAccounts = new JsonArray();
 		for (JsonElement accountElement : accounts) {
 			JsonObject account = new JsonObject();
@@ -926,8 +952,7 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 		}
 		map.put(InfinityConstants.accountLevelPermissions, accountLevelPermissions.toString());
 		map.put(InfinityConstants.transactionLimits, transactionLimits.toString());
-		
-		
+
 		if (isGlobalRequired) {
 			jsonObject.add(InfinityConstants.globalLevelPermissions, globalLevelpermissions);
 		} else {
@@ -941,101 +966,184 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 		return jsonObject;
 	}
 
-	private boolean isValidServiceDefinitionRole(String serviceDefId, String roleId, String legalEntityId, DataControllerRequest request)
+	private boolean isValidServiceDefinitionRole(String serviceDefId, String roleId, String legalEntityId,
+			DataControllerRequest request)
 			throws ApplicationException {
 
-				return true;
+		return true;
 		// Map<String, Object> input = new HashMap<String, Object>();
-		// String filter = InfinityConstants.serviceDefinitionId + DBPUtilitiesConstants.EQUAL + serviceDefId
-		// 		+ DBPUtilitiesConstants.AND + InfinityConstants.Group_id + DBPUtilitiesConstants.EQUAL + roleId
-		// 		+ DBPUtilitiesConstants.AND + InfinityConstants.LegalEntityId + DBPUtilitiesConstants.EQUAL
-		// 		+ legalEntityId;
+		// String filter = InfinityConstants.serviceDefinitionId +
+		// DBPUtilitiesConstants.EQUAL + serviceDefId
+		// + DBPUtilitiesConstants.AND + InfinityConstants.Group_id +
+		// DBPUtilitiesConstants.EQUAL + roleId
+		// + DBPUtilitiesConstants.AND + InfinityConstants.LegalEntityId +
+		// DBPUtilitiesConstants.EQUAL
+		// + legalEntityId;
 
 		// input.put(DBPUtilitiesConstants.FILTER, filter);
-		// JsonObject jsonResponse = ServiceCallHelper.invokeServiceAndGetJson(input, request.getHeaderMap(),
-		// 		URLConstants.GROUP_SERVICEDEFINITION);
+		// JsonObject jsonResponse = ServiceCallHelper.invokeServiceAndGetJson(input,
+		// request.getHeaderMap(),
+		// URLConstants.GROUP_SERVICEDEFINITION);
 
 		// if (jsonResponse.has(DBPDatasetConstants.DATASET_GROUPSERVICEDEFINITION)
-		// 		&& jsonResponse.get(DBPDatasetConstants.DATASET_GROUPSERVICEDEFINITION).isJsonArray()) {
+		// &&
+		// jsonResponse.get(DBPDatasetConstants.DATASET_GROUPSERVICEDEFINITION).isJsonArray())
+		// {
 
-		// 	JsonObject groupServiceDefinition = jsonResponse.get(DBPDatasetConstants.DATASET_GROUPSERVICEDEFINITION)
-		// 			.getAsJsonArray().size() > 0
-		// 					? jsonResponse.get(DBPDatasetConstants.DATASET_GROUPSERVICEDEFINITION).getAsJsonArray()
-		// 							.get(0).getAsJsonObject()
-		// 					: new JsonObject();
+		// JsonObject groupServiceDefinition =
+		// jsonResponse.get(DBPDatasetConstants.DATASET_GROUPSERVICEDEFINITION)
+		// .getAsJsonArray().size() > 0
+		// ?
+		// jsonResponse.get(DBPDatasetConstants.DATASET_GROUPSERVICEDEFINITION).getAsJsonArray()
+		// .get(0).getAsJsonObject()
+		// : new JsonObject();
 
-		// 	String role = groupServiceDefinition.has(InfinityConstants.Group_id)
-		// 			&& !groupServiceDefinition.get(InfinityConstants.Group_id).isJsonNull()
-		// 					? groupServiceDefinition.get(InfinityConstants.Group_id).getAsString()
-		// 					: null;
-		// 	if (!roleId.equals(role)) 
-		// 		return false;
-		// 	else
-		// 		return true;
+		// String role = groupServiceDefinition.has(InfinityConstants.Group_id)
+		// && !groupServiceDefinition.get(InfinityConstants.Group_id).isJsonNull()
+		// ? groupServiceDefinition.get(InfinityConstants.Group_id).getAsString()
+		// : null;
+		// if (!roleId.equals(role))
+		// return false;
+		// else
+		// return true;
 		// } else {
-		// 	return false;
+		// return false;
 		// }
 	}
-	
+
 	private boolean isValidAccountDetails(Map<String, String> map, DataControllerRequest request) throws Exception {
 		MigrateInfinityUserBusinessDelegate migrationDelegate = DBPAPIAbstractFactoryImpl
 				.getBusinessDelegate(MigrateInfinityUserBusinessDelegate.class);
-		
-		String coreCustomerId = map.get(InfinityConstants.cif);
-		String legalEntityId = map.get(InfinityConstants.legalEntityId);
-		
-		migrationDelegate.getCoreCustomerAccountDetails(coreCustomerId, legalEntityId, request);
+
+		// String coreCustomerId = map.get(InfinityConstants.cif);
+		// String legalEntityId = map.get(InfinityConstants.legalEntityId);
+
+		// migrationDelegate.getCoreCustomerAccountDetails(coreCustomerId,
+		// legalEntityId, request);
 		return true;
 	}
-	
+
 	private boolean isValidMembershipDetails(Map<String, String> map, DataControllerRequest request) throws Exception {
 
 		String coreCustomerId = map.get(InfinityConstants.cif);
 		String legalEntityId = map.get(InfinityConstants.legalEntityId);
-		CoreCustomerBusinessDelegate coreCustomerBusinessDelegate = DBPAPIAbstractFactoryImpl
-				.getBusinessDelegate(CoreCustomerBusinessDelegate.class);
-		MembershipDTO membershipDetails = coreCustomerBusinessDelegate.getMembershipDetails(coreCustomerId,
-				legalEntityId, request.getHeaderMap());
-		if (membershipDetails != null) {
-			JsonArray array = new JsonArray();
-			JsonObject jsonObject = new JsonObject();
-			String phone[] = membershipDetails.getPhone().split("-");
-			jsonObject.addProperty(InfinityConstants.phoneNumber, phone[1]);
-			jsonObject.addProperty(InfinityConstants.phoneCountryCode, phone[0]);
-			jsonObject.addProperty(InfinityConstants.email, membershipDetails.getEmail());
-			array.add(jsonObject);
-			map.put(InfinityConstants.communication, array.toString());
+		// CoreCustomerBusinessDelegate coreCustomerBusinessDelegate =
+		// DBPAPIAbstractFactoryImpl
+		// .getBusinessDelegate(CoreCustomerBusinessDelegate.class);
+		// MembershipDTO membershipDetails =
+		// coreCustomerBusinessDelegate.getMembershipDetails(coreCustomerId,
+		// legalEntityId, request.getHeaderMap());
+		// if (membershipDetails != null) {
+		JsonArray array = new JsonArray();
+		JsonObject jsonObject = new JsonObject();
+		// String phone[] = membershipDetails.getPhone().split("-");
+		// jsonObject.addProperty(InfinityConstants.phoneNumber, phone[1]);
+		// jsonObject.addProperty(InfinityConstants.phoneCountryCode, phone[0]);
+		// jsonObject.addProperty(InfinityConstants.email,
+		// membershipDetails.getEmail());
+		// array.add(jsonObject);
+		// map.put(InfinityConstants.communication, array.toString());
 
-			array = new JsonArray();
-			jsonObject = new JsonObject();
-			jsonObject.addProperty(InfinityConstants.addressLine1, membershipDetails.getAddressLine1());
-			jsonObject.addProperty(InfinityConstants.addressLine2, membershipDetails.getAddressLine2());
-			jsonObject.addProperty(InfinityConstants.cityName, membershipDetails.getCityName());
-			jsonObject.addProperty(InfinityConstants.state, membershipDetails.getState());
-			jsonObject.addProperty(InfinityConstants.zipCode, membershipDetails.getZipCode());
-			jsonObject.addProperty(InfinityConstants.country, membershipDetails.getCountry());
-			array.add(jsonObject);
-			map.put(InfinityConstants.address, array.toString());
+		// array = new JsonArray();
+		// jsonObject = new JsonObject();
+		// jsonObject.addProperty(InfinityConstants.addressLine1,
+		// membershipDetails.getAddressLine1());
+		// jsonObject.addProperty(InfinityConstants.addressLine2,
+		// membershipDetails.getAddressLine2());
+		// jsonObject.addProperty(InfinityConstants.cityName,
+		// membershipDetails.getCityName());
+		// jsonObject.addProperty(InfinityConstants.state,
+		// membershipDetails.getState());
+		// jsonObject.addProperty(InfinityConstants.zipCode,
+		// membershipDetails.getZipCode());
+		// jsonObject.addProperty(InfinityConstants.country,
+		// membershipDetails.getCountry());
+		// array.add(jsonObject);
+		// map.put(InfinityConstants.address, array.toString());
 
-			map.put(InfinityConstants.firstName, membershipDetails.getFirstName());
-			map.put(InfinityConstants.lastName, membershipDetails.getLastName());
-			map.put(InfinityConstants.taxId, membershipDetails.getTaxId());
-			String firstName = map.get(InfinityConstants.firstName);
-			String lastName = map.get(InfinityConstants.lastName);
-			String name = firstName + " " + lastName + " " + coreCustomerId;
-			map.put(InfinityConstants.name, name);
-			map.put(InfinityConstants.contractName, name);
-			map.put(InfinityConstants.coreCustomerName, name);
-			map.put(InfinityConstants.coreCustomerId, coreCustomerId);
-			map.put(InfinityConstants.companyId, legalEntityId);
-			
-			return true;
-		}
-		return false;
+		// map.put(InfinityConstants.firstName, membershipDetails.getFirstName());
+		// map.put(InfinityConstants.lastName, membershipDetails.getLastName());
+		// map.put(InfinityConstants.taxId, membershipDetails.getTaxId());
+		// String firstName = map.get(InfinityConstants.firstName);
+		// String lastName = map.get(InfinityConstants.lastName);
+		// String name = firstName + " " + lastName + " " + coreCustomerId;
+		// map.put(InfinityConstants.name, name);
+		// map.put(InfinityConstants.contractName, name);
+		// map.put(InfinityConstants.coreCustomerName, name);
+		// map.put(InfinityConstants.coreCustomerId, coreCustomerId);
+		// map.put(InfinityConstants.companyId, legalEntityId);
+		JSONObject address = getCustomerAddress(coreCustomerId, request);
+		String user_attributes_phone_number_country_code = "";
+		String user_attributes_full_name = "";
+		String user_attributes_loginId = "";
+		String user_attributes_phoneNumber = "";
+		String user_attributes_phone_number_region = "";
+		String user_attributes_dob = "";
+		String user_attributes_last_name = "";
+		String user_attributes_customer_id = "";
+		String user_attributes_first_name = "";
+		String user_attributes_email = "";
+		String hashedPassword = "";
+		ServicesManager servicesManager = request.getServicesManager();
+		IdentityHandler identityHandler = servicesManager.getIdentityHandler();
+
+		Map<String, Object> userAttributes = identityHandler.getUserAttributes();
+		user_attributes_full_name = (String) userAttributes.get("full_name");
+		user_attributes_phone_number_country_code = (String) userAttributes.get("phone_number_country_code");
+		user_attributes_loginId = (String) userAttributes.get("loginId");
+		user_attributes_phoneNumber = (String) userAttributes.get("phoneNumber");
+		user_attributes_phone_number_region = (String) userAttributes.get("phone_number_region");
+		user_attributes_dob = (String) userAttributes.get("dob");
+		user_attributes_last_name = (String) userAttributes.get("last_name");
+		user_attributes_customer_id = (String) userAttributes.get("customer_id");
+		user_attributes_first_name = (String) userAttributes.get("first_name");
+		user_attributes_email = (String) userAttributes.get("email");
+
+		// String phone[] = membershipDetails.getPhone().split("-");
+		jsonObject.addProperty(InfinityConstants.phoneNumber, user_attributes_phoneNumber);
+		jsonObject.addProperty(InfinityConstants.phoneCountryCode, user_attributes_phone_number_country_code);
+		jsonObject.addProperty(InfinityConstants.email, user_attributes_email);
+		array.add(jsonObject);
+		map.put(InfinityConstants.communication, array.toString());
+
+		array = new JsonArray();
+		jsonObject = new JsonObject();
+
+		jsonObject.addProperty(InfinityConstants.addressLine1, address.optString("addressLine1"));
+		jsonObject.addProperty(InfinityConstants.addressLine2, address.optString("addressLine2"));
+		jsonObject.addProperty(InfinityConstants.cityName, address.optString("city"));
+		jsonObject.addProperty(InfinityConstants.state, address.optString("addressLine2"));
+		jsonObject.addProperty(InfinityConstants.zipCode, address.optString("countryCode"));
+		jsonObject.addProperty(InfinityConstants.country, address.optString("countryDesignation"));
+		// jsonObject.addProperty(InfinityConstants.addressLine1, "ADDRESS_LINE_!");
+		// jsonObject.addProperty(InfinityConstants.addressLine2, "ADDRESS_LINE_@");
+		// jsonObject.addProperty(InfinityConstants.cityName, "CITY_NAME");
+		// jsonObject.addProperty(InfinityConstants.state, "STATE_NAME");
+		// jsonObject.addProperty(InfinityConstants.zipCode, "ZIP_CODE");
+		// jsonObject.addProperty(InfinityConstants.country, "DRC");
+		array.add(jsonObject);
+		map.put(InfinityConstants.address, array.toString());
+
+		map.put(InfinityConstants.firstName, user_attributes_first_name);
+		map.put(InfinityConstants.lastName, user_attributes_last_name);
+		map.put(InfinityConstants.taxId, user_attributes_customer_id);
+		String firstName = map.get(InfinityConstants.firstName);
+		String lastName = map.get(InfinityConstants.lastName);
+		String name = firstName + " " + lastName + " " + coreCustomerId;
+		map.put(InfinityConstants.name, name);
+		map.put(InfinityConstants.contractName, name);
+		map.put(InfinityConstants.coreCustomerName, name);
+		map.put(InfinityConstants.coreCustomerId, user_attributes_customer_id);
+		map.put(InfinityConstants.companyId, legalEntityId);
+
+		return true;
+		// }
+		// return true;
 	}
-	
+
 	private Result generateInfinityUserActivationCodeAndUsername(Map<String, String> inputParams,
 			DataControllerRequest request, DataControllerResponse response) throws ApplicationException {
+				logger.error("::Indside generateInfinityUserActivationCodeAndUsername :::");
 
 		Result result = new Result();
 		LegalEntityUtil.addCompanyIDToHeaders(request);
@@ -1062,7 +1170,7 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 			throw new ApplicationException(ErrorCodeEnum.ERR_10792);
 		}
 		boolean isVirtualUser = Boolean.parseBoolean(inputParams.get("isVirtualUser"));
-		if(isVirtualUser) {
+		if (isVirtualUser) {
 			String phone = inputParams.get(InfinityConstants.phone);
 			String email = inputParams.get(InfinityConstants.email);
 			inputParams.put(DTOConstants.PHONE, inputParams.getOrDefault(DTOConstants.PHONE, phone));
@@ -1095,8 +1203,9 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 		}
 		return result;
 	}
-	
-	private String getContractAccountDetails(String cif, String contractId, String accounts, DataControllerRequest request) {
+
+	private String getContractAccountDetails(String cif, String contractId, String accounts,
+			DataControllerRequest request) {
 		JsonArray contractAccounts = new JsonArray();
 		Map<String, Object> input = new HashMap<String, Object>();
 		Set<String> finalAccounts = parseAccountsJson(accounts);
@@ -1105,27 +1214,45 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 		input.put(DBPUtilitiesConstants.FILTER, filter);
 		JsonObject contract = ServiceCallHelper.invokeServiceAndGetJson(input, request.getHeaderMap(),
 				URLConstants.CONTRACTACCOUNT_GET);
-		logger.error("CONTRACT_GET : " +contract);
+		logger.error("CONTRACT_GET : " + contract);
 		if (null != contract
-                && JSONUtil.hasKey(contract, DBPDatasetConstants.DATASET_CONTRACTACCOUNT)
-                && contract.get(DBPDatasetConstants.DATASET_CONTRACTACCOUNT).isJsonArray()) {
-            JsonArray array = contract.get(DBPDatasetConstants.DATASET_CONTRACTACCOUNT).getAsJsonArray();
-            for(JsonElement element : array) {
-            	JsonObject account = element.getAsJsonObject();
-            	String accountId = account.get(InfinityConstants.accountId).getAsString();
-            	if(finalAccounts.contains(accountId)) {
-            		JsonObject contractAccount = new JsonObject();
-            		contractAccount.addProperty(InfinityConstants.accountId	, accountId);
-            		contractAccount.addProperty(InfinityConstants.accountName, account.get(InfinityConstants.accountName).getAsString());
-            		contractAccount.addProperty(InfinityConstants.isEnabled, true);
-            		contractAccount.addProperty(InfinityConstants.ownerType, account.get(InfinityConstants.ownerType).getAsString());
-            		contractAccounts.add(contractAccount);
-            	}
-            }
-        }
+				&& JSONUtil.hasKey(contract, DBPDatasetConstants.DATASET_CONTRACTACCOUNT)
+				&& contract.get(DBPDatasetConstants.DATASET_CONTRACTACCOUNT).isJsonArray()) {
+			JsonArray array = contract.get(DBPDatasetConstants.DATASET_CONTRACTACCOUNT).getAsJsonArray();
+			for (JsonElement element : array) {
+				JsonObject account = element.getAsJsonObject();
+				String accountId = account.get(InfinityConstants.accountId).getAsString();
+				if (finalAccounts.contains(accountId)) {
+					JsonObject contractAccount = new JsonObject();
+					contractAccount.addProperty(InfinityConstants.accountId, accountId);
+					contractAccount.addProperty(InfinityConstants.accountName,
+							account.get(InfinityConstants.accountName).getAsString());
+					contractAccount.addProperty(InfinityConstants.isEnabled, true);
+					contractAccount.addProperty(InfinityConstants.ownerType,
+							account.get(InfinityConstants.ownerType).getAsString());
+					contractAccounts.add(contractAccount);
+				}
+			}
+		}
 		return contractAccounts.toString();
 	}
-	
+
+	@SuppressWarnings("unused")
+	private JSONObject getCustomerAddress(String cif, DataControllerRequest request) throws DBPApplicationException {
+		String userName = "";
+		Map<String, Object> inputParams = new HashMap<>();
+
+		inputParams.put("customerNumber", cif);
+		String res = DBPServiceExecutorBuilder.builder().withServiceId("RawBankAddressListsJavaService")
+				.withOperationId("getRawbankAddressList").withRequestParameters(inputParams).build().getResponse();
+		JSONObject jsObj = new JSONObject(res);
+		if (jsObj.getJSONArray("getAddressListResponse").length() == 0)
+			return null;
+		JSONObject addressObj = jsObj.getJSONArray("getAddressListResponse").getJSONObject(0);
+		return addressObj;
+
+	}
+
 	@SuppressWarnings("deprecation")
 	private Set<String> parseAccountsJson(String providedAccounts) {
 		// Populate account related data
@@ -1155,19 +1282,18 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 		input.put(DBPUtilitiesConstants.FILTER, filter);
 		JsonObject contract = ServiceCallHelper.invokeServiceAndGetJson(input, request.getHeaderMap(),
 				URLConstants.CONTRACT_GET);
-		logger.error("CONTRACT_GET : " +contract);
+		logger.error("CONTRACT_GET : " + contract);
 		if (null != contract
-                && JSONUtil.hasKey(contract, DBPDatasetConstants.DATASET_CONTRACT)
-                && contract.get(DBPDatasetConstants.DATASET_CONTRACT).isJsonArray()) {
-            JsonArray array = contract.get(DBPDatasetConstants.DATASET_CONTRACT).getAsJsonArray();
-            	JsonObject contractObj = array.get(0).getAsJsonObject();
-            	String serviceDefId = contractObj.get(InfinityConstants.servicedefinitionId).getAsString();
-            	return serviceDefId;
-        }
+				&& JSONUtil.hasKey(contract, DBPDatasetConstants.DATASET_CONTRACT)
+				&& contract.get(DBPDatasetConstants.DATASET_CONTRACT).isJsonArray()) {
+			JsonArray array = contract.get(DBPDatasetConstants.DATASET_CONTRACT).getAsJsonArray();
+			JsonObject contractObj = array.get(0).getAsJsonObject();
+			String serviceDefId = contractObj.get(InfinityConstants.servicedefinitionId).getAsString();
+			return serviceDefId;
+		}
 		return null;
 	}
-	
-	
+
 	private Result generateUsernameAndActivationCode(String contractId, Result result, Map<String, String> map,
 			DataControllerRequest request, DataControllerResponse response) {
 		String customerId = "";
@@ -1179,7 +1305,7 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 			if (customerDTO != null) {
 				HashMap<String, Object> input = new HashMap<String, Object>();
 				input.put(InfinityConstants.id, customerId);
-				input.put(InfinityConstants.Status_id, HelperMethods.getCustomerStatus().get("NEW"));
+				input.put(InfinityConstants.Status_id, HelperMethods.getCustomerStatus().get("ACTIVE"));
 				input.put(InfinityConstants.CustomerType_id, HelperMethods.getCustomerTypes().get("Retail"));
 				customerDTO.setIsChanged(true);
 				customerDTO.persist(input, request.getHeaderMap());
@@ -1196,7 +1322,7 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 				}
 				result.addAllParams(deliveryResult.getAllParams());
 				result.addStringParam("status", "success");
-				if(StringUtils.isNotBlank(contractId))
+				if (StringUtils.isNotBlank(contractId))
 					result.addStringParam("contractId", contractId);
 				return result;
 			}
@@ -1204,37 +1330,67 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 		return result;
 	}
 
-	
-	private Map<String, String> getMembershipDetails(String cif, String legalEntityId, DataControllerRequest request) throws ApplicationException {
+	private Map<String, String> getMembershipDetails(String cif, String legalEntityId, DataControllerRequest request)
+			throws ApplicationException, MiddlewareException, DBPApplicationException {
 		Map<String, String> map = new HashMap<>();
 		CoreCustomerBusinessDelegate coreCustomerBusinessDelegate = DBPAPIAbstractFactoryImpl
 				.getBusinessDelegate(CoreCustomerBusinessDelegate.class);
 		MembershipDTO membershipDetails = coreCustomerBusinessDelegate.getMembershipDetails(cif,
 				legalEntityId, request.getHeaderMap());
+		JSONObject address = getCustomerAddress(cif, request);
 		if (membershipDetails != null) {
+			String user_attributes_phone_number_country_code = "";
+			String user_attributes_full_name = "";
+			String user_attributes_loginId = "";
+			String user_attributes_phoneNumber = "";
+			String user_attributes_phone_number_region = "";
+			String user_attributes_dob = "";
+			String user_attributes_last_name = "";
+			String user_attributes_customer_id = "";
+			String user_attributes_first_name = "";
+			String user_attributes_email = "";
+			String hashedPassword = "";
+			ServicesManager servicesManager = request.getServicesManager();
+			IdentityHandler identityHandler = servicesManager.getIdentityHandler();
+
+			Map<String, Object> userAttributes = identityHandler.getUserAttributes();
+			user_attributes_full_name = (String) userAttributes.get("full_name");
+			user_attributes_phone_number_country_code = (String) userAttributes.get("phone_number_country_code");
+			user_attributes_loginId = (String) userAttributes.get("loginId");
+			user_attributes_phoneNumber = (String) userAttributes.get("phoneNumber");
+			user_attributes_phone_number_region = (String) userAttributes.get("phone_number_region");
+			user_attributes_dob = (String) userAttributes.get("dob");
+			user_attributes_last_name = (String) userAttributes.get("last_name");
+			user_attributes_customer_id = (String) userAttributes.get("customer_id");
+			user_attributes_first_name = (String) userAttributes.get("first_name");
+			user_attributes_email = (String) userAttributes.get("email");
 			JsonArray array = new JsonArray();
 			JsonObject jsonObject = new JsonObject();
 			String phone[] = membershipDetails.getPhone().split("-");
-			jsonObject.addProperty(InfinityConstants.phoneNumber, phone[1]);
-			jsonObject.addProperty(InfinityConstants.phoneCountryCode, phone[0]);
-			jsonObject.addProperty(InfinityConstants.email, membershipDetails.getEmail());
+			// jsonObject.addProperty(InfinityConstants.phoneNumber, phone[1]);
+			// jsonObject.addProperty(InfinityConstants.phoneCountryCode, phone[0]);
+			// jsonObject.addProperty(InfinityConstants.email,
+			// membershipDetails.getEmail());
+			jsonObject.addProperty(InfinityConstants.phoneNumber, user_attributes_phoneNumber);
+			jsonObject.addProperty(InfinityConstants.phoneCountryCode, user_attributes_phone_number_country_code);
+			jsonObject.addProperty(InfinityConstants.email, user_attributes_email);
 			array.add(jsonObject);
 			map.put(InfinityConstants.communication, array.toString());
 
 			array = new JsonArray();
 			jsonObject = new JsonObject();
-			jsonObject.addProperty(InfinityConstants.addressLine1, membershipDetails.getAddressLine1());
-			jsonObject.addProperty(InfinityConstants.addressLine2, membershipDetails.getAddressLine2());
-			jsonObject.addProperty(InfinityConstants.cityName, membershipDetails.getCityName());
-			jsonObject.addProperty(InfinityConstants.state, membershipDetails.getState());
-			jsonObject.addProperty(InfinityConstants.zipCode, membershipDetails.getZipCode());
-			jsonObject.addProperty(InfinityConstants.country, membershipDetails.getCountry());
+			jsonObject.addProperty(InfinityConstants.addressLine1, address.optString("addressLine1"));
+			jsonObject.addProperty(InfinityConstants.addressLine2, address.optString("addressLine2"));
+			jsonObject.addProperty(InfinityConstants.cityName, address.optString("city"));
+			jsonObject.addProperty(InfinityConstants.state, address.optString("addressLine2"));
+			jsonObject.addProperty(InfinityConstants.zipCode, address.optString("countryCode"));
+			jsonObject.addProperty(InfinityConstants.country, address.optString("countryDesignation"));
 			array.add(jsonObject);
 			map.put(InfinityConstants.address, array.toString());
 
-			map.put(InfinityConstants.firstName, membershipDetails.getFirstName());
-			map.put(InfinityConstants.lastName, membershipDetails.getLastName());
-			map.put(InfinityConstants.taxId, membershipDetails.getTaxId());
+			map.put(InfinityConstants.firstName, user_attributes_first_name);
+			map.put(InfinityConstants.lastName, user_attributes_last_name);
+			map.put(InfinityConstants.taxId, cif);
 			String firstName = map.get(InfinityConstants.firstName);
 			String lastName = map.get(InfinityConstants.lastName);
 			String name = firstName + " " + lastName + " " + cif;
@@ -1303,7 +1459,8 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 			return ErrorCodeEnum.ERR_21026.setErrorCode(new Result());
 		}
 
-		if (MigrationUtils.containSpecialChars(signatoryGroupName) || MigrationUtils.containSpecialChars(signatoryGroupDescription)) {
+		if (MigrationUtils.containSpecialChars(signatoryGroupName)
+				|| MigrationUtils.containSpecialChars(signatoryGroupDescription)) {
 			return ErrorCodeEnum.ERR_21023.setErrorCode(new Result());
 		}
 
@@ -1378,7 +1535,7 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 				inputParams.put(key, request.getParameter(key));
 			}
 		}
-		
+
 		final String DOMESTIC_PAYEE = "DOMESTIC";
 		final String INTERNATIONAL_PAYEE = "INTERNATIONAL";
 		final String SAMEBANK_PAYEE = "SAMEBANK";
@@ -1387,7 +1544,8 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 		String legalEntityId = inputParams.get(InfinityConstants.legalEntityId);
 		String contractCifList = inputParams.get("contractCifList");
 		if (HelperMethods.isBlank(payeeType, userId, legalEntityId, contractCifList)) {
-			return ErrorCodeEnum.ERR_12000.setErrorCode(result, "Mandatory fields missing. Please enter valid payeeType, userId, legalEntityId, contractCifList");
+			return ErrorCodeEnum.ERR_12000.setErrorCode(result,
+					"Mandatory fields missing. Please enter valid payeeType, userId, legalEntityId, contractCifList");
 		}
 		contractCifList = contractCifList.replaceAll("cif", "coreCustomerId");
 		inputParams.put(InfinityConstants.cif, contractCifList);
@@ -1404,9 +1562,10 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 			inputParams.put("isInternationalAccount", "false");
 			result = createIntraBankPayeeOperation(inputParams, request, response);
 		} else {
-			return ErrorCodeEnum.ERR_12000.setErrorCode(result, "Please enter valid payeeType. Valid Payee Types are: DOMESTIC, INTERNATIONAL, SAMEBANK");
+			return ErrorCodeEnum.ERR_12000.setErrorCode(result,
+					"Please enter valid payeeType. Valid Payee Types are: DOMESTIC, INTERNATIONAL, SAMEBANK");
 		}
-		if(result.hasParamByName(DBPConstants.DBP_ERROR_MESSAGE_KEY)) {
+		if (result.hasParamByName(DBPConstants.DBP_ERROR_MESSAGE_KEY)) {
 			return result;
 		}
 		String payeeId = result.getParamValueByName("payeeId");
@@ -1428,7 +1587,8 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 		List<String> featureActions = new ArrayList<String>();
 		featureActions.add(FeatureAction.INTER_BANK_ACCOUNT_FUND_TRANSFER_CREATE_RECEPIENT);
 		sharedCifMap = MigrationUtils.getContractCifMap(sharedCifs);
-		boolean isAuthorized = DataFetchUtils.isUserAuthorizedForFeatureAction(featureActions, sharedCifMap, request.getHeaderMap(),
+		boolean isAuthorized = DataFetchUtils.isUserAuthorizedForFeatureAction(featureActions, sharedCifMap,
+				request.getHeaderMap(),
 				request);
 		if (!isAuthorized) {
 			return ErrorCodeEnum.ERR_12001.setErrorCode(result, "Invalid User Id");
@@ -1489,7 +1649,8 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 		Map<String, List<String>> sharedCifMap = new HashMap<String, List<String>>();
 		String sharedCifs = inputParams.get(InfinityConstants.cif);
 		sharedCifMap = MigrationUtils.getContractCifMap(sharedCifs);
-		boolean isAuthorized = DataFetchUtils.isUserAuthorizedForFeatureAction(featureActions, sharedCifMap, request.getHeaderMap(),
+		boolean isAuthorized = DataFetchUtils.isUserAuthorizedForFeatureAction(featureActions, sharedCifMap,
+				request.getHeaderMap(),
 				request);
 		if (!isAuthorized) {
 			return ErrorCodeEnum.ERR_12001.setErrorCode(result, "Invalid User Id");
@@ -1550,7 +1711,8 @@ public class MigrateInfinityUserResourceImpl implements MigrateInfinityUserResou
 		String sharedCifs = inputParams.get(InfinityConstants.cif);
 
 		sharedCifMap = MigrationUtils.getContractCifMap(sharedCifs);
-		boolean isAuthorized = DataFetchUtils.isUserAuthorizedForFeatureAction(featureActions, sharedCifMap, request.getHeaderMap(),
+		boolean isAuthorized = DataFetchUtils.isUserAuthorizedForFeatureAction(featureActions, sharedCifMap,
+				request.getHeaderMap(),
 				request);
 		if (!isAuthorized) {
 			return ErrorCodeEnum.ERR_12001.setErrorCode(result, "Invalid User Id");

@@ -12,11 +12,13 @@ com/temenos/dbx/datamigrationservices/utils/DataFetchUtils.class
 com/temenos/dbx/datamigrationservices/javaservice/CreateSignatoryGroup.class
 com/temenos/dbx/datamigrationservices/resource/impl/MigrateInfinityUserResourceImpl.class
 com/temenos/dbx/datamigrationservices/resource/impl/MigrateApprovalModeResourceImpl.class
+com/temenos/dbx/datamigrationservices/postporcessor/MigrationLoginPostProcessor.class
 com/temenos/dbx/datamigrationservices/javaservice/CreateUser.class
 com/temenos/dbx/datamigrationservices/utils/MigrationUtils$1.class
 com/temenos/dbx/datamigrationservices/javaservice/LinkExistingUserToContractOperation.class
 com/temenos/dbx/datamigrationservices/mapper/MigrationBackendDelegateMapper.class
 com/temenos/dbx/datamigrationservices/business/impl/MigrateInfinityUserBusinessDelegateImpl.class
+com/temenos/dbx/datamigrationservices/resource/impl/CreateCommucationRaw.class
 com/temenos/dbx/datamigrationservices/servlet/MigrationResourceServlet.class
 com/temenos/dbx/datamigrationservices/mapper/MigrationResourceMapper.class
 com/temenos/dbx/datamigrationservices/backend/impl/MigrateInfinityUserBackendDelegateImpl.class

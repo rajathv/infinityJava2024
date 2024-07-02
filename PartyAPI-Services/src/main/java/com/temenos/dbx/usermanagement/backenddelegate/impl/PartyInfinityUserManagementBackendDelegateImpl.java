@@ -210,38 +210,38 @@ public class PartyInfinityUserManagementBackendDelegateImpl implements InfinityU
                         ? userDetails.get(InfinityConstants.email).getAsString()
                         : null);
         emailCommunicationDTO.setType_id(HelperMethods.getCommunicationTypes().get(DTOConstants.EMAIL));
-        if (StringUtils.isNotBlank(coreCustomerId)) {
-            Map<String, Object> input = new HashMap<String, Object>();
-            HelperMethods.addMSJWTAuthHeader(headerMap, AuthConstants.PRE_LOGIN_FLOW);
-            input.put("customerId", coreCustomerId);
-            headerMap.put(DBPUtilitiesConstants.COMPANY_ID, legalEntityId);
-            /*String serviceId = ServiceId.T24ISUSER_INTEGRATION_SERVICE;
-            String operationName = OperationName.CORE_CUSTOMER_SEARCH;
+        // if (StringUtils.isNotBlank(coreCustomerId)) {
+        //     Map<String, Object> input = new HashMap<String, Object>();
+        //     HelperMethods.addMSJWTAuthHeader(headerMap, AuthConstants.PRE_LOGIN_FLOW);
+        //     input.put("customerId", coreCustomerId);
+        //     headerMap.put(DBPUtilitiesConstants.COMPANY_ID, legalEntityId);
+        //     /*String serviceId = ServiceId.T24ISUSER_INTEGRATION_SERVICE;
+        //     String operationName = OperationName.CORE_CUSTOMER_SEARCH;
 
-            JsonObject membershipJson =
-                    ServiceCallHelper.invokeServiceAndGetJson(serviceId, null, operationName,
-                            input, headerMap);*/
-            logger.debug("createInfinityUser : t24 search "+ coreCustomerId);
-            /*if (null != membershipJson && JSONUtil.hasKey(membershipJson, DBPDatasetConstants.DATASET_CUSTOMERS)
-                    && membershipJson.get(DBPDatasetConstants.DATASET_CUSTOMERS).isJsonArray()) {
-                JsonArray partyJsonArray =
-                        membershipJson.get(DBPDatasetConstants.DATASET_CUSTOMERS).getAsJsonArray();
-                if (partyJsonArray.size() > 0) {
-                    membershipJson = partyJsonArray.get(0).getAsJsonObject();
-                    customerDTO.setSsn(membershipJson.get(InfinityConstants.ssn).getAsString());
-                }
-            }*/
-            JsonObject party = partyJsonArray.get(0).isJsonObject() ? partyJsonArray.get(0).getAsJsonObject()
-                    : new JsonObject();
-            JsonArray customerDetails = party.get(DTOConstants.PARTYIDENTIFIERS).getAsJsonArray();
-            for (JsonElement taxids : customerDetails) {
-             	 String type = JSONUtil.getString(taxids.getAsJsonObject(), "type");
-                if(type.equalsIgnoreCase("SOCIAL.SECURITY.NO")) {
-                  String taxId = JSONUtil.getString(taxids.getAsJsonObject(), "identifierNumber");
-                  customerDTO.setSsn(taxId);
-                }
-            }
-        }
+        //     JsonObject membershipJson =
+        //             ServiceCallHelper.invokeServiceAndGetJson(serviceId, null, operationName,
+        //                     input, headerMap);*/
+        //     logger.debug("createInfinityUser : t24 search "+ coreCustomerId);
+        //     /*if (null != membershipJson && JSONUtil.hasKey(membershipJson, DBPDatasetConstants.DATASET_CUSTOMERS)
+        //             && membershipJson.get(DBPDatasetConstants.DATASET_CUSTOMERS).isJsonArray()) {
+        //         JsonArray partyJsonArray =
+        //                 membershipJson.get(DBPDatasetConstants.DATASET_CUSTOMERS).getAsJsonArray();
+        //         if (partyJsonArray.size() > 0) {
+        //             membershipJson = partyJsonArray.get(0).getAsJsonObject();
+        //             customerDTO.setSsn(membershipJson.get(InfinityConstants.ssn).getAsString());
+        //         }
+        //     }*/
+        //     JsonObject party = partyJsonArray.get(0).isJsonObject() ? partyJsonArray.get(0).getAsJsonObject()
+        //             : new JsonObject();
+        //     JsonArray customerDetails = party.get(DTOConstants.PARTYIDENTIFIERS).getAsJsonArray();
+        //     for (JsonElement taxids : customerDetails) {
+        //      	 String type = JSONUtil.getString(taxids.getAsJsonObject(), "type");
+        //         if(type.equalsIgnoreCase("SOCIAL.SECURITY.NO")) {
+        //           String taxId = JSONUtil.getString(taxids.getAsJsonObject(), "identifierNumber");
+        //           customerDTO.setSsn(taxId);
+        //         }
+        //     }
+        // }
 
         customerDTO.setCustomerCommuncation(phoneCommunicationDTO);
         customerDTO.setCustomerCommuncation(emailCommunicationDTO);
